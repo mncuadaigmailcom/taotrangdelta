@@ -545,7 +545,7 @@ body { background: #111; color: #fff; display: flex; flex-direction: column; jus
         <button id="btn-toggle-web2" class="btn-web2" onclick="toggleWeb2Feature()">🌐 Trang web 2: TẮT</button>
         <span class="divider">|</span>
 
-        <button id="btn-toggle-autopaste" class="btn-autopaste" onclick="toggleAutoPaste()" title="Khi bật: chỉ cần sao chép (copy) code ở bất kỳ đâu, hệ thống sẽ tự động dán vào tab (HTML/CSS/JS/Python) đang mở">📋 Tự Động Dán: TẮT</button>
+        <button id="btn-toggle-autopaste" class="btn-autopaste" onclick="toggleAutoPaste()" title="Khi bật: chỉ cần sao chép (copy) code ở bất kỳ đâu, hệ thống sẽ tự động XÓA code cũ và DÁN code mới vào tab (HTML/CSS/JS/Python) đang mở">📋 Tự Động Dán: TẮT</button>
         <span class="divider">|</span>
 
         <div id="page-edit-selector" class="page-switch-group" style="display:none;">
@@ -1522,9 +1522,13 @@ Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TO�
             if (!editor || typeof text !== 'string' || text.length === 0) return;
             const model = editor.getModel();
             if (!model) return;
-            const selection = editor.getSelection() || model.getFullModelRange();
-            editor.executeEdits('auto-paste', [{ range: selection, text: text, forceMoveMarkers: true }]);
+            // Xóa toàn bộ nội dung cũ trong tab, rồi dán nội dung mới vào (thay thế hoàn toàn)
+            const fullRange = model.getFullModelRange();
+            editor.executeEdits('auto-paste', [{ range: fullRange, text: text, forceMoveMarkers: true }]);
             editor.pushUndoStop();
+            const endPos = editor.getModel().getFullModelRange().getEndPosition();
+            editor.setPosition(endPos);
+            editor.revealPosition(endPos);
         }
 
         async function checkClipboardAndAutoPaste() {
@@ -1538,7 +1542,7 @@ Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TO�
                     const editor = editors[currentTab];
                     if (editor) {
                         insertTextIntoEditor(editor, text);
-                        showAutoPasteToast(`📋 Đã tự động dán vào tab ${currentTab.toUpperCase()}`);
+                        showAutoPasteToast(`📋 Đã xóa code cũ & dán code mới vào tab ${currentTab.toUpperCase()}`);
                     }
                 }
             } catch (e) {
