@@ -702,7 +702,7 @@ body { background: #111; color: #fff; display: flex; flex-direction: column; jus
                 <button style="width:100%; margin-bottom:12px; background:#0288d1; color:white; padding:8px;" onclick="fetchUserRepos()">🔄 Lấy Danh Sách Kho Lưu Trữ Của Bạn</button>
                 <div class="setting-item">
                     <label for="github-repo-list">Chọn Kho Lưu Trữ Cần Sửa:</label>
-                    <select id="github-repo-list">
+                    <select id="github-repo-list" onchange="onRepoListChange()">
                         <option value="">-- Vui lòng nhấn "Lấy Danh Sách Kho" --</option>
                     </select>
                 </div>
@@ -717,6 +717,12 @@ body { background: #111; color: #fff; display: flex; flex-direction: column; jus
             </div>
 
             <div id="bot-logs" class="bot-status-box">🤖 Boss Bot sẵn sàng nhận lệnh...</div>
+
+            <div id="bot-link-box" style="display:none; margin-top:10px; background:#1a1a1e; border:1px solid #00d2ff; border-radius:6px; padding:8px; align-items:center; gap:6px;">
+                <span style="font-size:0.75rem; color:#888; flex-shrink:0;">🌐 Link:</span>
+                <input id="bot-link-input" type="text" readonly style="flex:1; min-width:0; background:transparent; border:none; color:#00d2ff; font-size:0.75rem; outline:none;" onclick="this.select();" />
+                <button type="button" style="flex-shrink:0; padding:6px 10px; background:linear-gradient(135deg, #6e40c9, #00d2ff); border:none; color:white; border-radius:4px; font-size:0.7rem; font-weight:bold; cursor:pointer;" onclick="copyBotSiteLink()">📋 Copy</button>
+            </div>
         </div>
     </div>
 
@@ -1947,7 +1953,7 @@ Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TO�
         }
 
         function toggleSettingsModal(show) { const modal = document.getElementById('settings-modal'); if (show) { modal.classList.add('active'); const isBanner = ['top', 'bottom', 'popup'].includes(adsLocation); document.getElementById('ads-size-container').style.display = isBanner ? 'flex' : 'none'; } else { modal.classList.remove('active'); } }
-        function toggleBotModal(show) { const modal = document.getElementById('bot-modal'); if (show) { modal.classList.add('active'); const savedToken = localStorage.getItem('codespace_github_token'); if(savedToken) document.getElementById('github-token').value = savedToken; } else { modal.classList.remove('active'); } }
+        function toggleBotModal(show) { const modal = document.getElementById('bot-modal'); if (show) { modal.classList.add('active'); const savedToken = localStorage.getItem('codespace_github_token'); if(savedToken) document.getElementById('github-token').value = savedToken; const linkBox = document.getElementById('bot-link-box'); if (linkBox) linkBox.style.display = 'none'; } else { modal.classList.remove('active'); } }
         function onAdsLocationChange(select) { adsLocation = select.value; safeSetLocalStorage('codespace_ads_location', adsLocation); const isBanner = ['top', 'bottom', 'popup'].includes(adsLocation); document.getElementById('ads-size-container').style.display = isBanner ? 'flex' : 'none'; runCode(); }
         function onAdsSizeChange(select) { adsSize = select.value; safeSetLocalStorage('codespace_ads_size', adsSize); runCode(); }
 
@@ -1956,6 +1962,44 @@ Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TO�
             const logs = document.getElementById('bot-logs');
             logs.textContent += `\n> ${msg}`;
             logs.scrollTop = logs.scrollHeight;
+        }
+
+        function showBotSiteLink(url) {
+            const box = document.getElementById('bot-link-box');
+            const input = document.getElementById('bot-link-input');
+            if (!box || !input) return;
+            input.value = url;
+            box.style.display = 'flex';
+        }
+
+        function onRepoListChange() {
+            const select = document.getElementById('github-repo-list');
+            const box = document.getElementById('bot-link-box');
+            const opt = select.options[select.selectedIndex];
+            const repoName = select.value;
+            const owner = opt ? opt.dataset.owner : '';
+            if (!repoName || !owner) {
+                if (box) box.style.display = 'none';
+                return;
+            }
+            const siteUrl = `https://${owner}.github.io/${repoName}/`;
+            showBotSiteLink(siteUrl);
+        }
+
+        function copyBotSiteLink() {
+            const input = document.getElementById('bot-link-input');
+            if (!input || !input.value) return;
+            const url = input.value;
+            input.select();
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showCopyToast('📋 Đã sao chép link: ' + url);
+                }).catch(() => {
+                    fallbackSharePrompt(url);
+                });
+            } else {
+                fallbackSharePrompt(url);
+            }
         }
 
         function switchBotMode(mode) {
@@ -2006,11 +2050,13 @@ Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TO�
                 repos.forEach(r => {
                     const opt = document.createElement('option');
                     opt.value = r.name;
+                    opt.dataset.owner = (r.owner && r.owner.login) ? r.owner.login : '';
                     opt.textContent = `${r.name} ${r.private ? '🔒' : '🌐'}`;
                     select.appendChild(opt);
                 });
                 
                 botLog(`✅ Đã tìm thấy ${repos.length} kho lưu trữ. Hãy chọn kho muốn sửa!`);
+                onRepoListChange();
             } catch(err) {
                 botLog(`❌ [LỖI]: ${err.message}`);
             }
@@ -2093,6 +2139,7 @@ Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TO�
 
                 const siteUrl = `https://${username}.github.io/${selectedRepo}/`;
                 botLog(`🌐 Link trang web sau khi sửa: ${siteUrl}`);
+                showBotSiteLink(siteUrl);
 
             } catch (err) {
                 botLog(`❌ [LỖI]: ${err.message}`);
@@ -2203,6 +2250,7 @@ Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TO�
                 botLog("🎉 HOÀN TẤT TOÀN BỘ TIẾN TRÌNH!");
                 botLog(`🌐 Link web của bạn: ${siteUrl}`);
                 botLog("(Lưu ý: GitHub Pages có thể mất 1-2 phút để dựng xong trang web lần đầu).");
+                showBotSiteLink(siteUrl);
 
             } catch (err) {
                 botLog(`❌ [LỖI]: ${err.message}`);
