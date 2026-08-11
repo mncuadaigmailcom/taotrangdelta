@@ -483,6 +483,10 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         .btn-autopaste { background: #37474f !important; color: #cfd8dc !important; border-color: #546e7a !important; }
         .btn-autopaste.active { background: #00c853 !important; color: #052e16 !important; border-color: #69f0ae !important; box-shadow: 0 0 8px rgba(0,200,83,0.5); animation: aiPulseDot 1.6s infinite; }
 
+        .btn-ai-result { background: #263238 !important; color: #b0bec5 !important; border-color: #455a64 !important; }
+        .btn-ai-result.active { background: linear-gradient(90deg,#7b2ff7,#00c6ff) !important; color: #fff !important; border-color: #00e5ff !important; box-shadow: 0 0 10px rgba(0,198,255,0.6); animation: aiPulseDot 1.6s infinite; }
+        .ai-result-banner { position:absolute; top:0; left:0; right:0; z-index: 5; background: linear-gradient(90deg,#7b2ff7,#00c6ff); color:#fff; font-size:0.72rem; font-weight:bold; text-align:center; padding:4px 6px; box-shadow:0 2px 8px rgba(0,0,0,0.35); }
+
         #autopaste-toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1a1a1e; color: #e1e1e6; border: 1px solid #00e676; padding: 10px 18px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; z-index: 999999999; opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; box-shadow: 0 4px 18px rgba(0,0,0,0.4); }
         #autopaste-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
         
@@ -760,6 +764,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <button onclick="toggleSettingsModal(true)">⚙️ Cài Đặt</button>
         
         <button class="btn-run" onclick="runCode()">Chạy ▶</button>
+        <button id="btn-toggle-ai-result" class="btn-ai-result" onclick="toggleAIResultFeature()" title="Khi bật: nút Chạy sẽ gửi code HTML/CSS/JS/Python/C++ cho AI (theo API Key đang chọn) để AI CHUYỂN ĐỔI Python/C++ thành HTML/JS chạy thật và hiển thị kết quả. Khi tắt: chạy như bình thường (không đổi tính năng cũ).">🤖 Kết Quả AI: TẮT</button>
         <button class="btn-toggle-ui" onclick="toggleToolbar(false)" style="background: #b71c1c;">🚫 Ẩn</button>
         <div id="save-indicator" class="autosave-status">Đã lưu tự động</div>
     </div>
@@ -816,7 +821,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         </div>
         <div id="drag-resizer" class="resizer"></div>
         <div id="result-viewer" class="box-viewer">
-            <div id="iframe-wrapper" class="iframe-container"><iframe id="viewer"></iframe></div>
+            <div id="iframe-wrapper" class="iframe-container"><div id="ai-result-banner" class="ai-result-banner" style="display:none;"></div><iframe id="viewer"></iframe></div>
             
             <div id="console-panel" class="console-panel">
                 <div class="console-header">
@@ -1024,6 +1029,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         let adsSize = 'auto'; 
         let isWeb2Enabled = false;
         let isAutoPasteEnabled = false;
+        let isAIResultEnabled = false;
+        let aiResultRunToken = 0; // dùng để huỷ kết quả cũ nếu bấm Chạy nhiều lần liên tiếp
         let lastClipboardText = null;
         let autoPasteInterval = null;
         let autoPasteWarned = false;
@@ -1946,6 +1953,138 @@ Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TO�
                 if (btn) { btn.textContent = '📋 Tự Động Dán: TẮT'; btn.classList.remove('active'); }
                 stopAutoPasteWatcher();
                 showAutoPasteToast('📋 Tự động dán: ĐÃ TẮT');
+            }
+        }
+
+        /* ================= KẾT QUẢ HIỂN THỊ BẰNG AI (HTML/CSS/JS/Python/C++) =================
+           Khi TẮT: mọi thứ hoạt động y hệt như cũ (buildFullSource + Pyodide + JSCPP trong iframe).
+           Khi BẬT: nút "Chạy ▶" sẽ gửi code của cả 5 loại (HTML, CSS, JS, Python, C++) cho AI
+           (dùng đúng API Key đang được chọn trong khung AI Trợ Lý) để AI phân tích và dựng lại
+           trang kết quả, gồm: hiển thị đúng phần HTML/CSS/JS thật (trình duyệt tự chạy — chính xác 100%)
+           + phần "Kết quả Python (AI mô phỏng)" + "Kết quả C++ (AI mô phỏng)" do AI dự đoán output.
+           Không xoá, không thay thế bất kỳ hàm nào đã có sẵn (buildFullSource, runCppOnline, Pyodide...). */
+
+        function updateAIResultButtonUI() {
+            const btn = document.getElementById('btn-toggle-ai-result');
+            if (!btn) return;
+            if (isAIResultEnabled) {
+                btn.textContent = '🤖 Kết Quả AI: BẬT';
+                btn.classList.add('active');
+            } else {
+                btn.textContent = '🤖 Kết Quả AI: TẮT';
+                btn.classList.remove('active');
+            }
+        }
+
+        function toggleAIResultFeature(enable) {
+            isAIResultEnabled = (enable === undefined) ? !isAIResultEnabled : enable;
+            safeSetLocalStorage('codespace_ai_result_enabled', isAIResultEnabled ? 'true' : 'false');
+            updateAIResultButtonUI();
+
+            const banner = document.getElementById('ai-result-banner');
+            if (banner) banner.style.display = 'none';
+
+            runCode();
+        }
+
+        function setAIResultBanner(text, isError) {
+            const banner = document.getElementById('ai-result-banner');
+            if (!banner) return;
+            if (!text) { banner.style.display = 'none'; return; }
+            banner.textContent = text;
+            banner.style.background = isError ? '#b71c1c' : '';
+            banner.style.display = 'block';
+        }
+
+        // Tách code HTML mà AI trả về, phòng trường hợp AI lỡ bọc trong ```html ... ``` hoặc thêm lời giải thích
+        function extractAIHtmlDocument(raw) {
+            if (!raw) return null;
+            let text = raw.trim();
+            const fenceMatch = text.match(/```(?:html)?\s*([\s\S]*?)```/i);
+            if (fenceMatch) text = fenceMatch[1].trim();
+            const docMatch = text.match(/<!DOCTYPE[\s\S]*<\/html>/i) || text.match(/<html[\s\S]*<\/html>/i);
+            if (docMatch) return docMatch[0];
+            // Nếu AI không trả về đủ khung <html>, vẫn cho hiển thị nguyên văn để không mất dữ liệu
+            return text;
+        }
+
+        async function runCodeWithAI() {
+            const myToken = ++aiResultRunToken;
+            const target = activePreviewPage;
+            const h = getCode(target, 'html');
+            const c = getCode(target, 'css');
+            const j = getCode(target, 'js');
+            const py = getCode(target, 'py');
+            const cpp = getCode(target, 'cpp');
+
+            const activeKey = aiApiKeys.find(k => k.id === activeAIKeyId);
+            if (!activeKey || !activeKey.key) {
+                alert('⚠️ Bạn cần chọn/thêm API Key AI trước (bấm nút 🤖 AI Trợ Lý → 🔑 Key) để dùng tính năng "Kết Quả AI".');
+                setAIResultBanner('⚠️ Chưa có API Key — đang chạy theo cách thông thường', true);
+                document.getElementById('viewer').srcdoc = buildFullSource();
+                return;
+            }
+
+            setAIResultBanner('🤖 AI đang chuyển đổi Python/C++ sang HTML/JS và tạo kết quả...', false);
+            document.getElementById('viewer').srcdoc = '<body style="margin:0;background:#111;color:#8ecff5;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;"><div>🤖 AI đang chuyển đổi code, vui lòng đợi...</div></body>';
+
+            const promptText = `Bạn là một công cụ CHUYỂN ĐỔI CODE (code converter/transpiler) cho một trình soạn code đa ngôn ngữ.
+Dưới đây là code của người dùng, gồm 5 phần: HTML, CSS, JavaScript, Python, C++.
+
+Nhiệm vụ của bạn: trả về DUY NHẤT một tài liệu HTML hoàn chỉnh (bắt đầu bằng <!DOCTYPE html>, kết thúc bằng </html>), KHÔNG kèm markdown, KHÔNG kèm lời giải thích, để hiển thị trực tiếp trong khung kết quả và CHẠY THẬT trong trình duyệt (không phải mô phỏng/đoán output). Tài liệu đó phải gồm:
+1. Phần trên: nhúng nguyên văn HTML + CSS (trong thẻ <style>) + JavaScript (trong thẻ <script>) của người dùng để trình duyệt tự chạy thật (giữ nguyên logic, không được sửa đổi code này).
+2. Nếu phần PYTHON có code: hãy CHUYỂN ĐỔI (transpile) toàn bộ logic của đoạn Python đó thành JavaScript tương đương chính xác nhất có thể (giữ đúng thuật toán, biến, vòng lặp, điều kiện, hàm...), rồi viết đoạn JS đó vào một <script>, tự động chạy khi trang tải, và in mọi kết quả (thay cho print()) ra một khu vực giao diện đẹp, nền tối, có tiêu đề "🐍 Kết Quả Python (Đã Chuyển Đổi Sang HTML/JS)". Nếu Python dùng input() thì tạo sẵn ô nhập liệu (input HTML) tương ứng để người dùng tương tác được. Nếu code Python có lỗi cú pháp/logic rõ ràng không thể chuyển đổi, hãy ghi rõ lỗi đó trong khu vực này thay vì code chuyển đổi.
+3. Nếu phần C++ có code: tương tự, CHUYỂN ĐỔI (transpile) toàn bộ logic của đoạn C++ đó thành JavaScript tương đương chính xác nhất có thể (giữ đúng thuật toán, kiểu dữ liệu tương ứng, vòng lặp, hàm, con trỏ/mảng mô phỏng bằng array...), viết vào một <script> khác, tự chạy, in kết quả (thay cho cout/printf) ra khu vực giao diện tương tự, tiêu đề "⚙️ Kết Quả C++ (Đã Chuyển Đổi Sang HTML/JS)". Nếu C++ dùng cin thì tạo ô nhập liệu tương ứng. Nếu có lỗi biên dịch/logic rõ ràng không thể chuyển đổi, ghi rõ lỗi đó.
+Nếu Python hoặc C++ rỗng (không có code) thì bỏ qua hẳn khu vực tương ứng, không hiển thị khung rỗng.
+Kết quả in ra của Python/C++ sau khi chuyển đổi hiển thị trong các thẻ <pre> hoặc tương đương, giữ định dạng dòng, style rõ ràng dễ đọc, tách biệt với phần render HTML/CSS/JS gốc ở trên. Đây là chuyển đổi code thật để chạy, không phải đoán trước kết quả.
+
+=== HTML ===
+${h}
+
+=== CSS ===
+${c}
+
+=== JAVASCRIPT ===
+${j}
+
+=== PYTHON ===
+${py}
+
+=== C++ ===
+${cpp}`;
+
+            // dùng một node ẩn làm "botMsg" để callAIProvider có nơi ghi trạng thái thử lại (retry, VD: Gemini quá tải)
+            // mà không ảnh hưởng tới các khung UI khác. Kiểm tra định kỳ để cập nhật banner nếu có retry.
+            const dummyStatusNode = document.createElement('div');
+            dummyStatusNode.style.display = 'none';
+            document.body.appendChild(dummyStatusNode);
+            const statusPoller = setInterval(() => {
+                if (myToken !== aiResultRunToken) { clearInterval(statusPoller); return; }
+                const txt = dummyStatusNode.textContent;
+                if (txt) setAIResultBanner('🤖 ' + txt.replace(/<[^>]+>/g, ''), false);
+            }, 400);
+
+            try {
+                const result = await callAIProvider(activeKey, promptText, dummyStatusNode, []);
+                clearInterval(statusPoller);
+                dummyStatusNode.remove();
+
+                if (myToken !== aiResultRunToken) return; // người dùng đã bấm Chạy lần khác, bỏ kết quả cũ
+
+                if (result.success) {
+                    const htmlDoc = extractAIHtmlDocument(result.text);
+                    document.getElementById('viewer').srcdoc = htmlDoc;
+                    setAIResultBanner('🤖 Kết quả đang hiển thị bởi AI', false);
+                } else {
+                    setAIResultBanner('❌ ' + result.errorMessage, true);
+                    document.getElementById('viewer').srcdoc = buildFullSource();
+                }
+            } catch (err) {
+                clearInterval(statusPoller);
+                if (dummyStatusNode.parentNode) dummyStatusNode.remove();
+                if (myToken !== aiResultRunToken) return;
+                setAIResultBanner('❌ Lỗi kết nối AI: ' + err.message, true);
+                document.getElementById('viewer').srcdoc = buildFullSource();
             }
         }
 
@@ -3091,15 +3230,61 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
                     }
                 }
 
-                function runCpp() {
+                function getStdinIfNeeded() {
+                    let stdinData = "";
+                    if (/\\b(cin|scanf|getline|gets)\\b/.test(rawCpp)) {
+                        const userInput = prompt("⚙️ C++ (${target.toUpperCase()}) yêu cầu nhập dữ liệu (input). Nếu có nhiều giá trị, hãy cách nhau bằng dấu cách hoặc xuống dòng:");
+                        stdinData = userInput !== null ? userInput : "";
+                    }
+                    return stdinData;
+                }
+
+                async function runCppOnline(stdinData, reasonMsg) {
+                    try {
+                        printToScreen((reasonMsg ? reasonMsg + "\\n" : "") + "🌐 Đang thử biên dịch bằng trình biên dịch GCC trực tuyến (hỗ trợ đầy đủ C++: STL, class, template...)...\\n", false);
+                        console.log("🌐 [C++] Đang gọi trình biên dịch trực tuyến (Wandbox / GCC)...");
+
+                        const resp = await fetch('https://wandbox.org/api/compile.json', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                code: rawCpp,
+                                compiler: 'gcc-13.2.0',
+                                options: 'warning,gnu++17',
+                                'compiler-option-raw': '-std=gnu++17',
+                                stdin: stdinData || ''
+                            })
+                        });
+                        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                        const data = await resp.json();
+
+                        if (data.compiler_error) printToScreen(data.compiler_error, true);
+                        if (data.compiler_message && !data.compiler_error) printToScreen(data.compiler_message + "\\n", false);
+                        if (data.program_output) printToScreen(data.program_output, false);
+                        if (data.program_error) printToScreen(data.program_error, true);
+
+                        if (!data.program_output && !data.program_error && !data.compiler_error) {
+                            printToScreen("(Không có output)", false);
+                        }
+
+                        const exitCode = (typeof data.status !== 'undefined') ? data.status : (data.signal || '?');
+                        printToScreen("\\n[GCC trực tuyến - chương trình kết thúc với mã thoát: " + exitCode + "]", false);
+                        console.log("⚙️ [C++ Online] Đã biên dịch & chạy xong bằng GCC trực tuyến.");
+                        return true;
+                    } catch (err) {
+                        const msg = (err && err.message) ? err.message : String(err);
+                        console.error("⚙️ [C++ Online Error] " + msg);
+                        printToScreen("❌ Không thể biên dịch trực tuyến: " + msg + " (kiểm tra kết nối mạng).", true);
+                        return false;
+                    }
+                }
+
+                async function runCpp() {
+                    const stdinData = getStdinIfNeeded();
+                    let jscppOk = false;
+
                     try {
                         console.log("⏳ Đang biên dịch & chạy C++ (JSCPP)...");
-
-                        let stdinData = "";
-                        if (/\\b(cin|scanf|getline|gets)\\b/.test(rawCpp)) {
-                            const userInput = prompt("⚙️ C++ (${target.toUpperCase()}) yêu cầu nhập dữ liệu (input). Nếu có nhiều giá trị, hãy cách nhau bằng dấu cách hoặc xuống dòng:");
-                            stdinData = userInput !== null ? userInput : "";
-                        }
 
                         const config = {
                             stdio: {
@@ -3113,10 +3298,17 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
                         const exitCode = JSCPP.run(rawCpp, stdinData, config);
                         printToScreen("\\n[Chương trình kết thúc với mã thoát: " + exitCode + "]", false);
                         console.log("⚙️ [C++] Chạy xong, mã thoát: " + exitCode);
+                        jscppOk = true;
                     } catch (err) {
                         const msg = (err && err.message) ? err.message : String(err);
-                        console.error("⚙️ [C++ Error] " + msg);
-                        printToScreen("❌ Lỗi: " + msg, true);
+                        console.warn("⚙️ [C++ JSCPP] Không xử lý được đoạn code này: " + msg);
+                        printToScreen("⚠️ JSCPP (trình thông dịch nhanh) không hỗ trợ đầy đủ đoạn code này: " + msg + "\\n", true);
+                    }
+
+                    // Nếu JSCPP không chạy được (dùng tính năng C++ nâng cao như vector, class, template, STL...),
+                    // tự động thử lại bằng trình biên dịch GCC thật trực tuyến để tối đa khả năng chạy được code.
+                    if (!jscppOk) {
+                        await runCppOnline(stdinData, null);
                     }
                 }
 
@@ -3146,8 +3338,9 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
                             }
                             if (waited >= 10000) {
                                 clearInterval(waitTimer);
-                                console.warn("⚠️ Không thể tải thư viện JSCPP. Hãy kiểm tra kết nối mạng để chạy C++.");
-                                printToScreen("⚠️ Không thể tải thư viện JSCPP (kiểm tra kết nối mạng).", true);
+                                console.warn("⚠️ Không thể tải thư viện JSCPP. Sẽ thử biên dịch trực tuyến thay thế.");
+                                const stdinData = getStdinIfNeeded();
+                                runCppOnline(stdinData, "⚠️ Không thể tải thư viện JSCPP (kiểm tra kết nối mạng).");
                             }
                         }
                     }, 200);
@@ -3159,7 +3352,13 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
             return `<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<style>\n${adsStyle}\n${c}\n</style>\n${consoleInterceptorScript}\n</head>\n<body>\n${finalBody}\n<script>\n${j}\n${adsJS}\n<\/script>\n${pythonRunnerScript}\n${cppRunnerScript}\n</body>\n</html>`;
         }
         
-        function runCode() { if (adsLocation === 'video-skippable' || adsLocation === 'video-non-skippable') { setMode('full-view'); } const source = buildFullSource(); document.getElementById('viewer').srcdoc = source; }
+        function runCode() {
+            if (adsLocation === 'video-skippable' || adsLocation === 'video-non-skippable') { setMode('full-view'); }
+            if (isAIResultEnabled) { runCodeWithAI(); return; }
+            setAIResultBanner(''); // ẩn banner AI khi chạy theo cách thông thường
+            const source = buildFullSource();
+            document.getElementById('viewer').srcdoc = source;
+        }
         
         window.addEventListener('message', function(event) {
             if (event.data && event.data.type) {
@@ -3180,6 +3379,8 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
             adsSize = localStorage.getItem('codespace_ads_size') || 'auto';
             isWeb2Enabled = localStorage.getItem('codespace_web2_enabled') === 'true';
             isAutoPasteEnabled = localStorage.getItem('codespace_autopaste_enabled') === 'true';
+            isAIResultEnabled = localStorage.getItem('codespace_ai_result_enabled') === 'true';
+            updateAIResultButtonUI();
 
             document.getElementById('select-ads').value = adsLocation; 
             document.getElementById('select-ads-size').value = adsSize;
