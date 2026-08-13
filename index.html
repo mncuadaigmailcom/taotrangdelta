@@ -1,40 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
- .fake-ad { background:#fff3cd; color:#856404; border:1px solid #ffeeba; padding:12px; margin:10px auto; border-radius:6px; text-align:center; font-family:sans-serif; position:relative; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; } .fake-ad-tag { position:absolute; top:2px; left:5px; font-size:9px; background:#ccc; color:#fff; padding:1px 3px; border-radius:2px; } .fake-ad-title { font-size:13px; display:block; margin-bottom:4px; font-weight:bold; } .fake-ad-close { position:absolute; top:4px; right:6px; background:none; border:none; font-weight:bold; cursor:pointer; } .video-ad-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); color:white; z-index:99999999; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:sans-serif; padding:20px; text-align:center; } .video-box { width:100%; max-width:320px; height:180px; background:#000; display:flex; justify-content:center; align-items:center; border:2px solid #00b0ff; margin-bottom:15px; border-radius:6px; color:#00b0ff; font-weight:bold; } .video-timer-text { font-size:14px; margin-bottom:15px; } .video-btn { padding:10px 20px; background:#00e676; border:none; color:#052e16; font-weight:bold; border-radius:4px; cursor:pointer; } .video-btn:disabled { background:#3a3a40!important; color:#8e8e93!important; cursor:not-allowed!important; opacity:0.6; }  .fake-ad { width: calc(100% - 20px); } 
-body { background: #111; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: sans-serif; }
-.card { background: #222; padding: 25px; border-radius: 8px; text-align: center; border: 1px solid #00b0ff; box-shadow: 0 4px 15px rgba(0,176,255,0.2); width: 90%; max-width: 400px; margin: 20px; }
-</style>
-<script>(function() { const origLog = console.log; const origErr = console.error; const origWarn = console.warn; console.log = function(...args) { window.parent.postMessage({ type: 'log', data: args.join(' ') }, '*'); origLog.apply(console, args); }; console.error = function(...args) { window.parent.postMessage({ type: 'error', data: args.join(' ') }, '*'); origErr.apply(console, args); }; console.warn = function(...args) { window.parent.postMessage({ type: 'warn', data: args.join(' ') }, '*'); origWarn.apply(console, args); }; window.onerror = function(m, s, l) { window.parent.postMessage({ type: 'error', data: m + " (Dòng " + l + ")" }, '*'); }; })();</script>
-</head>
-<body>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
- .fake-ad { background:#fff3cd; color:#856404; border:1px solid #ffeeba; padding:12px; margin:10px auto; border-radius:6px; text-align:center; font-family:sans-serif; position:relative; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; } .fake-ad-tag { position:absolute; top:2px; left:5px; font-size:9px; background:#ccc; color:#fff; padding:1px 3px; border-radius:2px; } .fake-ad-title { font-size:13px; display:block; margin-bottom:4px; font-weight:bold; } .fake-ad-close { position:absolute; top:4px; right:6px; background:none; border:none; font-weight:bold; cursor:pointer; } .video-ad-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); color:white; z-index:99999999; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:sans-serif; padding:20px; text-align:center; } .video-box { width:100%; max-width:320px; height:180px; background:#000; display:flex; justify-content:center; align-items:center; border:2px solid #00b0ff; margin-bottom:15px; border-radius:6px; color:#00b0ff; font-weight:bold; } .video-timer-text { font-size:14px; margin-bottom:15px; } .video-btn { padding:10px 20px; background:#00e676; border:none; color:#052e16; font-weight:bold; border-radius:4px; cursor:pointer; } .video-btn:disabled { background:#3a3a40!important; color:#8e8e93!important; cursor:not-allowed!important; opacity:0.6; }  .fake-ad { width: calc(100% - 20px); } 
-body { background: #111; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: sans-serif; }
-.card { background: #222; padding: 25px; border-radius: 8px; text-align: center; border: 1px solid #00b0ff; box-shadow: 0 4px 15px rgba(0,176,255,0.2); width: 90%; max-width: 400px; margin: 20px; }
-</style>
-<script>(function() { const origLog = console.log; const origErr = console.error; const origWarn = console.warn; console.log = function(...args) { window.parent.postMessage({ type: 'log', data: args.join(' ') }, '*'); origLog.apply(console, args); }; console.error = function(...args) { window.parent.postMessage({ type: 'error', data: args.join(' ') }, '*'); origErr.apply(console, args); }; console.warn = function(...args) { window.parent.postMessage({ type: 'warn', data: args.join(' ') }, '*'); origWarn.apply(console, args); }; window.onerror = function(m, s, l) { window.parent.postMessage({ type: 'error', data: m + " (Dòng " + l + ")" }, '*'); }; })();</script>
-</head>
-<body>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
- .fake-ad { background:#fff3cd; color:#856404; border:1px solid #ffeeba; padding:12px; margin:10px auto; border-radius:6px; text-align:center; font-family:sans-serif; position:relative; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; } .fake-ad-tag { position:absolute; top:2px; left:5px; font-size:9px; background:#ccc; color:#fff; padding:1px 3px; border-radius:2px; } .fake-ad-title { font-size:13px; display:block; margin-bottom:4px; font-weight:bold; } .fake-ad-close { position:absolute; top:4px; right:6px; background:none; border:none; font-weight:bold; cursor:pointer; } .video-ad-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); color:white; z-index:99999999; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:sans-serif; padding:20px; text-align:center; } .video-box { width:100%; max-width:320px; height:180px; background:#000; display:flex; justify-content:center; align-items:center; border:2px solid #00b0ff; margin-bottom:15px; border-radius:6px; color:#00b0ff; font-weight:bold; } .video-timer-text { font-size:14px; margin-bottom:15px; } .video-btn { padding:10px 20px; background:#00e676; border:none; color:#052e16; font-weight:bold; border-radius:4px; cursor:pointer; } .video-btn:disabled { background:#3a3a40!important; color:#8e8e93!important; cursor:not-allowed!important; opacity:0.6; }  .fake-ad { width: calc(100% - 20px); } 
-body { background: #111; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: sans-serif; }
-.card { background: #222; padding: 25px; border-radius: 8px; text-align: center; border: 1px solid #00b0ff; box-shadow: 0 4px 15px rgba(0,176,255,0.2); width: 90%; max-width: 400px; margin: 20px; }
-</style>
-<script>(function() { const origLog = console.log; const origErr = console.error; const origWarn = console.warn; console.log = function(...args) { window.parent.postMessage({ type: 'log', data: args.join(' ') }, '*'); origLog.apply(console, args); }; console.error = function(...args) { window.parent.postMessage({ type: 'error', data: args.join(' ') }, '*'); origErr.apply(console, args); }; console.warn = function(...args) { window.parent.postMessage({ type: 'warn', data: args.join(' ') }, '*'); origWarn.apply(console, args); }; window.onerror = function(m, s, l) { window.parent.postMessage({ type: 'error', data: m + " (Dòng " + l + ")" }, '*'); }; })();</script>
-</head>
-<body>
-<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -684,7 +648,18 @@ https://github.com/nodeca/pako/blob/main/LICENSE
                 transition: none !important;
             }
         }
-    </style>
+    
+        /* Snapshot UI */
+        .snapshot-menu { min-width: 280px; }
+        .snapshot-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; border-radius: 4px; cursor: default; gap: 8px; }
+        .snapshot-item:hover { background: #29292e; }
+        .snapshot-time { font-size: 0.72rem; color: #e1e1e6; display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+        .snapshot-time small { color: #828282; font-size: 0.65rem; }
+        .snapshot-restore-btn { padding: 3px 8px; font-size: 0.7rem; background: #00b0ff !important; color: #fff !important; border: none !important; border-radius: 3px; cursor: pointer; white-space: nowrap; }
+        .snapshot-restore-btn:hover { background: #0091ea !important; }
+        .snapshot-delete-btn { padding: 3px 8px; font-size: 0.7rem; background: #ef5350 !important; color: #fff !important; border: none !important; border-radius: 3px; cursor: pointer; white-space: nowrap; }
+        .snapshot-delete-btn:hover { background: #c62828 !important; }
+</style>
 </head>
 <body class="layout-pc">
     <button id="reopen-btn" class="reopen-toolbar-btn" onclick="toggleToolbar(true)">🔽 Hiện Công Cụ</button>
@@ -734,6 +709,16 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         <div class="font-controls"><button onclick="changeFontSize(-2)">A-</button><button onclick="changeFontSize(2)">A+</button></div>
         
         <button class="btn-reset" onclick="resetWorkspace()">🔄 Reset</button>
+        <div class="dropdown-wrap snapshot-wrap">
+            <button class="btn-reset" onclick="toggleSnapshotMenu(event)" style="background:#5e35b1 !important; color:#fff !important; border-color:#5e35b1 !important;">💾 Lưu Snapshot <span class="dropdown-caret">▼</span></button>
+            <div id="snapshot-menu" class="dropdown-menu snapshot-menu">
+                <button onclick="saveSnapshot()">💾 Lưu trạng thái hiện tại</button>
+                <div class="snapshot-divider" style="border-top:1px solid #424242; margin:4px 0;"></div>
+                <div id="snapshot-list-container" style="display:flex; flex-direction:column; gap:4px; max-height:220px; overflow-y:auto;">
+                    <span style="color:#888; font-size:0.75rem; padding:6px 10px;">Chưa có snapshot nào</span>
+                </div>
+            </div>
+        </div>
         
         <div class="dropdown-wrap">
             <button class="btn-save" onclick="toggleDownloadMenu(event)">💾 Tải Xuống <span class="dropdown-caret">▼</span></button>
@@ -1043,6 +1028,121 @@ https://github.com/nodeca/pako/blob/main/LICENSE
         let showLines = true;
         let typingTimer;
 
+        /* ==================== SNAPSHOT (LƯU & QUAY LẠI) ==================== */
+        const MAX_SNAPSHOTS = 5;
+        const SNAPSHOT_KEY = 'codespace_snapshots';
+
+        function getSnapshots() {
+            try {
+                const raw = localStorage.getItem(SNAPSHOT_KEY);
+                if (raw) {
+                    const list = JSON.parse(raw);
+                    if (Array.isArray(list)) return list;
+                }
+            } catch (e) {}
+            return [];
+        }
+
+        function setSnapshots(list) {
+            safeSetLocalStorage(SNAPSHOT_KEY, JSON.stringify(list));
+        }
+
+        function saveSnapshot() {
+            const snapshots = getSnapshots();
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('vi-VN') + ' ' + now.toLocaleDateString('vi-VN');
+            const newSnap = {
+                id: 'snap_' + Date.now(),
+                time: timeStr,
+                timestamp: Date.now(),
+                p1: { html: getCode('p1','html'), css: getCode('p1','css'), js: getCode('p1','js'), py: getCode('p1','py'), cpp: getCode('p1','cpp') },
+                p2: { html: getCode('p2','html'), css: getCode('p2','css'), js: getCode('p2','js'), py: getCode('p2','py'), cpp: getCode('p2','cpp') }
+            };
+            snapshots.push(newSnap);
+            if (snapshots.length > MAX_SNAPSHOTS) {
+                snapshots.shift(); // xóa cái đầu tiên (cũ nhất) để tiết kiệm bộ nhớ
+            }
+            setSnapshots(snapshots);
+            renderSnapshotMenu();
+            showAutoPasteToast(`💾 Đã lưu snapshot! (${snapshots.length}/${MAX_SNAPSHOTS})`);
+            closeSnapshotMenu();
+        }
+
+        function restoreSnapshot(id) {
+            const snapshots = getSnapshots();
+            const snap = snapshots.find(s => s.id === id);
+            if (!snap) return;
+            if (!confirm('↩️ Quay lại snapshot lúc ' + snap.time + '?\n\nCode hiện tại sẽ được thay thế bằng bản lưu này.')) return;
+
+            ['p1','p2'].forEach(p => {
+                if (snap[p]) {
+                    ['html','css','js','py','cpp'].forEach(t => {
+                        if (typeof snap[p][t] === 'string') {
+                            setCode(p, t, snap[p][t]);
+                        }
+                    });
+                }
+            });
+
+            if (models.p1.html && editors.html) {
+                ['html','css','js','py','cpp'].forEach(t => {
+                    if (editors[t]) editors[t].layout();
+                });
+            }
+
+            runCode();
+            showAutoPasteToast('↩️ Đã quay lại snapshot lúc ' + snap.time);
+            closeSnapshotMenu();
+        }
+
+        function deleteSnapshot(id) {
+            let snapshots = getSnapshots();
+            snapshots = snapshots.filter(s => s.id !== id);
+            setSnapshots(snapshots);
+            renderSnapshotMenu();
+        }
+
+        function renderSnapshotMenu() {
+            const container = document.getElementById('snapshot-list-container');
+            if (!container) return;
+            const snapshots = getSnapshots();
+            if (snapshots.length === 0) {
+                container.innerHTML = '<span style="color:#888; font-size:0.75rem; padding:6px 10px;">Chưa có snapshot nào</span>';
+                return;
+            }
+            container.innerHTML = snapshots.slice().reverse().map((s, idx) => {
+                const realIndex = snapshots.length - idx;
+                const totalChars = (
+                    (s.p1.html?.length||0) + (s.p1.css?.length||0) + (s.p1.js?.length||0) + (s.p1.py?.length||0) + (s.p1.cpp?.length||0) +
+                    (s.p2.html?.length||0) + (s.p2.css?.length||0) + (s.p2.js?.length||0) + (s.p2.py?.length||0) + (s.p2.cpp?.length||0)
+                ).toLocaleString();
+                return `<div class="snapshot-item">
+                    <div class="snapshot-time">
+                        <span>#${realIndex} — ${escapeHtml(s.time)}</span>
+                        <small>${totalChars} ký tự • Cả P1 + P2</small>
+                    </div>
+                    <div style="display:flex; gap:4px; flex-shrink:0;">
+                        <button class="snapshot-restore-btn" onclick="restoreSnapshot('${s.id}')">↩️ Quay lại</button>
+                        <button class="snapshot-delete-btn" onclick="event.stopPropagation(); deleteSnapshot('${s.id}')">🗑️</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function toggleSnapshotMenu(e) {
+            if (e) e.stopPropagation();
+            renderSnapshotMenu();
+            const menu = document.getElementById('snapshot-menu');
+            menu.classList.toggle('active');
+        }
+
+        function closeSnapshotMenu() {
+            const menu = document.getElementById('snapshot-menu');
+            if (menu) menu.classList.remove('active');
+        }
+        /* ================================================================= */
+
+
         const editors = {};
         const models = {
             p1: { html: null, css: null, js: null, py: null, cpp: null },
@@ -1286,43 +1386,46 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             return AI_PROVIDER_PRESETS[providerId] || AI_PROVIDER_PRESETS.custom;
         }
 
+        // Các phần code rỗng sẽ không được gửi cho AI để tiết kiệm token.
+        // "Rỗng" = không có ký tự nào ngoài khoảng trắng, xuống dòng, tab.
+        function isCodeEmpty(code) {
+            return !code || !code.replace(/\s/g, '').length;
+        }
+
         function buildAIPromptText(text) {
-            const htmlCode = getCode(activeEditPage, 'html');
-            const cssCode = getCode(activeEditPage, 'css');
-            const jsCode = getCode(activeEditPage, 'js');
-            const pyCode = getCode(activeEditPage, 'py');
-            const cppCode = getCode(activeEditPage, 'cpp');
+            const allSections = [
+                { key: 'html', label: 'HTML', lang: 'html', code: getCode(activeEditPage, 'html') },
+                { key: 'css', label: 'CSS', lang: 'css', code: getCode(activeEditPage, 'css') },
+                { key: 'js', label: 'JS', lang: 'javascript', code: getCode(activeEditPage, 'js') },
+                { key: 'py', label: 'PYTHON', lang: 'python', code: getCode(activeEditPage, 'py') },
+                { key: 'cpp', label: 'C++', lang: 'cpp', code: getCode(activeEditPage, 'cpp') }
+            ];
 
-            return `Bạn là trợ lý lập trình thông minh, có khả năng đọc và hiểu TOÀN BỘ dự án của người dùng gồm 5 phần: HTML, CSS, JS, Python và C++ (trang hiện tại: ${activeEditPage.toUpperCase()}). Tab người dùng đang mở là: ${currentTab.toUpperCase()}.
+            // Chỉ gửi những phần THỰC SỰ có nội dung. Các tab rỗng bị bỏ qua hoàn toàn
+            // (không mất tính năng gì, vì code rỗng không mang thông tin để AI hiểu dự án,
+            // nhưng vẫn tốn token nếu gửi kèm khối mã trống).
+            const nonEmptySections = allSections.filter(s => !isCodeEmpty(s.code));
+            const emptyLabels = allSections.filter(s => isCodeEmpty(s.code)).map(s => s.label);
 
---- HTML ---
-\`\`\`html
-${htmlCode}
-\`\`\`
+            let codeBlocks = nonEmptySections.map(s =>
+                `--- ${s.label} ---\n\`\`\`${s.lang}\n${s.code}\n\`\`\``
+            ).join('\n\n');
 
---- CSS ---
-\`\`\`css
-${cssCode}
-\`\`\`
+            if (!codeBlocks) {
+                codeBlocks = '(Dự án hiện chưa có code ở bất kỳ phần nào.)';
+            }
 
---- JS ---
-\`\`\`javascript
-${jsCode}
-\`\`\`
+            const emptyNote = emptyLabels.length
+                ? `\n\n(Các phần sau hiện đang trống nên không gửi kèm: ${emptyLabels.join(', ')}.)`
+                : '';
 
---- PYTHON ---
-\`\`\`python
-${pyCode}
-\`\`\`
+            return `Bạn là trợ lý lập trình thông minh, có khả năng đọc và hiểu dự án của người dùng gồm tối đa 5 phần: HTML, CSS, JS, Python và C++ (trang hiện tại: ${activeEditPage.toUpperCase()}). Tab người dùng đang mở là: ${currentTab.toUpperCase()}. Dưới đây là các phần code đang có nội dung:
 
---- C++ ---
-\`\`\`cpp
-${cppCode}
-\`\`\`
+${codeBlocks}${emptyNote}
 
 Yêu cầu người dùng: ${text}
 
-Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TOÀN BỘ 5 phần code ở trên (kể cả khi câu hỏi liên quan đến cách các phần tương tác với nhau). Nếu cung cấp code mới cho một phần cụ thể, hãy đặt trong khối mã markdown đúng loại ngôn ngữ đó, ví dụ \`\`\`html, \`\`\`css, \`\`\`javascript, \`\`\`python, hoặc \`\`\`cpp, để hệ thống tự nhận diện và chèn đúng vào tab tương ứng. Nếu không sửa code, không cần đưa khối mã.`;
+Hãy trả lời ngắn gọn, trực diện, dựa trên hiểu biết về TOÀN BỘ các phần code ở trên (kể cả khi câu hỏi liên quan đến cách các phần tương tác với nhau). Nếu cung cấp code mới cho một phần cụ thể, hãy đặt trong khối mã markdown đúng loại ngôn ngữ đó, ví dụ \`\`\`html, \`\`\`css, \`\`\`javascript, \`\`\`python, hoặc \`\`\`cpp, để hệ thống tự nhận diện và chèn đúng vào tab tương ứng. Nếu không sửa code, không cần đưa khối mã.`;
         }
 
         let codeBlockIdCounter = 0;
@@ -2221,6 +2324,8 @@ ${cpp}`;
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.dropdown-wrap')) {
                 closeDownloadMenu();
+                closeCopyCodeMenu();
+                closeSnapshotMenu();
             }
         });
 
@@ -2669,7 +2774,11 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
             clearTimeout(typingTimer); 
             typingTimer = setTimeout(() => { 
                 safeSetLocalStorage(`codespace_${page}_${type}`, getCode(page, type)); 
-                runCode(); 
+                // deferInteractive = true: khi đang tự động cập nhật preview lúc gõ code,
+                // KHÔNG tự chạy các đoạn Python/C++ có input()/cin... để tránh hộp thoại
+                // "yêu cầu nhập dữ liệu" bật lên liên tục mỗi lần bạn gõ phím.
+                // Nhấn nút "Chạy ▶" (runCode()) vẫn chạy đầy đủ như bình thường.
+                runCode(true); 
             }, 800); 
         }
 
@@ -3095,13 +3204,17 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
             } catch (err) { alert("❌ Lỗi khi đọc file ZIP: " + err.message); }
         }
 
-        function buildFullSource(targetPage = null) {
+        function buildFullSource(targetPage = null, deferInteractive = false) {
             const target = targetPage || activePreviewPage;
             const h = getCode(target, 'html'); 
             const c = getCode(target, 'css'); 
             const j = getCode(target, 'js'); 
             const py = getCode(target, 'py');
             const cpp = getCode(target, 'cpp');
+            const pyNeedsInput = /\binput\s*\(/.test(py);
+            const cppNeedsInput = /\b(cin|scanf|getline|gets)\b/.test(cpp);
+            const holdPython = deferInteractive && pyNeedsInput;
+            const holdCpp = deferInteractive && cppNeedsInput;
 
             let adsStyle = ` .fake-ad { background:#fff3cd; color:#856404; border:1px solid #ffeeba; padding:12px; margin:10px auto; border-radius:6px; text-align:center; font-family:sans-serif; position:relative; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; } .fake-ad-tag { position:absolute; top:2px; left:5px; font-size:9px; background:#ccc; color:#fff; padding:1px 3px; border-radius:2px; } .fake-ad-title { font-size:13px; display:block; margin-bottom:4px; font-weight:bold; } .fake-ad-close { position:absolute; top:4px; right:6px; background:none; border:none; font-weight:bold; cursor:pointer; } .video-ad-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); color:white; z-index:99999999; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:sans-serif; padding:20px; text-align:center; } .video-box { width:100%; max-width:320px; height:180px; background:#000; display:flex; justify-content:center; align-items:center; border:2px solid #00b0ff; margin-bottom:15px; border-radius:6px; color:#00b0ff; font-weight:bold; } .video-timer-text { font-size:14px; margin-bottom:15px; } .video-btn { padding:10px 20px; background:#00e676; border:none; color:#052e16; font-weight:bold; border-radius:4px; cursor:pointer; } .video-btn:disabled { background:#3a3a40!important; color:#8e8e93!important; cursor:not-allowed!important; opacity:0.6; } `;
             if (adsSize === 'leaderboard') adsStyle += ` .fake-ad { width: 728px; height: 90px; max-width: 95%; } `; else if (adsSize === 'square') adsStyle += ` .fake-ad { width: 336px; height: 280px; max-width: 95%; } `; else if (adsSize === 'skyscraper') adsStyle += ` .fake-ad { width: 160px; height: 600px; float: left; margin: 10px; max-height: 95%; } `; else adsStyle += ` .fake-ad { width: calc(100% - 20px); } `;
@@ -3111,7 +3224,8 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
             if (adsLocation === 'video-skippable' || adsLocation === 'video-non-skippable') { const time = (adsLocation === 'video-skippable') ? 5 : 15; adsHTML = `<div id="video-ad" class="video-ad-overlay"><div class="video-box"><span>📺 Video Quảng Cáo Giả Lập</span></div><div id="video-timer" class="video-timer-text">Đang tải...</div><button id="video-close-btn" class="video-btn" disabled onclick="window.parent.postMessage({type:'close-video-ad'},'*'); document.getElementById('video-ad').remove()">Vui lòng xem...</button></div>`; adsJS = `(function() { let count = ${time}; const timer = document.getElementById('video-timer'); const btn = document.getElementById('video-close-btn'); timer.textContent = "Quảng cáo kết thúc sau " + count + " giây..."; const interval = setInterval(() => { count--; if(count > 0) { timer.textContent = "Quảng cáo kết thúc sau " + count + " giây..."; } else { clearInterval(interval); timer.textContent = "Bạn đã xem xong!"; btn.disabled = false; btn.textContent = "⏩ BỎ QUA QUẢNG CÁO"; } }, 1000); })();`; }
             const consoleInterceptorScript = `<script>(function() { const origLog = console.log; const origErr = console.error; const origWarn = console.warn; console.log = function(...args) { window.parent.postMessage({ type: 'log', data: args.join(' ') }, '*'); origLog.apply(console, args); }; console.error = function(...args) { window.parent.postMessage({ type: 'error', data: args.join(' ') }, '*'); origErr.apply(console, args); }; console.warn = function(...args) { window.parent.postMessage({ type: 'warn', data: args.join(' ') }, '*'); origWarn.apply(console, args); }; window.onerror = function(m, s, l) { window.parent.postMessage({ type: 'error', data: m + " (Dòng " + l + ")" }, '*'); }; })();<\/script>`;
             
-            const pythonRunnerScript = py.trim() ? `<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"><\/script>
+            const pythonHoldNotice = `<div style="background:#18181b;color:#facc15;border:1px solid #27272a;padding:14px;margin:15px auto;border-radius:8px;font-family:'Courier New',Courier,monospace;font-size:13px;max-width:95%;width:90%;">⏸️ Code Python này có dùng <b>input()</b> nên không tự chạy khi bạn đang gõ. Nhấn nút <b>"Chạy ▶"</b> để chạy và nhập dữ liệu.</div>`;
+            const pythonRunnerScript = !py.trim() ? '' : (holdPython ? pythonHoldNotice : `<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"><\/script>
             <script>
             (async function() {
                 const rawPy = ${JSON.stringify(py)};
@@ -3152,10 +3266,17 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
                                 } 
                             });
 
+                            // Hàng đợi dữ liệu nhập: gom TẤT CẢ các dòng input() lại từ MỘT hộp thoại duy nhất,
+                            // thay vì bật prompt() riêng cho từng lần input() được gọi trong code.
+                            window._pyStdinQueue = [];
                             window._pyodideInstance.setStdin({
                                 stdin: () => {
-                                    const val = prompt("🐍 Python (${target.toUpperCase()}) yêu cầu nhập dữ liệu (input):");
-                                    return val !== null ? val : "";
+                                    if (window._pyStdinQueue.length === 0) {
+                                        const raw = prompt("🐍 Python (${target.toUpperCase()}) yêu cầu nhập dữ liệu (input):\\n\\nNếu code cần nhập NHIỀU giá trị, hãy nhập từng giá trị và xuống dòng (Shift+Enter/dán sẵn văn bản nhiều dòng) - mỗi dòng sẽ được đưa vào 1 lần gọi input() theo đúng thứ tự.");
+                                        const lines = (raw !== null ? raw : "").split("\\n");
+                                        window._pyStdinQueue.push(...lines);
+                                    }
+                                    return window._pyStdinQueue.shift() ?? "";
                                 }
                             });
 
@@ -3198,9 +3319,10 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
                     }
                 }
             })();
-            <\/script>` : '';
+            <\/script>`);
 
-            const cppRunnerScript = cpp.trim() ? `<script src="https://cdn.jsdelivr.net/npm/JSCPP@2.0.9/dist/JSCPP.es5.min.js"><\/script>
+            const cppHoldNotice = `<div style="background:#18181b;color:#facc15;border:1px solid #27272a;padding:14px;margin:15px auto;border-radius:8px;font-family:'Courier New',Courier,monospace;font-size:13px;max-width:95%;width:90%;">⏸️ Code C++ này có đọc dữ liệu nhập (cin/scanf...) nên không tự chạy khi bạn đang gõ. Nhấn nút <b>"Chạy ▶"</b> để chạy và nhập dữ liệu.</div>`;
+            const cppRunnerScript = !cpp.trim() ? '' : (holdCpp ? cppHoldNotice : `<script src="https://cdn.jsdelivr.net/npm/JSCPP@2.0.9/dist/JSCPP.es5.min.js"><\/script>
             <script>
             (function() {
                 const rawCpp = ${JSON.stringify(cpp)};
@@ -3346,17 +3468,17 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
                     }, 200);
                 }
             })();
-            <\/script>` : '';
+            <\/script>`);
 
             let finalBody = (adsLocation === 'top' || adsLocation === 'popup') ? adsHTML + h : (adsLocation === 'bottom' ? h + adsHTML : h);
             return `<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<style>\n${adsStyle}\n${c}\n</style>\n${consoleInterceptorScript}\n</head>\n<body>\n${finalBody}\n<script>\n${j}\n${adsJS}\n<\/script>\n${pythonRunnerScript}\n${cppRunnerScript}\n</body>\n</html>`;
         }
         
-        function runCode() {
+        function runCode(deferInteractive = false) {
             if (adsLocation === 'video-skippable' || adsLocation === 'video-non-skippable') { setMode('full-view'); }
             if (isAIResultEnabled) { runCodeWithAI(); return; }
             setAIResultBanner(''); // ẩn banner AI khi chạy theo cách thông thường
-            const source = buildFullSource();
+            const source = buildFullSource(null, deferInteractive);
             document.getElementById('viewer').srcdoc = source;
         }
         
@@ -3469,6 +3591,7 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
                 toggleWeb2Feature(isWeb2Enabled);
                 showEditor(currentTab);
                 runCode();
+                renderSnapshotMenu();
 
                 if (isAutoPasteEnabled) {
                     toggleAutoPaste(true);
@@ -3479,20 +3602,5 @@ Thư mục gồm: index.html, manifest.json, service-worker.js, icons/ (kèm kí
             });
         };
     </script>
-</body>
-</html>
-<script>
-console.log("⚡ [Trang 1] JavaScript đã sẵn sàng hoạt động!");
-
-</script>
-
-</body>
-</html>
-<script>
-console.log("⚡ [Trang 1] JavaScript đã sẵn sàng hoạt động!");
-
-</script>
-
-
 </body>
 </html>
