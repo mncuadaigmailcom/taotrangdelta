@@ -3,6 +3,12 @@
 <head>
 <style>
  .fake-ad { background:#fff3cd; color:#856404; border:1px solid #ffeeba; padding:12px; margin:10px auto; border-radius:6px; text-align:center; font-family:sans-serif; position:relative; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; } .fake-ad-tag { position:absolute; top:2px; left:5px; font-size:9px; background:#ccc; color:#fff; padding:1px 3px; border-radius:2px; } .fake-ad-title { font-size:13px; display:block; margin-bottom:4px; font-weight:bold; } .fake-ad-close { position:absolute; top:4px; right:6px; background:none; border:none; font-weight:bold; cursor:pointer; } .video-ad-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); color:white; z-index:99999999; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:sans-serif; padding:20px; text-align:center; } .video-box { width:100%; max-width:320px; height:180px; background:#000; display:flex; flex-direction:column; gap:12px; justify-content:center; align-items:center; border:2px solid #00b0ff; margin-bottom:15px; border-radius:6px; color:#00b0ff; font-weight:bold; } .video-progress { width:82%; height:7px; background:#1b1b20; border-radius:4px; overflow:hidden; border:1px solid #2a2a32; } .video-progress-bar { width:0%; height:100%; background:linear-gradient(90deg,#00b0ff,#00e676); transition:width 1s linear; } .video-ad-badge { font-size:11px; color:#8e8e93; letter-spacing:0.5px; } .video-timer-text { font-size:14px; margin-bottom:15px; } .video-btn { padding:10px 20px; background:#00e676; border:none; color:#052e16; font-weight:bold; border-radius:4px; cursor:pointer; } .video-btn:disabled { background:#3a3a40!important; color:#8e8e93!important; cursor:not-allowed!important; opacity:0.6; }  .fake-ad { width: calc(100% - 20px); } 
+/* CSS và Fonts của trang web đã được tối ưu và tích hợp chuẩn xác trong tab HTML */
+</style>
+<script>(function() { const origLog = console.log; const origErr = console.error; const origWarn = console.warn; console.log = function(...args) { window.parent.postMessage({ type: 'log', data: args.join(' ') }, '*'); origLog.apply(console, args); }; console.error = function(...args) { window.parent.postMessage({ type: 'error', data: args.join(' ') }, '*'); origErr.apply(console, args); }; console.warn = function(...args) { window.parent.postMessage({ type: 'warn', data: args.join(' ') }, '*'); origWarn.apply(console, args); }; window.onerror = function(m, s, l) { window.parent.postMessage({ type: 'error', data: m + " (Dòng " + l + ")" }, '*'); }; })();</script>
+
+<style>
+ .fake-ad { background:#fff3cd; color:#856404; border:1px solid #ffeeba; padding:12px; margin:10px auto; border-radius:6px; text-align:center; font-family:sans-serif; position:relative; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; } .fake-ad-tag { position:absolute; top:2px; left:5px; font-size:9px; background:#ccc; color:#fff; padding:1px 3px; border-radius:2px; } .fake-ad-title { font-size:13px; display:block; margin-bottom:4px; font-weight:bold; } .fake-ad-close { position:absolute; top:4px; right:6px; background:none; border:none; font-weight:bold; cursor:pointer; } .video-ad-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); color:white; z-index:99999999; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:sans-serif; padding:20px; text-align:center; } .video-box { width:100%; max-width:320px; height:180px; background:#000; display:flex; flex-direction:column; gap:12px; justify-content:center; align-items:center; border:2px solid #00b0ff; margin-bottom:15px; border-radius:6px; color:#00b0ff; font-weight:bold; } .video-progress { width:82%; height:7px; background:#1b1b20; border-radius:4px; overflow:hidden; border:1px solid #2a2a32; } .video-progress-bar { width:0%; height:100%; background:linear-gradient(90deg,#00b0ff,#00e676); transition:width 1s linear; } .video-ad-badge { font-size:11px; color:#8e8e93; letter-spacing:0.5px; } .video-timer-text { font-size:14px; margin-bottom:15px; } .video-btn { padding:10px 20px; background:#00e676; border:none; color:#052e16; font-weight:bold; border-radius:4px; cursor:pointer; } .video-btn:disabled { background:#3a3a40!important; color:#8e8e93!important; cursor:not-allowed!important; opacity:0.6; }  .fake-ad { width: calc(100% - 20px); } 
 
 </style>
 <script>(function() { const origLog = console.log; const origErr = console.error; const origWarn = console.warn; console.log = function(...args) { window.parent.postMessage({ type: 'log', data: args.join(' ') }, '*'); origLog.apply(console, args); }; console.error = function(...args) { window.parent.postMessage({ type: 'error', data: args.join(' ') }, '*'); origErr.apply(console, args); }; console.warn = function(...args) { window.parent.postMessage({ type: 'warn', data: args.join(' ') }, '*'); origWarn.apply(console, args); }; window.onerror = function(m, s, l) { window.parent.postMessage({ type: 'error', data: m + " (Dòng " + l + ")" }, '*'); }; })();</script>
@@ -14,7 +20,7 @@
     <!-- Thư viện CDN (defer: không chặn dựng trang; thư viện nặng được tải theo nhu cầu) -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
-    <!-- html2canvas + tesseract.js được tải lazy khi dùng tới (chụp ảnh / OCR). pyodide chỉ dùng trong trang kết quả do iframe tự nạp. -->
+    <!-- html2canvas + tesseract.js được tải lazy khi dùng tới (chụp ảnh / OCR). -->
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -130,6 +136,122 @@
         .combo-count-line { font-size: 0.72rem; color: #9aa4ad; margin: 10px 0; }
         .combo-count-line b { color: #e040fb; }
         .combo-hint { margin-top: 11px; font-size: 0.7rem; color: #7f8a94; line-height: 1.55; }
+
+        /* ====== TÍNH NĂNG MỚI: TẠO TÍNH NĂNG TỰ TẠO (FILE / CODE) ====== */
+        .btn-cfsaved { background: linear-gradient(135deg, #00695c, #26a69a) !important; color: #fff !important; border: none !important; font-weight: bold; box-shadow: 0 0 10px rgba(38,166,154,0.45); }
+        .btn-cfsaved.active { background: linear-gradient(135deg, #00bfa5, #69f0ae) !important; color: #04221c !important; box-shadow: 0 0 14px rgba(105,240,174,0.7); animation: aiPulseDot 1.8s infinite; }
+        #cf-fab { display: none !important; }
+        #cf-saved-bar { display: none; align-items: center; gap: 4px; flex-wrap: wrap; }
+        #cf-saved-bar.show { display: inline-flex; }
+        .btn-cfsaved-item {
+            padding: 6px 12px !important;
+            border-radius: 4px !important;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border: 1px solid #424242 !important;
+            background: #29292e !important;
+            color: #e1e1e6 !important;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .btn-cfsaved-item:hover { filter: brightness(1.08); border-color: #6e6e73 !important; }
+        .btn-cfsaved-item.btn-active { background: #00b0ff !important; color: #fff !important; border-color: #00b0ff !important; }
+        .cf-modal-content { width: 620px; max-width: 95%; max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; border: 1px solid #00d2ff; box-shadow: 0 0 26px rgba(0,210,255,0.3); }
+        #cf-saved-modal.modal-overlay.active {
+            display: block !important;
+            overflow-y: scroll !important;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+            padding: 16px 10px 40px;
+        }
+        #cf-saved-modal .cf-modal-content {
+            max-height: none !important;
+            overflow: visible !important;
+            margin: 0 auto;
+            animation: none !important;
+            transform: none !important;
+            will-change: auto !important;
+        }
+        #cf-saved-menu-list { max-height: none; overflow: visible; padding-right: 2px; }
+        .cf-color-row { display: flex; align-items: center; gap: 8px; }
+        .cf-color-row input[type="color"] { width: 42px; height: 34px; padding: 2px; border: 1px solid #424242; border-radius: 6px; background: #29292e; cursor: pointer; }
+        .cf-mode-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+        .cf-chip {
+            flex: 1 1 140px; padding: 8px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 700;
+            border: 1px solid #3a3a44; background: #23232b; color: #dcdce3; cursor: pointer; text-align: center;
+        }
+        .cf-chip.active { border-color: #00d2ff; background: rgba(0,210,255,0.14); color: #b8f0ff; box-shadow: 0 0 0 1px rgba(0,210,255,0.35) inset; }
+        .cf-file-drop {
+            border: 1px dashed #55555f; border-radius: 8px; padding: 12px; text-align: center;
+            background: #17171b; font-size: 0.76rem; color: #9aa4ad; cursor: pointer;
+        }
+        .cf-file-drop.has-file { border-color: #00d2ff; color: #b8f0ff; }
+        .cf-code-area {
+            width: 100%; min-height: 150px; background: #121214; color: #4ade80;
+            border: 1px solid #424242; border-radius: 6px; padding: 10px;
+            font-family: 'Courier New', monospace; font-size: 0.75rem; resize: vertical; outline: none;
+        }
+        .cf-code-area:focus { border-color: #00d2ff; }
+        .cf-card { border: 1px solid #33333b; background: #1c1c22; border-radius: 10px; padding: 11px 12px; margin-bottom: 10px; }
+        .cf-card-head { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+        .cf-card-icon { flex: 0 0 32px; width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #fff; }
+        .cf-preview-swatch { width: 14px; height: 14px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.25); display: inline-block; vertical-align: middle; margin-right: 4px; }
+
+        /* Menu góc: cùng kích thước khung AI Trợ Lý (340px, full chiều cao) */
+        #cf-corner-panel.cf-ai-sidebar {
+            flex: 0 0 340px;
+            width: 340px;
+            min-width: 340px;
+            z-index: 26;
+        }
+        #cf-corner-panel.cf-ai-sidebar.collapsed {
+            flex: 0 0 0 !important;
+            width: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden;
+            border-right: none;
+            box-shadow: none;
+        }
+        #cf-corner-panel .cf-run-header {
+            padding: 12px 14px;
+            border-bottom: 1px solid #26262c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex: 0 0 auto;
+            background: linear-gradient(135deg, rgba(0,176,255,0.12), rgba(0,114,255,0.05) 60%, transparent);
+        }
+        #cf-corner-frame-wrap {
+            position: relative;
+            flex: 1 1 auto;
+            min-height: 0;
+            background: #fff;
+            overflow-y: scroll !important;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+            overscroll-behavior: contain;
+        }
+        #cf-corner-frame { position: static !important; width: 100%; min-height: 100%; height: auto; border: none; background: #fff; display: block; }
+
+        /* Menu giữa: cùng kích thước CODE WEB PRO MAX (580px) */
+        .cf-center-run-content { width: 580px; max-width: 95%; height: min(86vh, 720px); max-height: 90vh; padding: 0; overflow: hidden; display: flex; flex-direction: column; border: 1px solid #00d2ff; box-shadow: 0 0 25px rgba(0,210,255,0.3); animation: none !important; transform: none !important; }
+        .cf-center-run-content .cf-run-header { padding: 12px 16px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex: 0 0 auto; }
+        #cf-center-frame-wrap { position: relative; flex: 1 1 auto; min-height: 0; background: #fff; overflow-y: scroll !important; -webkit-overflow-scrolling: touch; touch-action: pan-y; overscroll-behavior: contain; }
+        #cf-center-frame { position: static !important; width: 100%; min-height: 100%; height: auto; border: none; background: #fff; display: block; }
+        #cf-center-modal { z-index: 280; }
+        .cf-card { cursor: pointer; }
+        .cf-card:hover { border-color: #00d2ff; }
+        .cf-server-log { background:#111; border:1px solid #334155; border-radius:6px; padding:10px; font-family:monospace; font-size:0.72rem; color:#4ade80; height:110px; overflow-y:auto; margin-top:8px; white-space:pre-wrap; }
+        .cf-payload-preview { width:100%; min-height:110px; background:#0b1120; color:#7dd3fc; border:1px solid #334155; border-radius:6px; padding:8px; font-family:'Courier New',monospace; font-size:0.7rem; resize:vertical; outline:none; }
+        .cf-payload-preview:focus { border-color:#00d2ff; }
+        .cf-run-title { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 0.95rem; font-weight: 800; }
+        .cf-run-title span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        @media (max-width: 768px) {
+            #cf-corner-panel { width: 100% !important; }
+            #cf-saved-bar { width: 100%; }
+        }
 
         /* ====== HỘP THOẠI XÁC NHẬN RIÊNG (không phụ thuộc confirm/prompt của trình duyệt) ====== */
         .app-dialog-overlay { z-index: 400 !important; }
@@ -514,8 +636,6 @@
         .code-lang-badge.lang-html { background: #e34c26; color: #fff; }
         .code-lang-badge.lang-css  { background: #2965f1; color: #fff; }
         .code-lang-badge.lang-js   { background: #f0db4f; color: #222; }
-        .code-lang-badge.lang-py   { background: #3572A5; color: #fff; }
-        .code-lang-badge.lang-cpp  { background: #004482; color: #fff; }
         .code-block-wrap pre {
             border-radius: 0 !important;
         }
@@ -823,6 +943,7 @@
             .autosave-status { width: 100%; text-align: right; margin-top: 2px; }
             .iframe-container.preview-mobile iframe { width: 100%; border: none; }
             .ai-sidebar { width: 100% !important; position: absolute; left: 0; top: 0; bottom: 0; }
+            #cf-corner-panel.cf-ai-sidebar { width: 100% !important; min-width: 0; position: absolute; left: 0; top: 0; bottom: 0; }
             .ai-web-resizer { display: none !important; }
             .save-slot-actions button { flex: 1 1 auto; }
         }
@@ -890,11 +1011,10 @@
             box-shadow: 0 8px 18px rgba(0,0,0,0.4), 0 0 16px rgba(0,176,255,0.25);
         }
 
-        #tab-html, #tab-css, #tab-js, #tab-py, #tab-cpp {
+        #tab-html, #tab-css, #tab-js {
             transform-style: preserve-3d;
         }
-        #tab-html.btn-active, #tab-css.btn-active, #tab-js.btn-active,
-        #tab-py.btn-active, #tab-cpp.btn-active {
+        #tab-html.btn-active, #tab-css.btn-active, #tab-js.btn-active {
             transform: translateY(-1px) translateZ(0);
             box-shadow: 0 4px 10px rgba(0,176,255,0.35), inset 0 0 0 1px rgba(255,255,255,0.08);
         }
@@ -1005,8 +1125,6 @@
         <button id="tab-html" class="btn-active" onclick="showEditor('html')">HTML</button>
         <button id="tab-css" onclick="showEditor('css')">CSS</button>
         <button id="tab-js" onclick="showEditor('js')">JS</button>
-        <button id="tab-py" onclick="showEditor('py')" style="background: #3776ab; color: #ffd343;">🐍 Python</button>
-        <button id="tab-cpp" onclick="showEditor('cpp')" style="background: #004482; color: #00b0ff;">⚙️ C++</button>
         <span class="divider">|</span>
 
         <button id="btn-search-toggle" class="btn-toggle-ui" onclick="toggleSearchBar()" style="background:#5e35b1; font-weight:bold;">🔍 Tìm & Đổi</button>
@@ -1031,6 +1149,8 @@
 
         <!-- TÍNH NĂNG MỚI: TỔNG HỢP NHIỀU TÍNH NĂNG THÀNH 1 -->
         <button id="btn-toggle-combo" class="btn-combo" onclick="toggleComboMenuFeature()" title="Gộp nhiều tính năng thành một nhóm. Khi BẬT sẽ hiện menu các tính năng bạn đã thêm vào nhóm.">🧩 Tổng Hợp: TẮT</button>
+        <button id="btn-toggle-cfsaved" class="btn-cfsaved" onclick="toggleSavedCustomFeatures()" title="Bật: mở menu tên các tính năng đã lưu — có thể mở hoặc xóa. Tắt không xóa dữ liệu.">📦 Tính Năng Đã Tạo: TẮT</button>
+        <span id="cf-saved-bar" class="page-switch-group" aria-label="Tính năng đã lưu"></span>
 
         <button id="btn-reset-workspace" class="btn-reset" onclick="resetWorkspace()">🔄 Reset</button>
 
@@ -1039,7 +1159,7 @@
             <div id="download-menu" class="dropdown-menu">
                 <button id="btn-dl-p1" onclick="downloadFullHTML('p1')">📄 File gộp (Trang Web 1)</button>
                 <button id="btn-dl-p2" onclick="downloadFullHTML('p2')">📄 File gộp (Trang Web 2)</button>
-                <button id="btn-dl-separate" onclick="downloadSeparateFiles()">📑 Các file riêng (.html, .css, .js, .py, .cpp)</button>
+                <button id="btn-dl-separate" onclick="downloadSeparateFiles()">📑 Các file riêng (.html, .css, .js)</button>
                 <button id="btn-dl-zip" onclick="downloadZip()">🗜️ Gói ZIP (cả project)</button>
             </div>
         </div>
@@ -1047,8 +1167,8 @@
         <div class="dropdown-wrap copy-code-wrap">
             <button class="btn-save" onclick="toggleCopyCodeMenu(event)">📋 Sao Chép Code <span class="dropdown-caret">▼</span></button>
             <div id="copy-code-menu" class="dropdown-menu">
-                <button id="btn-copy-text" onclick="copyAllCodeAsText()">📄 Sao chép bằng chữ (HTML+CSS+JS+Python+C++)</button>
-                <button id="btn-copy-file" onclick="copyAllCodeAsFile()">💾 Sao chép bằng file (.html, .css, .js, .py, .cpp)</button>
+                <button id="btn-copy-text" onclick="copyAllCodeAsText()">📄 Sao chép bằng chữ (HTML+CSS+JS)</button>
+                <button id="btn-copy-file" onclick="copyAllCodeAsFile()">💾 Sao chép bằng file (.html, .css, .js)</button>
             </div>
         </div>
 
@@ -1061,12 +1181,12 @@
 
         <button id="btn-import-file" class="btn-import" onclick="triggerFileInput()">📂 NHẬP FILE</button>
         <button id="btn-import-folder" class="btn-import" onclick="triggerFolderInput()">📁 NHẬP THƯ MỤC</button>
-        <input type="file" id="file-input" accept=".html,.htm,.vue,.mht,.mhtml,.txt,.css,.scss,.sass,.less,.js,.jsx,.ts,.tsx,.mjs,.cjs,.py,.pyw,.ipynb,.json,.xml,.svg,.md,.yaml,.yml,.csv,.tsv,.log,.ini,.env,.zip,.png,.jpg,.jpeg,.gif,.webp,.bmp,.ico,.woff,.woff2,.ttf,.otf" multiple style="display:none;" onchange="importFile(this)">
+        <input type="file" id="file-input" accept=".html,.htm,.vue,.mht,.mhtml,.txt,.css,.scss,.sass,.less,.js,.jsx,.ts,.tsx,.mjs,.cjs,.json,.xml,.svg,.md,.yaml,.yml,.csv,.tsv,.log,.ini,.env,.zip,.png,.jpg,.jpeg,.gif,.webp,.bmp,.ico,.woff,.woff2,.ttf,.otf" multiple style="display:none;" onchange="importFile(this)">
         <input type="file" id="folder-input" webkitdirectory directory multiple style="display:none;" onchange="importFile(this)">
         <button id="btn-open-settings" onclick="toggleSettingsModal(true)">⚙️ Cài Đặt</button>
 
         <button id="btn-run-code" class="btn-run" onclick="runCode()">Chạy ▶</button>
-        <button id="btn-toggle-ai-result" class="btn-ai-result" onclick="toggleAIResultFeature()" title="Khi bật: nút Chạy sẽ gửi code cho AI chuyển đổi Python/C++ thành HTML/JS thật.">🤖 Kết Quả AI: TẮT</button>
+        <button id="btn-toggle-ai-result" class="btn-ai-result" onclick="toggleAIResultFeature()" title="Khi bật: nút Chạy sẽ gửi code cho AI tối ưu và render HTML/JS thật.">🤖 Kết Quả AI: TẮT</button>
         <button id="btn-hide-toolbar" class="btn-toggle-ui" onclick="toggleToolbar(false)" style="background: #b71c1c;">🚫 Ẩn</button>
         <div id="save-indicator" class="autosave-status">Đã lưu tự động</div>
     </div>
@@ -1110,7 +1230,7 @@
                 <button type="button" class="ai-mode-toggle" data-mode="deep" onclick="toggleAIAssistantMode('deep')" aria-pressed="false" title="Phân tích kỹ, kiểm tra lỗi">🧠 Suy nghĩ sâu</button>
                 <button type="button" class="ai-mode-toggle" data-mode="code" onclick="toggleAIAssistantMode('code')" aria-pressed="false" title="Ưu tiên viết code hoàn chỉnh">💻 Code</button>
             </div>
-            <div id="ai-autoinsert-bar" class="ai-autoinsert-bar" title="Khi BẬT: code AI trả về trong chat sẽ TỰ ĐỘNG xóa code cũ và nhập thẳng vào đúng tab tương ứng (HTML/CSS/JS/Python/C++)">
+            <div id="ai-autoinsert-bar" class="ai-autoinsert-bar" title="Khi BẬT: code AI trả về trong chat sẽ TỰ ĐỘNG xóa code cũ và nhập thẳng vào đúng tab tương ứng (HTML/CSS/JS)">
                 <span class="ai-mode-label">📥 NHẬP CODE AI:</span>
                 <button type="button" id="btn-ai-autoinsert" class="btn-ai-autoinsert" onclick="toggleAIAutoInsert()" aria-pressed="false">Tự Động Nhập: TẮT</button>
             </div>
@@ -1122,7 +1242,7 @@
                 <input type="file" id="ai-file-input" accept="image/*,video/*" multiple style="display:none" onchange="handleAIFileSelect(event)">
                 <button class="btn-ai-attach" onclick="triggerAIFileInput()" title="Đính kèm hình ảnh / video">📎</button>
                 <button id="btn-ai-capture-open" class="btn-ai-attach btn-ai-capture" onclick="startAIResultCapture()" title="Chụp một vùng vuông trong phần Kết quả và đưa vào AI">📷</button>
-                <input type="text" id="ai-user-input" class="ai-input" placeholder="Hỏi AI..." onkeypress="if(event.key==='Enter') sendAIMessage()">
+                <input type="text" id="ai-user-input" class="ai-input" placeholder="Hỏi AI..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendAIMessage();}">
                 <button class="btn-ai-send" onclick="sendAIMessage()" title="Gửi"></button>
             </div>
             <!-- TÍNH NĂNG MỚI: TRANG WEB AI (nhúng web AI ngay trong khung AI) -->
@@ -1149,7 +1269,7 @@
                             <option value="https://duckduckgo.com/">🦆 DuckDuckGo AI</option>
                         </optgroup>
                     </select>
-                    <input type="text" id="ai-web-url" class="ai-web-url" value="https://arena.ai/" spellcheck="false" onkeypress="if(event.key==='Enter') aiWebLoadUrl()" title="Nhập link bất kỳ trang web AI nào rồi nhấn Enter">
+                    <input type="text" id="ai-web-url" class="ai-web-url" value="https://arena.ai/" spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();aiWebLoadUrl();}" title="Nhập link bất kỳ trang web AI nào rồi nhấn Enter">
                     <button type="button" class="ai-web-topbtn ai-web-wbtn" onclick="nudgeAIWebWidth(-70)" title="Thu nhỏ khung Trang Web AI (bớt 70px)">−</button>
                     <button type="button" class="ai-web-topbtn ai-web-wbtn" onclick="nudgeAIWebWidth(70)" title="Phóng to khung Trang Web AI (thêm 70px)">+</button>
                     <button type="button" class="ai-web-topbtn" onclick="aiWebReload()" title="Tải lại trang">🔄</button>
@@ -1175,12 +1295,19 @@
             <div id="ai-web-resizer" class="ai-web-resizer" title="Kéo ngang để chỉnh độ rộng khung Trang Web AI • Nhấp đúp để đặt lại mặc định"></div>
         </div>
 
+        <!-- Menu góc: cùng kích thước AI Trợ Lý 340px -->
+        <div id="cf-corner-panel" class="ai-sidebar cf-ai-sidebar collapsed" aria-label="Menu góc tính năng">
+            <div class="cf-run-header" id="cf-corner-header">
+                <div class="cf-run-title"><span id="cf-corner-icon">✨</span><span id="cf-corner-title">Tính năng</span></div>
+                <button type="button" class="ai-header-btn ai-close" onclick="closeCustomCornerPanel()" title="Đóng">✖</button>
+            </div>
+            <div id="cf-corner-frame-wrap"><iframe id="cf-corner-frame" title="Tính năng góc"></iframe></div>
+        </div>
+
         <div id="editors-panel" class="editors">
             <div id="container-html" class="editor-container active"></div>
             <div id="container-css" class="editor-container"></div>
             <div id="container-js" class="editor-container"></div>
-            <div id="container-py" class="editor-container"></div>
-            <div id="container-cpp" class="editor-container"></div>
         </div>
         <div id="drag-resizer" class="resizer"></div>
         <div id="result-viewer" class="box-viewer">
@@ -1211,7 +1338,7 @@
             <div id="ai-web-menu-presets" class="ai-web-menu-presets"></div>
 
             <div class="ai-web-menu-label">🔗 Hoặc dán link trang web bất kỳ:</div>
-            <input type="text" id="ai-web-menu-url" class="ai-web-menu-url" placeholder="https://..." spellcheck="false" onkeypress="if(event.key==='Enter') openAIWebInFrame()" title="Nhập link rồi nhấn Enter hoặc bấm nút bên dưới">
+            <input type="text" id="ai-web-menu-url" class="ai-web-menu-url" placeholder="https://..." spellcheck="false" onkeydown="if(event.key==='Enter'){event.preventDefault();openAIWebInFrame();}" title="Nhập link rồi nhấn Enter hoặc bấm nút bên dưới">
 
             <div class="ai-web-menu-actions">
                 <button type="button" class="ai-web-menu-btn primary" onclick="openAIWebInFrame()" title="Nhúng trang web ngay trong khung AI Trợ Lý (có thể kéo rộng/nhỏ khung)">🌐 Mở trong khung (Nhúng)</button>
@@ -1233,7 +1360,7 @@
             </div>
 
             <div class="save-slot-counter">
-                <span>Đang dùng <b id="save-slot-used">0</b>/5 ô lưu — mỗi bản lưu gồm đủ HTML, CSS, JS, Python, C++ của cả Trang 1 &amp; Trang 2.</span>
+                <span>Đang dùng <b id="save-slot-used">0</b>/5 ô lưu — mỗi bản lưu gồm đủ HTML, CSS, JS của cả Trang 1 &amp; Trang 2.</span>
             </div>
 
             <div id="save-slot-list" class="save-slot-list"></div>
@@ -1241,7 +1368,7 @@
             <div class="save-add-box">
                 <div class="setting-item" style="margin-bottom:8px;">
                     <label for="save-slot-name-input">Tên bản lưu mới:</label>
-                    <input type="text" id="save-slot-name-input" placeholder="VD: Bản chạy ổn định, Giao diện shop bán hàng..." onkeypress="if(event.key==='Enter') saveNewProject()">
+                    <input type="text" id="save-slot-name-input" placeholder="VD: Bản chạy ổn định, Giao diện shop bán hàng..." onkeydown="if(event.key==='Enter'){event.preventDefault();saveNewProject();}">
                 </div>
                 <button id="btn-do-save-project" class="btn-run" style="width:100%; padding:11px; font-size:0.88rem; margin-left:0; background:linear-gradient(135deg,#00838f,#26c6da) !important; color:#fff !important;" onclick="saveNewProject()">➕ LƯU BẢN MỚI (Code Hiện Tại)</button>
             </div>
@@ -1268,7 +1395,7 @@
         <div class="modal-content app-dialog-content" onclick="event.stopPropagation()">
             <div id="app-prompt-title" class="app-dialog-title">✏️ Nhập nội dung</div>
             <div id="app-prompt-message" class="app-dialog-msg"></div>
-            <input type="text" id="app-prompt-input" class="app-dialog-input" onkeypress="if(event.key==='Enter') resolveAppPrompt(true)">
+            <input type="text" id="app-prompt-input" class="app-dialog-input" onkeydown="if(event.key==='Enter'){event.preventDefault();resolveAppPrompt(true);}">
             <div class="app-dialog-actions">
                 <button type="button" class="app-dialog-cancel" onclick="resolveAppPrompt(false)">✖ Hủy</button>
                 <button type="button" class="app-dialog-ok" onclick="resolveAppPrompt(true)">💾 Lưu lại</button>
@@ -1359,6 +1486,137 @@
         </div>
     </div>
 
+    <!-- ==================== TÍNH NĂNG MỚI: TẠO TÍNH NĂNG (FILE / CODE) ==================== -->
+
+    <div id="cf-saved-modal" class="modal-overlay" onclick="closeSavedCustomFeaturesMenu()">
+        <div class="modal-content cf-modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header" style="border-bottom:1px solid #334155;">
+                <h3 style="color:#69f0ae; display:flex; align-items:center; gap:8px; font-size:1.05rem;">📦 Tính Năng Đã Tạo</h3>
+                <button class="modal-close" onclick="closeSavedCustomFeaturesMenu()">✖</button>
+            </div>
+            <p class="combo-hint" style="margin-top:0;margin-bottom:12px;">💡 Đặt <b>tên</b>, chọn <b>màu nút</b>, rồi <b>nhập file</b> hoặc <b>nhập code</b>. Trong danh sách có thể <b>đổi màu</b>, <b>ẩn</b> (nút trên thanh công cụ biến mất) hoặc <b>xóa</b>. Ẩn không làm mất tính năng.</p>
+
+            <div style="border:1px solid #2e7d6f; background:#14201e; border-radius:10px; padding:12px; margin-bottom:14px;">
+                <div style="font-size:0.82rem; font-weight:800; color:#69f0ae; margin-bottom:10px;">➕ Tạo tính năng mới</div>
+                <div class="setting-item" style="margin-bottom:10px;">
+                    <label for="cf-saved-name">Đặt tên tính năng:</label>
+                    <input type="text" id="cf-saved-name" placeholder="VD: Bộ đếm, Ghi chú nhanh, Công cụ màu...">
+                </div>
+                <div class="setting-item" style="margin-bottom:10px;">
+                    <label for="cf-saved-color-text">Màu nút tính năng:</label>
+                    <div class="cf-color-row">
+                        <input type="color" id="cf-saved-color" value="#26a69a" oninput="syncSavedMenuColorFromPicker()">
+                        <input type="text" id="cf-saved-color-text" value="#26a69a" placeholder="#26a69a" style="flex:1;" oninput="syncSavedMenuColorFromText()">
+                        <span id="cf-saved-color-preview" class="cf-preview-swatch" style="width:28px;height:28px;border-radius:7px;background:#26a69a;"></span>
+                    </div>
+                </div>
+                <div class="setting-item" style="margin-bottom:10px;">
+                    <label>Nhập file hoạt động (HTML / JS / CSS / TXT):</label>
+                    <input type="file" id="cf-saved-file" accept=".html,.htm,.js,.css,.txt,.json,.svg" style="display:none;" onchange="onSavedMenuFileChosen(this)">
+                    <div id="cf-saved-file-drop" class="cf-file-drop" onclick="document.getElementById('cf-saved-file').click()">📂 Bấm để chọn file — file này sẽ chạy khi mở tính năng</div>
+                </div>
+                <div class="setting-item" style="margin-bottom:10px;">
+                    <label for="cf-saved-code">Hoặc nhập code HTML tại đây:</label>
+                    <textarea id="cf-saved-code" class="cf-code-area" placeholder="<!DOCTYPE html>&#10;<html>&#10;<body>&#10;  <h1>Xin chào</h1>&#10;
+<script>
+// JS của trang web đã được định dạng và tích hợp chuẩn xác trong tab HTML
+
+</script>
+
+
+</body>&#10;</html>"></textarea>
+                </div>
+                <div class="setting-item" style="margin-bottom:10px;">
+                    <label for="cf-saved-api-url">URL API riêng của tính năng (không bắt buộc):</label>
+                    <input type="text" id="cf-saved-api-url" placeholder="Trống = dùng URL server chung ở dưới">
+                </div>
+                <div class="setting-item" style="margin-bottom:10px;">
+                    <label>Cách hiện khi mở:</label>
+                    <div class="cf-mode-chips">
+                        <button type="button" id="cf-saved-display-corner" class="cf-chip active" onclick="setSavedMenuDisplay('corner')">📐 Menu góc (AI)</button>
+                        <button type="button" id="cf-saved-display-center" class="cf-chip" onclick="setSavedMenuDisplay('center')">🪟 Menu giữa (PRO)</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-run" style="width:100%; margin-left:0; padding:11px; font-size:0.88rem; background:linear-gradient(135deg,#00695c,#26a69a) !important; color:#fff !important;" onclick="saveCustomFeatureFromSavedMenu()">💾 LƯU TÍNH NĂNG VÀO MENU</button>
+            </div>
+
+            <div style="font-size:0.82rem; font-weight:800; color:#69f0ae; margin-bottom:8px;">📋 Các tính năng đã lưu</div>
+            <div id="cf-saved-menu-list"></div>
+
+            <div style="border:1px solid #00d2ff; background:#101820; border-radius:10px; padding:12px; margin:14px 0 10px;">
+                <div style="font-size:0.82rem; font-weight:800; color:#7dd3fc; margin-bottom:8px;">🌐 Gửi / nhận server (JSON chuẩn)</div>
+                <div style="font-size:0.72rem; color:#94a3b8; line-height:1.5; margin-bottom:10px;">
+                    Server nhận <code style="color:#7dd3fc;">{ "version":1, "type":"codespace-custom-feature", "sentAt", "features":[...], "feature", "extra" }</code>
+                    — Header <b>Content-Type: application/json</b>. HTML tính năng gọi <code style="color:#fbbf24;">CodeSpace.sendToServer()</code>.
+                </div>
+                <div class="setting-item" style="margin-bottom:8px;">
+                    <label for="cf-saved-server-url">URL API server (https://...):</label>
+                    <input type="text" id="cf-saved-server-url" placeholder="https://api.example.com/features" oninput="scheduleSaveCfServerConfig()">
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <div class="setting-item" style="margin-bottom:8px; flex:1; min-width:120px;">
+                        <label for="cf-saved-server-method">Method:</label>
+                        <select id="cf-saved-server-method" onchange="scheduleSaveCfServerConfig()">
+                            <option value="POST">POST (khuyên dùng)</option>
+                            <option value="PUT">PUT</option>
+                            <option value="PATCH">PATCH</option>
+                            <option value="GET">GET (nhận)</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                    </div>
+                    <div class="setting-item" style="margin-bottom:8px; flex:1; min-width:150px;">
+                        <label for="cf-saved-server-ctype">Content-Type:</label>
+                        <input type="text" id="cf-saved-server-ctype" value="application/json" oninput="scheduleSaveCfServerConfig()">
+                    </div>
+                </div>
+                <div class="setting-item" style="margin-bottom:8px;">
+                    <label for="cf-saved-server-auth">Authorization (không bắt buộc):</label>
+                    <input type="password" id="cf-saved-server-auth" placeholder="Bearer token..." autocomplete="off" oninput="scheduleSaveCfServerConfig()">
+                </div>
+                <div class="setting-item" style="margin-bottom:8px;">
+                    <label for="cf-saved-server-headers">Header thêm (JSON hoặc Key: Value):</label>
+                    <textarea id="cf-saved-server-headers" class="cf-payload-preview" style="min-height:48px;" placeholder='{"X-Api-Key":"abc"}' oninput="scheduleSaveCfServerConfig()"></textarea>
+                </div>
+                <div class="setting-item" style="flex-direction:row; align-items:center; gap:8px; margin-bottom:8px;">
+                    <input type="checkbox" id="cf-saved-server-use-proxy" style="width:18px;height:18px;cursor:pointer;accent-color:#00d2ff;" onchange="scheduleSaveCfServerConfig()">
+                    <label for="cf-saved-server-use-proxy" style="cursor:pointer;font-size:0.8rem;user-select:none;">Dùng CORS Proxy nếu trình duyệt chặn</label>
+                </div>
+                <div class="setting-item" style="margin-bottom:8px;">
+                    <label for="cf-saved-server-proxy">CORS Proxy:</label>
+                    <input type="text" id="cf-saved-server-proxy" placeholder="https://corsproxy.io/?{url}" oninput="scheduleSaveCfServerConfig()">
+                </div>
+                <div class="combo-toolbar-row">
+                    <button type="button" class="btn-combo-new" onclick="previewCustomFeaturePayloadInSavedMenu()">👁 Xem payload</button>
+                    <button type="button" class="btn-combo-runall" onclick="sendAllCustomFeaturesToServer()">📤 Gửi tất cả</button>
+                    <button type="button" class="btn-combo-manage" onclick="fetchCustomFeaturesFromServer()">📥 Nhận từ server</button>
+                </div>
+                <textarea id="cf-saved-server-payload" class="cf-payload-preview" placeholder="Bấm 👁 Xem payload rồi gửi..."></textarea>
+                <div class="combo-toolbar-row" style="margin-top:8px;">
+                    <button type="button" class="btn-combo-runall" onclick="sendSavedMenuPayload()">🚀 Gửi payload đang xem</button>
+                    <button type="button" class="btn-combo-manage" onclick="copyCustomFeatureExport()">📋 Sao chép JSON</button>
+                    <button type="button" class="btn-combo-manage" onclick="downloadCustomFeatureExport()">💾 Tải JSON</button>
+                </div>
+                <div id="cf-saved-server-log" class="cf-server-log">📦 Server: sẵn sàng gửi / nhận JSON...</div>
+            </div>
+
+            <div class="combo-toolbar-row" style="margin-top:8px;">
+                <button type="button" class="btn-combo-manage" onclick="closeSavedCustomFeaturesMenu()">✖ Đóng menu</button>
+                <button type="button" class="btn-combo-del" onclick="toggleSavedCustomFeatures(false)">📦 Tắt thanh nút</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chạy tính năng — MENU GIỮA (kích thước CODE WEB PRO 580px) -->
+    <div id="cf-center-modal" class="modal-overlay" onclick="closeCustomFeatureRunner()">
+        <div class="modal-content cf-center-run-content" onclick="event.stopPropagation()">
+            <div class="cf-run-header" id="cf-center-header">
+                <div class="cf-run-title" style="color:#00d2ff;"><span id="cf-center-icon">✨</span><span id="cf-center-title">Tính năng</span></div>
+                <button type="button" class="modal-close" onclick="closeCustomFeatureRunner()">✖</button>
+            </div>
+            <div id="cf-center-frame-wrap"><iframe id="cf-center-frame" title="Tính năng giữa"></iframe></div>
+        </div>
+    </div>
+
     <!-- ==================== MODAL: NHẬP LINK WEB (CODE WEB PRO MAX 2026) ==================== -->
     <div id="web-url-modal" class="modal-overlay" onclick="toggleWebUrlModal(false)">
         <div class="modal-content" style="width: 580px; max-width: 95%; max-height: 90vh; overflow-y: auto; border: 1px solid #00d2ff; box-shadow: 0 0 25px rgba(0,210,255,0.3);" onclick="event.stopPropagation()">
@@ -1391,7 +1649,7 @@
                 <div class="setting-item" style="margin-bottom:8px;">
                     <label for="web-url-input" style="font-weight:bold;">Nhập link trang web (URL):</label>
                     <div style="display:flex; gap:6px;">
-                        <input type="text" id="web-url-input" placeholder="https://example.com hoặc https://..." style="background:#29292e; color:#fff; border:1px solid #424242; border-radius:4px; padding:9px 12px; font-size:0.85rem; flex:1;" onkeypress="if(event.key==='Enter') fetchAndPasteWebCode()" />
+                        <input type="text" id="web-url-input" placeholder="https://example.com hoặc https://..." style="background:#29292e; color:#fff; border:1px solid #424242; border-radius:4px; padding:9px 12px; font-size:0.85rem; flex:1;" onkeydown="if(event.key==='Enter'){event.preventDefault();fetchAndPasteWebCode();}" />
                         <button type="button" style="background:#0288d1; color:white; border:none; padding:8px 12px; font-size:0.75rem;" onclick="pasteFromClipboardToUrlInput()" title="Dán link từ clipboard">📋 Dán Link</button>
                     </div>
                 </div>
@@ -1761,9 +2019,15 @@
                     <label for="ai-key-endpoint-input">Địa chỉ API (Endpoint):</label>
                     <input type="text" id="ai-key-endpoint-input" placeholder="https://.../v1/chat/completions">
                 </div>
+                <div class="setting-item" style="margin-bottom:8px;">
+                    <label for="ai-key-proxy-input">CORS Proxy (tùy chọn):</label>
+                    <input type="text" id="ai-key-proxy-input" placeholder="VD: https://corsproxy.io/?url=  — dùng khi trình duyệt chặn CORS">
+                </div>
+                <button class="btn-ai" style="width:100%; padding:8px; font-size:0.8rem; margin-bottom:8px; background:#263238;" onclick="testAIKeyConnection()">🔌 Kiểm tra kết nối</button>
+                <div id="ai-key-test-result" style="font-size:0.78rem; margin-bottom:8px; line-height:1.5; word-break:break-word;"></div>
                 <button class="btn-ai" style="width:100%; padding:10px; font-size:0.85rem;" onclick="addNewAIKey()">➕ Lưu Key Mới</button>
             </div>
-            <p class="ai-key-hint">💡 Hỗ trợ: Google Gemini, ChatGPT, Claude, DeepSeek, Groq, xAI Grok, OpenRouter, Custom.</p>
+            <p class="ai-key-hint">💡 Hỗ trợ: Google Gemini, ChatGPT, Claude, DeepSeek, Groq, xAI Grok, OpenRouter, Custom.<br>⚠️ Gemini bị chặn ở một số quốc gia (VD: Việt Nam) và OpenAI/DeepSeek/xAI bị trình duyệt chặn CORS — nên dùng <b>OpenRouter / Groq / Claude</b> hoặc điền CORS Proxy.</p>
         </div>
     </div>
 
@@ -1794,24 +2058,20 @@
 
         const editors = {};
         const models = {
-            p1: { html: null, css: null, js: null, py: null, cpp: null },
-            p2: { html: null, css: null, js: null, py: null, cpp: null }
+            p1: { html: null, css: null, js: null },
+            p2: { html: null, css: null, js: null }
         };
 
         const defaultTemplates = {
             p1: {
-                html: `<div class="card">\n    <h1>Giao diện Trang 1 ✨</h1>\n    <p>Trình soạn thảo VS Code với bộ HTML/CSS/JS/Python Trang 1 độc lập!</p>\n    <a href="https://google.com">Link Thử Nhiệm</a>\n</div>`,
+                html: `<div class="card">\n    <h1>Giao diện Trang 1 ✨</h1>\n    <p>Trình soạn thảo VS Code với bộ HTML/CSS/JS Trang 1 độc lập!</p>\n    <a href="https://google.com">Link Thử Nhiệm</a>\n</div>`,
                 css: `body { background: #111; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: sans-serif; }\n.card { background: #222; padding: 25px; border-radius: 8px; text-align: center; border: 1px solid #00b0ff; box-shadow: 0 4px 15px rgba(0,176,255,0.2); width: 90%; max-width: 400px; margin: 20px; }`,
-                js: `console.log("⚡ [Trang 1] JavaScript đã sẵn sàng hoạt động!");`,
-                py: `# Python Trang 1 Full-Auto\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nprint("🐍 [Trang 1] Đang thực thi Python...")\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\nplt.figure(figsize=(6, 3))\nplt.plot(x, y, color='#00b0ff', linewidth=2, label='sin(x)')\nplt.title('Trang 1: Đồ thị Hàm Sine')\nplt.grid(True, linestyle='--', alpha=0.5)\nplt.legend()\nplt.show()`,
-                cpp: `#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "⚙️ [Trang 1] C++ đã sẵn sàng hoạt động!" << endl;\n    for (int i = 1; i <= 5; i++) {\n        cout << "Trang 1 - Dong: " << i << endl;\n    }\n    return 0;\n}`
+                js: `console.log("⚡ [Trang 1] JavaScript đã sẵn sàng hoạt động!");`
             },
             p2: {
-                html: `<div class="card">\n    <h1>🚀 Giao diện Trang Web 2</h1>\n    <p>Bộ HTML/CSS/JS/Python riêng biệt 100% của Trang 2!</p>\n    <button onclick="thongBaoTrang2()">Bấm thử JS Trang 2</button>\n</div>`,
+                html: `<div class="card">\n    <h1>🚀 Giao diện Trang Web 2</h1>\n    <p>Bộ HTML/CSS/JS riêng biệt 100% của Trang 2!</p>\n    <button onclick="thongBaoTrang2()">Bấm thử JS Trang 2</button>\n</div>`,
                 css: `body { background: #1a002c; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: sans-serif; }\n.card { background: #2a0845; padding: 25px; border-radius: 8px; text-align: center; border: 1px solid #e040fb; box-shadow: 0 4px 15px rgba(224,64,251,0.4); width: 90%; max-width: 400px; margin: 20px; }\nbutton { background: #e040fb; color: white; border: none; padding: 10px 18px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 0.9rem; }\nbutton:hover { background: #ab47bc; }`,
-                js: `function thongBaoTrang2() {\n    alert("🎉 Bạn vừa kích hoạt JavaScript độc lập của TRANG WEB 2!");\n}\nconsole.log("🚀 [Trang 2] JavaScript đã sẵn sàng hoạt động!");`,
-                py: `# Python Trang 2 Full-Auto\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nprint("🐍 [Trang 2] Đang thực thi Python...")\nx = np.linspace(0, 10, 100)\ny = np.cos(x)\n\nplt.figure(figsize=(6, 3))\nplt.plot(x, y, color='#e040fb', linewidth=2, label='cos(x)')\nplt.title('Trang 2: Đồ thị Hàm Cosine')\nplt.grid(True, linestyle='--', alpha=0.5)\nplt.legend()\nplt.show()`,
-                cpp: `#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "⚙️ [Trang 2] C++ đã sẵn sàng hoạt động!" << endl;\n    for (int i = 1; i <= 5; i++) {\n        cout << "Trang 2 - Dong: " << i << endl;\n    }\n    return 0;\n}`
+                js: `function thongBaoTrang2() {\n    alert("🎉 Bạn vừa kích hoạt JavaScript độc lập của TRANG WEB 2!");\n}\nconsole.log("🚀 [Trang 2] JavaScript đã sẵn sàng hoạt động!");`
             }
         };
 
@@ -1894,8 +2154,27 @@
             if (e.key !== 'Escape') return;
             const cModal = document.getElementById('app-confirm-modal');
             const pModal = document.getElementById('app-prompt-modal');
-            if (cModal && cModal.classList.contains('active')) { e.preventDefault(); resolveAppConfirm(false); }
-            else if (pModal && pModal.classList.contains('active')) { e.preventDefault(); resolveAppPrompt(false); }
+            if (cModal && cModal.classList.contains('active')) { e.preventDefault(); resolveAppConfirm(false); return; }
+            if (pModal && pModal.classList.contains('active')) { e.preventDefault(); resolveAppPrompt(false); return; }
+
+            // Đóng nhanh các modal / menu đang mở khi nhấn Escape
+            if (document.getElementById('web-url-modal')?.classList.contains('active')) { toggleWebUrlModal(false); return; }
+            if (document.getElementById('ai-web-menu-modal')?.classList.contains('active')) { closeAIWebMenu(); return; }
+            if (document.getElementById('save-modal')?.classList.contains('active')) { toggleSaveModal(false); return; }
+            if (document.getElementById('settings-modal')?.classList.contains('active')) { toggleSettingsModal(false); return; }
+            if (document.getElementById('bot-modal')?.classList.contains('active')) { toggleBotModal(false); return; }
+            if (document.getElementById('cdn-modal')?.classList.contains('active')) { toggleCDNModal(false); return; }
+            if (document.getElementById('create-app-modal')?.classList.contains('active')) { toggleCreateAppModal(false); return; }
+            if (document.getElementById('ai-key-modal')?.classList.contains('active')) { closeAIKeyModal(); return; }
+            if (document.getElementById('cf-saved-modal')?.classList.contains('active')) { closeSavedCustomFeaturesMenu(); return; }
+            if (document.getElementById('cf-center-modal')?.classList.contains('active')) { closeCustomFeatureRunner(); return; }
+            if (document.getElementById('combo-manage-modal')?.classList.contains('active')) { closeComboManage(); return; }
+            if (document.getElementById('combo-edit-modal')?.classList.contains('active')) { closeComboEditor(); return; }
+            if (document.getElementById('combo-menu-modal')?.classList.contains('active')) { closeComboMenu(); return; }
+            const searchBar = document.getElementById('search-bar');
+            if (searchBar && searchBar.style.display === 'flex') { toggleSearchBar(); return; }
+            closeDownloadMenu();
+            closeCopyCodeMenu();
         });
 
         /* ==================================================================== */
@@ -1903,7 +2182,7 @@
         /* ==================================================================== */
         const SAVE_SLOT_MAX = 5;
         const SAVE_STORAGE_KEY = 'codespace_saved_projects';
-        const SAVE_CODE_TYPES = ['html', 'css', 'js', 'py', 'cpp'];
+        const SAVE_CODE_TYPES = ['html', 'css', 'js'];
         let savedProjects = loadSavedProjects();
 
         function loadSavedProjects() {
@@ -2125,7 +2404,7 @@
             const item = savedProjects.find(s => s.id === id);
             if (!item || !item.data) return;
             try {
-                const page = (item.data.p1 && item.data.p1.html) ? 'p1' : 'p2';
+                const page = item.page || ((item.data.p1 && item.data.p1.html) ? 'p1' : (item.web2 ? 'p2' : 'p1'));
                 const d = item.data[page] || {};
                 const html = `<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<title>${escapeHtml(item.name || 'Ban luu')}</title>\n<style>\n${d.css || ''}\n</style>\n</head>\n<body>\n${d.html || ''}\n<script>\n${String(d.js || '').replace(/<\/script/gi, '<\\/script')}\n<\/script>\n</body>\n</html>`;
                 const safeFile = (item.name || 'ban-luu').replace(/[^a-zA-Z0-9\-_ ]/g, '').trim().replace(/\s+/g, '-') || 'ban-luu';
@@ -2178,8 +2457,6 @@
             { id: 'tab-html',   cat: 'Soạn thảo code', icon: '🟧', label: 'Mở tab HTML',   run: () => showEditor('html') },
             { id: 'tab-css',    cat: 'Soạn thảo code', icon: '🟦', label: 'Mở tab CSS',    run: () => showEditor('css') },
             { id: 'tab-js',     cat: 'Soạn thảo code', icon: '🟨', label: 'Mở tab JS',     run: () => showEditor('js') },
-            { id: 'tab-py',     cat: 'Soạn thảo code', icon: '🐍', label: 'Mở tab Python', run: () => showEditor('py') },
-            { id: 'tab-cpp',    cat: 'Soạn thảo code', icon: '⚙️', label: 'Mở tab C++',    run: () => showEditor('cpp') },
             { id: 'search',     cat: 'Soạn thảo code', icon: '🔍', label: 'Tìm & Thay thế',         run: () => toggleSearchBar() },
             { id: 'format',     cat: 'Soạn thảo code', icon: '✨', label: 'Format làm đẹp code',    run: () => formatCurrentEditor() },
             { id: 'lines',      cat: 'Soạn thảo code', icon: '🔢', label: 'Bật/tắt số dòng',        run: () => toggleLineNumbers() },
@@ -2226,7 +2503,8 @@
             { id: 'ai-result',  cat: 'AI & Lấy code web', icon: '✨', label: 'Bật/tắt Kết Quả AI',           run: () => toggleAIResultFeature() },
             { id: 'ai-autoinsert', cat: 'AI & Lấy code web', icon: '📥', label: 'Bật/tắt Tự Động Nhập Code AI', run: () => toggleAIAutoInsert() },
             { id: 'ai-web',     cat: 'AI & Lấy code web', icon: '🌐', label: 'Mở menu Trang Web AI (mọi web AI)', run: () => openAIWebMenu() },
-            { id: 'codeweb',    cat: 'AI & Lấy code web', icon: '👑', label: 'Mở CODE WEB PRO MAX',          run: () => toggleWebUrlModal(true) }
+            { id: 'codeweb',    cat: 'AI & Lấy code web', icon: '👑', label: 'Mở CODE WEB PRO MAX',          run: () => toggleWebUrlModal(true) },
+            { id: 'cf-saved',   cat: 'AI & Lấy code web', icon: '📦', label: 'Mở Tính Năng Đã Tạo',          run: () => { toggleSavedCustomFeatures(true); openSavedCustomFeaturesMenu(); } }
         ];
 
         /* --- Bản đồ tính năng -> nút gốc ngoài giao diện (để tự ẩn khi đã gộp vào nhóm) --- */
@@ -2247,8 +2525,6 @@
             'tab-html': ['#tab-html'],
             'tab-css': ['#tab-css'],
             'tab-js': ['#tab-js'],
-            'tab-py': ['#tab-py'],
-            'tab-cpp': ['#tab-cpp'],
             'search': ['#btn-search-toggle'],
             'format': ['#btn-format-code'],
             'lines': ['#btn-lines-pc'],
@@ -2286,7 +2562,8 @@
             'ai-result': ['#btn-toggle-ai-result'],
             'ai-autoinsert': ['#btn-ai-autoinsert'],
             'ai-web': ['#btn-toggle-ai-web'],
-            'codeweb': ['#btn-web-url-fetch']
+            'codeweb': ['#btn-web-url-fetch'],
+            'cf-saved': ['#btn-toggle-cfsaved']
         };
 
         let hideOriginalWhenCombined = true;
@@ -2402,7 +2679,9 @@
         }
 
         function getFeatureById(id) {
-            return FEATURE_REGISTRY.find(f => f.id === id);
+            const builtIn = FEATURE_REGISTRY.find(f => f.id === id);
+            if (builtIn) return builtIn;
+            return getCustomFeatureRegistryItem(id);
         }
 
         function loadFeatureCombos() {
@@ -2688,9 +2967,10 @@
 
             const searchEl = document.getElementById('combo-search-input');
             const keyword = (searchEl ? searchEl.value : '').trim().toLowerCase();
+            const allPickable = getAllPickableFeatures();
             const list = keyword
-                ? FEATURE_REGISTRY.filter(f => (f.label + ' ' + f.cat + ' ' + f.id).toLowerCase().includes(keyword))
-                : FEATURE_REGISTRY;
+                ? allPickable.filter(f => (f.label + ' ' + f.cat + ' ' + f.id).toLowerCase().includes(keyword))
+                : allPickable;
 
             if (list.length === 0) {
                 wrap.innerHTML = '<div class="combo-empty">Không tìm thấy tính năng nào khớp từ khóa.</div>';
@@ -2759,6 +3039,919 @@
             hideOriginalWhenCombined = localStorage.getItem(COMBO_HIDE_KEY) !== 'false';
             updateComboButtonUI();
             applyComboVisibility();
+        }
+
+        /* ==================================================================== */
+        /* ====== TÍNH NĂNG MỚI: TẠO TÍNH NĂNG (FILE HOẠT ĐỘNG / CODE) ======== */
+        /* ==================================================================== */
+        const CF_STORAGE_KEY = 'codespace_custom_features';
+        const CF_SAVED_ENABLED_KEY = 'codespace_custom_saved_enabled';
+        const CF_SERVER_KEY = 'codespace_custom_feature_server';
+        const CF_MAX_SOURCE = 250000;
+        const CF_PAYLOAD_TYPE = 'codespace-custom-feature';
+        const CF_PAYLOAD_VERSION = 1;
+
+        let customFeatures = loadCustomFeatures();
+        let isSavedCustomFeaturesEnabled = false;
+        let runningCustomFeatureId = null;
+        let cfServerSaveTimer = null;
+
+        function loadCustomFeatures() {
+            try {
+                const raw = localStorage.getItem(CF_STORAGE_KEY);
+                if (!raw) return [];
+                const list = JSON.parse(raw);
+                if (!Array.isArray(list)) return [];
+                return list.filter(f => f && typeof f.name === 'string');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function persistCustomFeatures() {
+            const ok = safeSetLocalStorage(CF_STORAGE_KEY, JSON.stringify(customFeatures));
+            if (!ok) appAlert('Không lưu được tính năng (bộ nhớ trình duyệt đã đầy). Hãy rút gọn file/code.', '⚠️ Không lưu được');
+            return ok;
+        }
+
+        function getCustomFeatureById(id) {
+            return customFeatures.find(f => f.id === id) || null;
+        }
+
+        function getCustomFeatureRegistryItem(id) {
+            const f = getCustomFeatureById(id);
+            if (!f) return null;
+            return {
+                id: f.id,
+                cat: 'Tính năng tự tạo',
+                icon: f.icon || '✨',
+                label: f.name,
+                run: () => runCustomFeature(f.id)
+            };
+        }
+
+        function getAllPickableFeatures() {
+            const extras = customFeatures.map(f => getCustomFeatureRegistryItem(f.id)).filter(Boolean);
+            return FEATURE_REGISTRY.concat(extras);
+        }
+
+        function updateCustomMakerButtonUI() {
+            const savedBtn = document.getElementById('btn-toggle-cfsaved');
+            if (savedBtn) {
+                const vis = customFeatures.filter(function (f) { return !f.hidden; }).length;
+                savedBtn.textContent = isSavedCustomFeaturesEnabled
+                    ? `📦 Tính Năng Đã Tạo: BẬT (${vis}/${customFeatures.length})`
+                    : '📦 Tính Năng Đã Tạo: TẮT';
+                savedBtn.classList.toggle('active', isSavedCustomFeaturesEnabled);
+            }
+            renderSavedCustomFeatureToolbar();
+        }
+
+        function renderSavedCustomFeatureToolbar() {
+            const bar = document.getElementById('cf-saved-bar');
+            if (!bar) return;
+            if (!isSavedCustomFeaturesEnabled) {
+                bar.classList.remove('show');
+                bar.innerHTML = '';
+                bar.style.display = 'none';
+                return;
+            }
+            bar.style.display = 'inline-flex';
+            bar.classList.add('show');
+            if (!customFeatures.length) {
+                bar.innerHTML = '';
+                return;
+            }
+            const visible = customFeatures.filter(function (f) { return !f.hidden; });
+            if (!visible.length) {
+                bar.innerHTML = '';
+                return;
+            }
+            bar.innerHTML = visible.map(function (f) {
+                const color = sanitizeHexColor(f.color) || '#455a64';
+                const name = escapeHtml(f.name || 'Tính năng');
+                const icon = escapeHtml(f.icon || '✨');
+                return '<button type="button" class="btn-device-preview btn-cfsaved-item" style="background:' + color + ' !important; color:#fff !important; border-color:' + color + ' !important;" title="Mở tính năng đã lưu: ' + name + '" onclick="runCustomFeature(\'' + String(f.id).replace(/'/g, '') + '\')">' + icon + ' ' + name + '</button>';
+            }).join('');
+        }
+
+        function relayoutEditorsSoon() {
+            setTimeout(function () {
+                try { if (editors[currentTab]) editors[currentTab].layout(); } catch (e) {}
+            }, 180);
+        }
+
+        let savedMenuDraft = { display: 'corner', fileName: '', source: '', color: '#26a69a' };
+
+        function syncSavedMenuColorFromPicker() {
+            const picker = document.getElementById('cf-saved-color');
+            const text = document.getElementById('cf-saved-color-text');
+            const preview = document.getElementById('cf-saved-color-preview');
+            if (!picker) return;
+            if (text) text.value = picker.value;
+            if (preview) preview.style.background = picker.value;
+            savedMenuDraft.color = picker.value;
+        }
+
+        function syncSavedMenuColorFromText() {
+            const text = document.getElementById('cf-saved-color-text');
+            const picker = document.getElementById('cf-saved-color');
+            const preview = document.getElementById('cf-saved-color-preview');
+            const hex = sanitizeHexColor(text ? text.value : '');
+            if (!hex) return;
+            if (picker) picker.value = hex;
+            if (preview) preview.style.background = hex;
+            if (text) text.value = hex;
+            savedMenuDraft.color = hex;
+        }
+
+        function setCustomFeatureButtonColor(id, color) {
+            const item = getCustomFeatureById(id);
+            const hex = sanitizeHexColor(color);
+            if (!item || !hex) return;
+            item.color = hex;
+            item.updatedAt = Date.now();
+            persistCustomFeatures();
+            renderSavedCustomFeaturesMenu();
+            updateCustomMakerButtonUI();
+        }
+
+        function toggleCustomFeatureHidden(id) {
+            const item = getCustomFeatureById(id);
+            if (!item) return;
+            item.hidden = !item.hidden;
+            item.updatedAt = Date.now();
+            persistCustomFeatures();
+            renderSavedCustomFeaturesMenu();
+            updateCustomMakerButtonUI();
+            showAutoPasteToast(item.hidden
+                ? '🙈 Đã ẩn "' + item.name + '" (vẫn giữ, bấm Hiện để lấy lại)'
+                : '👁 Đã hiện lại "' + item.name + '"');
+        }
+
+        function setSavedMenuDisplay(mode) {
+            savedMenuDraft.display = (mode === 'center') ? 'center' : 'corner';
+            const c = document.getElementById('cf-saved-display-corner');
+            const m = document.getElementById('cf-saved-display-center');
+            if (c) c.classList.toggle('active', savedMenuDraft.display === 'corner');
+            if (m) m.classList.toggle('active', savedMenuDraft.display === 'center');
+        }
+
+        function updateSavedMenuFileDropLabel() {
+            const drop = document.getElementById('cf-saved-file-drop');
+            if (!drop) return;
+            if (savedMenuDraft.fileName) {
+                drop.classList.add('has-file');
+                drop.textContent = '📂 Đã nhận file: ' + savedMenuDraft.fileName + ' — bấm để đổi file khác';
+            } else {
+                drop.classList.remove('has-file');
+                drop.textContent = '📂 Bấm để chọn file — file này sẽ chạy khi mở tính năng';
+            }
+        }
+
+        function onSavedMenuFileChosen(input) {
+            const file = input.files && input.files[0];
+            input.value = '';
+            if (!file) return;
+            if (file.size > CF_MAX_SOURCE) {
+                appAlert('File quá lớn (tối đa khoảng 250KB chữ). Hãy chọn file nhỏ hơn.', '⚠️ File quá lớn');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function () {
+                savedMenuDraft.fileName = file.name;
+                savedMenuDraft.source = String(reader.result || '');
+                const codeEl = document.getElementById('cf-saved-code');
+                if (codeEl) codeEl.value = savedMenuDraft.source;
+                updateSavedMenuFileDropLabel();
+                showAutoPasteToast('📂 Đã nạp file: ' + file.name);
+            };
+            reader.onerror = function () { appAlert('Không đọc được file này.', '❌ Lỗi đọc file'); };
+            reader.readAsText(file);
+        }
+
+        function resetSavedMenuCreateForm() {
+            savedMenuDraft = { display: savedMenuDraft.display || 'corner', fileName: '', source: '', color: savedMenuDraft.color || '#26a69a' };
+            const nameEl = document.getElementById('cf-saved-name');
+            const codeEl = document.getElementById('cf-saved-code');
+            if (nameEl) nameEl.value = '';
+            if (codeEl) codeEl.value = '';
+            const colorEl = document.getElementById('cf-saved-color');
+            const colorText = document.getElementById('cf-saved-color-text');
+            const colorPrev = document.getElementById('cf-saved-color-preview');
+            const hex = sanitizeHexColor(savedMenuDraft.color) || '#26a69a';
+            if (colorEl) colorEl.value = hex;
+            if (colorText) colorText.value = hex;
+            if (colorPrev) colorPrev.style.background = hex;
+            updateSavedMenuFileDropLabel();
+            setSavedMenuDisplay(savedMenuDraft.display);
+        }
+
+        function saveCustomFeatureFromSavedMenu() {
+            const name = ((document.getElementById('cf-saved-name') && document.getElementById('cf-saved-name').value) || '').trim();
+            const codeEl = document.getElementById('cf-saved-code');
+            const typed = codeEl ? (codeEl.value || '') : '';
+            const source = String(typed || savedMenuDraft.source || '');
+            savedMenuDraft.source = source;
+            if (!name) { appAlert('Vui lòng đặt tên cho tính năng!'); return; }
+            if (!source.trim()) {
+                appAlert('Hãy nhập file hoặc dán code vào ô bên dưới — đó là phần hoạt động của tính năng.');
+                return;
+            }
+            if (source.length > CF_MAX_SOURCE) {
+                appAlert('Code/file quá dài (tối đa khoảng 250KB). Hãy rút gọn rồi lưu lại.');
+                return;
+            }
+            const savedId = 'cf_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+            customFeatures.push({
+                id: savedId,
+                name: name,
+                icon: '✨',
+                color: sanitizeHexColor((document.getElementById('cf-saved-color-text') && document.getElementById('cf-saved-color-text').value) || savedMenuDraft.color) || '#26a69a',
+                inputMode: savedMenuDraft.fileName ? 'file' : 'code',
+                display: savedMenuDraft.display === 'center' ? 'center' : 'corner',
+                fileName: savedMenuDraft.fileName || '',
+                source: source,
+                hidden: false,
+                apiUrl: ((document.getElementById('cf-saved-api-url') && document.getElementById('cf-saved-api-url').value) || '').trim(),
+                apiExtra: '',
+                createdAt: Date.now()
+            });
+            if (!persistCustomFeatures()) return;
+            resetSavedMenuCreateForm();
+            renderSavedCustomFeaturesMenu();
+            updateCustomMakerButtonUI();
+            showAutoPasteToast('💾 Đã lưu tính năng: ' + name);
+        }
+
+        function renderSavedCustomFeaturesMenu() {
+            const list = document.getElementById('cf-saved-menu-list');
+            if (!list) return;
+            if (!customFeatures.length) {
+                list.innerHTML = '<div class="combo-empty">Chưa có tính năng nào được lưu.\nĐặt tên + nhập file hoặc nhập code ở khung phía trên rồi bấm Lưu.</div>';
+                return;
+            }
+            list.innerHTML = customFeatures.map(function (f) {
+                const color = sanitizeHexColor(f.color) || '#26a69a';
+                const id = String(f.id || '').replace(/'/g, '');
+                const name = escapeHtml(f.name || 'Không tên');
+                const icon = escapeHtml(f.icon || '✨');
+                const displayLabel = f.display === 'center' ? 'Menu giữa' : 'Menu góc';
+                const hidden = !!f.hidden;
+                const hideBtn = hidden
+                    ? '<button type="button" class="btn-combo-onoff on" onclick="toggleCustomFeatureHidden(\'' + id + '\')">👁 Hiện</button>'
+                    : '<button type="button" class="btn-combo-onoff" onclick="toggleCustomFeatureHidden(\'' + id + '\')">🙈 Ẩn</button>';
+                return '<div class="cf-card"' + (hidden ? ' style="opacity:0.55;"' : '') + '>' +
+                    '<div class="cf-card-head">' +
+                    '<div class="cf-card-icon" style="background:' + color + '">' + icon + '</div>' +
+                    '<div class="combo-card-info">' +
+                    '<div class="combo-card-name">' + name + (hidden ? ' <span style="font-size:0.68rem;color:#9aa4ad;">(đang ẩn)</span>' : '') + '</div>' +
+                    '<div class="combo-card-meta"><span class="cf-preview-swatch" style="background:' + color + '"></span>' + displayLabel + ' • màu nút</div>' +
+                    '</div>' +
+                    '<div class="cf-color-row" style="flex:0 0 auto;">' +
+                    '<input type="color" value="' + color + '" title="Đổi màu nút" oninput="setCustomFeatureButtonColor(\'' + id + '\', this.value)">' +
+                    '</div></div>' +
+                    '<div class="combo-card-actions">' +
+                    '<button type="button" class="btn-combo-runall" onclick="runCustomFeature(\'' + id + '\')">▶ Mở</button>' +
+                    hideBtn +
+                    '<button type="button" class="btn-combo-new" onclick="sendOneCustomFeatureToServer(\'' + id + '\')">📤 Gửi server</button>' +
+                    '<button type="button" class="btn-combo-del" onclick="deleteCustomFeature(\'' + id + '\')">🗑️ Xóa tính năng này</button>' +
+                    '</div></div>';
+            }).join('');
+        }
+
+        function openSavedCustomFeaturesMenu() {
+            renderSavedCustomFeaturesMenu();
+            updateSavedMenuFileDropLabel();
+            setSavedMenuDisplay(savedMenuDraft.display || 'corner');
+            fillCfServerForm();
+            const modal = document.getElementById('cf-saved-modal');
+            if (modal) modal.classList.add('active');
+        }
+
+        function previewCustomFeaturePayloadInSavedMenu() {
+            const payload = buildCustomFeaturePayload(null, {});
+            const el = document.getElementById('cf-saved-server-payload') || document.getElementById('cf-server-payload');
+            if (el) el.value = JSON.stringify(payload, null, 2);
+            cfServerLog('Đã tạo payload ' + payload.count + ' tính năng.');
+        }
+
+        async function sendSavedMenuPayload() {
+            try {
+                await sendCustomFeaturesToServer({ useEdited: true });
+            } catch (e) {
+                cfServerLog('❌ ' + (e.message || e));
+                appAlert(e.message || String(e), '❌ Gửi payload thất bại');
+            }
+        }
+
+        function closeSavedCustomFeaturesMenu() {
+            const modal = document.getElementById('cf-saved-modal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function toggleSavedCustomFeatures(enable) {
+            const modal = document.getElementById('cf-saved-modal');
+            const menuOpen = !!(modal && modal.classList.contains('active'));
+            if (enable === undefined) {
+                if (!isSavedCustomFeaturesEnabled) {
+                    isSavedCustomFeaturesEnabled = true;
+                } else if (menuOpen) {
+                    isSavedCustomFeaturesEnabled = false;
+                } else {
+                    isSavedCustomFeaturesEnabled = true;
+                }
+            } else {
+                isSavedCustomFeaturesEnabled = !!enable;
+            }
+            safeSetLocalStorage(CF_SAVED_ENABLED_KEY, isSavedCustomFeaturesEnabled ? 'true' : 'false');
+            updateCustomMakerButtonUI();
+            if (isSavedCustomFeaturesEnabled) {
+                openSavedCustomFeaturesMenu();
+                showAutoPasteToast('📦 Tính Năng Đã Tạo: ĐÃ BẬT — menu tên + xóa');
+            } else {
+                closeSavedCustomFeaturesMenu();
+                showAutoPasteToast('📦 Tính Năng Đã Tạo: ĐÃ TẮT (tính năng đã lưu vẫn được giữ)');
+            }
+        }
+
+        function sanitizeHexColor(val) {
+            const s = String(val || '').trim();
+            if (/^#[0-9a-fA-F]{6}$/.test(s)) return s.toLowerCase();
+            if (/^#[0-9a-fA-F]{3}$/.test(s)) {
+                return ('#' + s[1] + s[1] + s[2] + s[2] + s[3] + s[3]).toLowerCase();
+            }
+            return '';
+        }
+
+        async function deleteCustomFeature(id) {
+            const item = getCustomFeatureById(id);
+            if (!item) return;
+            const ok = await appConfirm('Xóa tính năng "' + item.name + '"? Các tính năng gốc của trang vẫn giữ nguyên.', { title: '🗑️ Xóa tính năng', danger: true, okText: '🗑️ Xóa' });
+            if (!ok) return;
+            customFeatures = customFeatures.filter(f => f.id !== id);
+            persistCustomFeatures();
+            renderSavedCustomFeaturesMenu();
+            updateCustomMakerButtonUI();
+            showAutoPasteToast('🗑️ Đã xóa tính năng (các tính năng gốc không bị mất)');
+        }
+
+        function guessCustomSourceKind(source, fileName) {
+            const name = String(fileName || '').toLowerCase();
+            const src = String(source || '').trim();
+            if (name.endsWith('.css')) return 'css';
+            if (name.endsWith('.js') || name.endsWith('.mjs') || name.endsWith('.cjs')) return 'js';
+            if (name.endsWith('.html') || name.endsWith('.htm') || name.endsWith('.svg')) return 'html';
+            if (/<!DOCTYPE/i.test(src) || /<html[\s>]/i.test(src) || /<\/html>/i.test(src) || /<\/?(div|section|button|style|h1|h2|h3|p|span|input|form|table|ul|ol|nav|header|main|body|img|a|script)\b/i.test(src)) return 'html';
+            if (/\{[\s\S]*\}/.test(src) && /[.#a-zA-Z][\w-]*\s*\{/.test(src) && !/\bfunction\b|\bconst\b|\blet\b|\bvar\b/.test(src)) return 'css';
+            return 'html';
+        }
+
+        function buildCustomFeatureHelperScript() {
+            return '<scr' + 'ipt>(function(){function call(action,extra){return new Promise(function(res,rej){var id="cf"+Date.now()+Math.random();function on(e){if(e.data&&e.data.type==="cf-api-result"&&e.data.id===id){window.removeEventListener("message",on);if(e.data.error)rej(new Error(e.data.error));else res(e.data.value);}}window.addEventListener("message",on);var msg={type:"cf-api",action:action,id:id};if(extra){for(var k in extra){if(Object.prototype.hasOwnProperty.call(extra,k))msg[k]=extra[k];}}parent.postMessage(msg,"*");});}window.CodeSpace={getCode:function(tab){return call("getCode",{tab:tab||"html"});},setCode:function(tab,value){parent.postMessage({type:"cf-api",action:"setCode",tab:tab,value:value},"*");},run:function(){parent.postMessage({type:"cf-api",action:"run"},"*");},toast:function(msg){parent.postMessage({type:"cf-api",action:"toast",message:String(msg||"")},"*" );},getServer:function(){return call("getServer");},getFeature:function(){return call("getFeature");},fetch:function(opts){return call("fetch",{opts:opts||{}});},sendToServer:function(extra){return call("sendToServer",{extra:extra||{}});}};})();</scr' + 'ipt>';
+        }
+
+        function buildCustomFeatureDocument(feature) {
+            const kind = guessCustomSourceKind(feature.source, feature.fileName);
+            const color = sanitizeHexColor(feature.color) || '#ff9100';
+            const title = String(feature.name || 'Tinh nang').replace(/[<>]/g, '');
+            const helper = buildCustomFeatureHelperScript();
+            const baseCss = 'html,body{margin:0;padding:0;min-height:100%;height:auto;overflow:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;font-family:sans-serif;background:' + color + '14;color:#1a1a1e;box-sizing:border-box;}';
+            const scrollFix = '<style>html,body{overflow:auto!important;-webkit-overflow-scrolling:touch;height:auto;min-height:100%;}</style>';
+            const src = String(feature.source || '');
+            if (kind === 'css') {
+                return '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + title + '</title><style>' + baseCss + '\\n' + src + '</style>' + helper + '</head><body><div style="padding:16px">Da ap dung CSS cua tinh nang.</div></body></html>';
+            }
+            if (kind === 'js') {
+                return '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' + title + '</title><style>' + baseCss + '</style>' + helper + '</head><body><div id="app" style="padding:14px"></div><scr' + 'ipt>' + src + '</scr' + 'ipt></body></html>';
+            }
+            const trimmed = src.trim();
+            if (/^<!DOCTYPE/i.test(trimmed) || /^<html/i.test(trimmed)) {
+                if (/<\/head>/i.test(src)) return src.replace(/<\/head>/i, helper + scrollFix + '</head>');
+                if (/<body[^>]*>/i.test(src)) return src.replace(/<body([^>]*)>/i, '<body$1>' + helper + scrollFix);
+                return helper + scrollFix + src;
+            }
+            return '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + title + '</title><style>' + baseCss + '</style>' + helper + '</head><body>' + src + '</body></html>';
+        }
+
+        function sizeCustomFeatureFrame(frame) {
+            if (!frame) return;
+            try {
+                const doc = frame.contentDocument;
+                if (!doc) return;
+                const wrap = frame.parentElement;
+                const wrapH = wrap ? wrap.clientHeight : 0;
+                const h = Math.max(
+                    doc.documentElement ? doc.documentElement.scrollHeight : 0,
+                    doc.body ? doc.body.scrollHeight : 0,
+                    wrapH,
+                    400
+                );
+                frame.style.height = h + 'px';
+            } catch (e) {}
+        }
+
+        function loadHtmlIntoCustomFrame(frame, html) {
+            if (!frame) return;
+            try { if (frame._cfBlobUrl) URL.revokeObjectURL(frame._cfBlobUrl); } catch (e) {}
+            frame.removeAttribute('sandbox');
+            frame.style.height = '100%';
+            const afterLoad = function () {
+                sizeCustomFeatureFrame(frame);
+                try {
+                    const doc = frame.contentDocument;
+                    if (doc && doc.fonts && doc.fonts.ready) {
+                        doc.fonts.ready.then(function () { sizeCustomFeatureFrame(frame); }).catch(function () {});
+                    }
+                } catch (e) {}
+                setTimeout(function () { sizeCustomFeatureFrame(frame); }, 200);
+                setTimeout(function () { sizeCustomFeatureFrame(frame); }, 800);
+            };
+            frame.onload = afterLoad;
+            try {
+                const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                frame._cfBlobUrl = url;
+                frame.src = url;
+            } catch (e) {
+                frame.srcdoc = html;
+                setTimeout(afterLoad, 50);
+            }
+        }
+
+        function runCustomFeature(id) {
+            const feature = getCustomFeatureById(id);
+            if (!feature) {
+                appAlert('Không tìm thấy tính năng này (có thể đã bị xóa).');
+                return;
+            }
+            if (!feature.source || !String(feature.source).trim()) {
+                appAlert('Tính năng chưa có file/code hoạt động. Hãy sửa và gửi lại file hoặc nhập code.');
+                return;
+            }
+            runningCustomFeatureId = feature.id;
+            closeSavedCustomFeaturesMenu();
+            const html = buildCustomFeatureDocument(feature);
+            const color = sanitizeHexColor(feature.color) || '#ff9100';
+            const display = feature.display === 'center' ? 'center' : 'corner';
+
+            if (display === 'center') {
+                const modal = document.getElementById('cf-center-modal');
+                const title = document.getElementById('cf-center-title');
+                const icon = document.getElementById('cf-center-icon');
+                const header = document.getElementById('cf-center-header');
+                const frame = document.getElementById('cf-center-frame');
+                if (title) title.textContent = feature.name;
+                if (icon) icon.textContent = feature.icon || '✨';
+                if (header) header.style.background = 'linear-gradient(135deg,' + color + '33, transparent)';
+                closeCustomCornerPanel();
+                if (modal) modal.classList.add('active');
+                loadHtmlIntoCustomFrame(frame, html);
+            } else {
+                const panel = document.getElementById('cf-corner-panel');
+                const title = document.getElementById('cf-corner-title');
+                const icon = document.getElementById('cf-corner-icon');
+                const header = document.getElementById('cf-corner-header');
+                const frame = document.getElementById('cf-corner-frame');
+                const center = document.getElementById('cf-center-modal');
+                if (center) center.classList.remove('active');
+                if (title) title.textContent = feature.name;
+                if (icon) icon.textContent = feature.icon || '✨';
+                if (header) header.style.background = 'linear-gradient(135deg, rgba(0,176,255,0.18), transparent)';
+                if (panel) panel.classList.remove('collapsed');
+                loadHtmlIntoCustomFrame(frame, html);
+                relayoutEditorsSoon();
+            }
+            showAutoPasteToast((display === 'center' ? '🪟' : '📐') + ' Đã mở: ' + feature.name);
+        }
+
+        function closeCustomCornerPanel() {
+            const panel = document.getElementById('cf-corner-panel');
+            const frame = document.getElementById('cf-corner-frame');
+            if (panel) panel.classList.add('collapsed');
+            if (frame) {
+                try { if (frame._cfBlobUrl) URL.revokeObjectURL(frame._cfBlobUrl); } catch (e) {}
+                frame.src = 'about:blank';
+            }
+            relayoutEditorsSoon();
+        }
+
+        function closeCustomFeatureRunner() {
+            closeCustomCornerPanel();
+            const modal = document.getElementById('cf-center-modal');
+            const frame = document.getElementById('cf-center-frame');
+            if (modal) modal.classList.remove('active');
+            if (frame) {
+                try { if (frame._cfBlobUrl) URL.revokeObjectURL(frame._cfBlobUrl); } catch (e) {}
+                frame.src = 'about:blank';
+            }
+        }
+
+        function handleCustomFeatureApi(event) {
+            const data = event.data || {};
+            const action = data.action;
+            const reply = function (value, error) {
+                if (event.source) event.source.postMessage({ type: 'cf-api-result', id: data.id, value: value, error: error || null }, '*');
+            };
+            try {
+                if (action === 'getCode') {
+                    const tab = data.tab || currentTab || 'html';
+                    reply(getCode(activeEditPage, tab));
+                } else if (action === 'setCode') {
+                    const tab = data.tab || currentTab || 'html';
+                    setCode(activeEditPage, tab, String(data.value == null ? '' : data.value));
+                    if (tab !== currentTab) showEditor(tab);
+                    showAutoPasteToast('👑 Tính năng đã cập nhật tab ' + String(tab).toUpperCase());
+                } else if (action === 'run') {
+                    runCode();
+                } else if (action === 'toast') {
+                    showAutoPasteToast(String(data.message || ''));
+                } else if (action === 'getServer') {
+                    const cfg = getCfServerConfig();
+                    reply({ url: cfg.url, method: cfg.method, contentType: cfg.contentType, useProxy: cfg.useProxy });
+                } else if (action === 'getFeature') {
+                    const f = runningCustomFeatureId ? getCustomFeatureById(runningCustomFeatureId) : null;
+                    reply(f ? serializeCustomFeature(f) : null);
+                } else if (action === 'fetch') {
+                    cfHttpRequest(data.opts || {}).then(function (v) { reply(v); }).catch(function (e) { reply(null, e.message || String(e)); });
+                } else if (action === 'sendToServer') {
+                    const ids = runningCustomFeatureId ? [runningCustomFeatureId] : [];
+                    sendCustomFeaturesToServer({ ids: ids, extra: data.extra, silent: true }).then(function (v) { reply(v); }).catch(function (e) { reply(null, e.message || String(e)); });
+                }
+            } catch (e) {
+                console.warn('cf-api error', e);
+                if (data && data.id) reply(null, e.message || String(e));
+            }
+        }
+
+        function cfServerLog(msg) {
+            ['cf-server-log', 'cf-saved-server-log'].forEach(function (id) {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const line = '> ' + msg;
+                const prev = el.textContent || '';
+                el.textContent = (prev.indexOf('sẵn sàng') !== -1 && prev.split('\n').length < 3) ? line : (prev + '\n' + line);
+                el.scrollTop = el.scrollHeight;
+            });
+        }
+
+        function cfServerField(ids, savedVal, isCheck) {
+            const savedOpen = !!(document.getElementById('cf-saved-modal') && document.getElementById('cf-saved-modal').classList.contains('active'));
+            const ordered = savedOpen ? ids.slice().reverse() : ids.slice();
+            for (let i = 0; i < ordered.length; i++) {
+                const el = document.getElementById(ordered[i]);
+                if (!el) continue;
+                if (isCheck) return !!el.checked;
+                return String(el.value || '').trim();
+            }
+            return isCheck ? !!savedVal : String(savedVal || '');
+        }
+
+        function getCfServerConfig() {
+            let saved = {};
+            try { saved = JSON.parse(localStorage.getItem(CF_SERVER_KEY) || '{}') || {}; } catch (e) { saved = {}; }
+            return {
+                url: cfServerField(['cf-server-url', 'cf-saved-server-url'], saved.url),
+                method: (cfServerField(['cf-server-method', 'cf-saved-server-method'], saved.method || 'POST') || 'POST').toUpperCase(),
+                contentType: cfServerField(['cf-server-ctype', 'cf-saved-server-ctype'], saved.contentType || 'application/json') || 'application/json',
+                auth: cfServerField(['cf-server-auth', 'cf-saved-server-auth'], saved.auth),
+                extraHeaders: cfServerField(['cf-server-headers', 'cf-saved-server-headers'], saved.extraHeaders),
+                proxy: cfServerField(['cf-server-proxy', 'cf-saved-server-proxy'], saved.proxy),
+                useProxy: cfServerField(['cf-server-use-proxy', 'cf-saved-server-use-proxy'], saved.useProxy, true)
+            };
+        }
+
+        function fillCfServerForm() {
+            let saved = {};
+            try { saved = JSON.parse(localStorage.getItem(CF_SERVER_KEY) || '{}') || {}; } catch (e) { saved = {}; }
+            const setv = function (id, val) { const el = document.getElementById(id); if (el && val != null) el.value = val; };
+            ['cf-server-url', 'cf-saved-server-url'].forEach(function (id) { setv(id, saved.url || ''); });
+            ['cf-server-method', 'cf-saved-server-method'].forEach(function (id) { setv(id, saved.method || 'POST'); });
+            ['cf-server-ctype', 'cf-saved-server-ctype'].forEach(function (id) { setv(id, saved.contentType || 'application/json'); });
+            ['cf-server-auth', 'cf-saved-server-auth'].forEach(function (id) { setv(id, saved.auth || ''); });
+            ['cf-server-headers', 'cf-saved-server-headers'].forEach(function (id) { setv(id, saved.extraHeaders || ''); });
+            ['cf-server-proxy', 'cf-saved-server-proxy'].forEach(function (id) { setv(id, saved.proxy || ''); });
+            ['cf-server-use-proxy', 'cf-saved-server-use-proxy'].forEach(function (id) {
+                const cb = document.getElementById(id);
+                if (cb) cb.checked = !!saved.useProxy;
+            });
+        }
+
+        function saveCfServerConfigNow() {
+            const cfg = getCfServerConfig();
+            safeSetLocalStorage(CF_SERVER_KEY, JSON.stringify(cfg));
+        }
+
+        function scheduleSaveCfServerConfig() {
+            clearTimeout(cfServerSaveTimer);
+            cfServerSaveTimer = setTimeout(saveCfServerConfigNow, 250);
+        }
+
+        function parseCfHeaderText(text) {
+            const t = String(text || '').trim();
+            const out = {};
+            if (!t) return out;
+            try {
+                const obj = JSON.parse(t);
+                if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+                    Object.keys(obj).forEach(function (k) { out[String(k)] = String(obj[k]); });
+                    return out;
+                }
+            } catch (e) {}
+            t.split(/\r?\n/).forEach(function (line) {
+                const i = line.indexOf(':');
+                if (i > 0) out[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+            });
+            return out;
+        }
+
+        function parseCfJsonObject(text, fallback) {
+            const t = String(text || '').trim();
+            if (!t) return fallback || {};
+            try {
+                const obj = JSON.parse(t);
+                if (obj && typeof obj === 'object' && !Array.isArray(obj)) return obj;
+            } catch (e) {}
+            return fallback || {};
+        }
+
+        function serializeCustomFeature(f) {
+            return {
+                id: f.id,
+                name: f.name,
+                icon: f.icon || '✨',
+                color: f.color || '#00d2ff',
+                display: f.display === 'center' ? 'center' : 'corner',
+                inputMode: f.inputMode || 'code',
+                fileName: f.fileName || '',
+                source: f.source || '',
+                hidden: !!f.hidden,
+                apiUrl: f.apiUrl || '',
+                apiExtra: f.apiExtra || '',
+                createdAt: f.createdAt || null,
+                updatedAt: f.updatedAt || null
+            };
+        }
+
+        function buildCustomFeaturePayload(ids, extra) {
+            const list = (ids && ids.length)
+                ? customFeatures.filter(function (f) { return ids.indexOf(f.id) !== -1; })
+                : customFeatures.slice();
+            const features = list.map(serializeCustomFeature);
+            const mergedExtra = extra && typeof extra === 'object' ? extra : {};
+            return {
+                version: CF_PAYLOAD_VERSION,
+                type: CF_PAYLOAD_TYPE,
+                client: 'Code Space TAO TINH NANG PRO MAX',
+                sentAt: new Date().toISOString(),
+                count: features.length,
+                feature: features.length === 1 ? features[0] : undefined,
+                features: features,
+                extra: mergedExtra
+            };
+        }
+
+        function applyCfCorsProxy(url, cfg) {
+            cfg = cfg || getCfServerConfig();
+            const proxy = String(cfg.proxy || '').trim();
+            if (!cfg.useProxy || !proxy) return url;
+            return proxy.indexOf('{url}') !== -1 ? proxy.replace('{url}', encodeURIComponent(url)) : proxy + encodeURIComponent(url);
+        }
+
+        function isSafeHttpUrl(url) {
+            try {
+                const u = new URL(String(url || ''), window.location.href);
+                return u.protocol === 'http:' || u.protocol === 'https:';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        async function cfHttpRequest(opts) {
+            opts = opts || {};
+            const cfg = getCfServerConfig();
+            const rawUrl = String(opts.url || cfg.url || '').trim();
+            if (!rawUrl) throw new Error('Chưa nhập URL API server.');
+            if (!isSafeHttpUrl(rawUrl)) throw new Error('URL phải bắt đầu bằng http:// hoặc https://');
+            const method = String(opts.method || cfg.method || 'POST').toUpperCase();
+            const headers = {};
+            const ctype = String(opts.contentType || cfg.contentType || 'application/json').trim();
+            if (ctype && method !== 'GET') headers['Content-Type'] = ctype;
+            if (cfg.auth) headers['Authorization'] = cfg.auth;
+            Object.assign(headers, parseCfHeaderText(cfg.extraHeaders));
+            if (opts.headers && typeof opts.headers === 'object') {
+                Object.keys(opts.headers).forEach(function (k) { headers[String(k)] = String(opts.headers[k]); });
+            }
+            let body = opts.body;
+            if (body != null && typeof body !== 'string') body = JSON.stringify(body);
+            const useProxy = (opts.useProxy != null) ? !!opts.useProxy : cfg.useProxy;
+            const target = useProxy ? applyCfCorsProxy(rawUrl, Object.assign({}, cfg, { useProxy: true })) : rawUrl;
+            const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+            const timer = controller ? setTimeout(function () { controller.abort(); }, 60000) : null;
+            let res;
+            try {
+                res = await fetch(target, {
+                    method: method,
+                    headers: headers,
+                    body: (method === 'GET' || method === 'HEAD') ? undefined : body,
+                    signal: controller ? controller.signal : undefined
+                });
+            } catch (e) {
+                if (e && e.name === 'AbortError') throw new Error('Quá thời gian chờ 60s khi gọi server.');
+                throw new Error('Không kết nối được server (CORS/mạng): ' + (e.message || e));
+            } finally {
+                if (timer) clearTimeout(timer);
+            }
+            const rawText = await res.text();
+            const clipped = rawText.length > 800000 ? rawText.slice(0, 800000) + '\n…(đã cắt)' : rawText;
+            let json = null;
+            try { json = clipped ? JSON.parse(clipped) : null; } catch (e) { json = null; }
+            return {
+                ok: !!res.ok,
+                status: res.status,
+                statusText: res.statusText,
+                url: rawUrl,
+                body: clipped,
+                json: json
+            };
+        }
+
+        async function sendCustomFeaturesToServer(options) {
+            options = options || {};
+            saveCfServerConfigNow();
+            const cfg = getCfServerConfig();
+            const ids = options.ids || null;
+            const list = (ids && ids.length)
+                ? customFeatures.filter(function (f) { return ids.indexOf(f.id) !== -1; })
+                : customFeatures.slice();
+            const featureExtra = (list.length === 1) ? parseCfJsonObject(list[0].apiExtra, {}) : {};
+            const extra = Object.assign({}, featureExtra, (options.extra && typeof options.extra === 'object') ? options.extra : {});
+            let payload;
+            const edited = document.getElementById('cf-saved-server-payload') || document.getElementById('cf-server-payload');
+            if (options.useEdited && edited && edited.value.trim()) {
+                try {
+                    payload = JSON.parse(edited.value);
+                } catch (e) {
+                    throw new Error('Dữ liệu JSON trong ô tải lên không hợp lệ: ' + (e.message || e));
+                }
+            } else {
+                payload = buildCustomFeaturePayload(ids, extra);
+                if (edited && !options.silent) edited.value = JSON.stringify(payload, null, 2);
+            }
+            const url = (list.length === 1 && list[0].apiUrl) ? list[0].apiUrl : cfg.url;
+            if (!url) throw new Error('Chưa nhập URL API server.');
+            if (String(cfg.method || 'POST').toUpperCase() === 'GET' && !options.forceGet) {
+                throw new Error('Method GET không gửi body. Hãy chọn POST/PUT để gửi JSON.');
+            }
+            if (!options.silent) cfServerLog('Đang gửi ' + (payload.count != null ? payload.count : '?') + ' tính năng → ' + url);
+            const result = await cfHttpRequest({
+                url: url,
+                method: cfg.method,
+                contentType: cfg.contentType,
+                body: payload
+            });
+            if (!options.silent) {
+                cfServerLog('Phản hồi HTTP ' + result.status + ' ' + (result.statusText || '') + (result.ok ? ' ✅' : ' ❌'));
+                if (result.body) cfServerLog(result.body.slice(0, 800));
+                showAutoPasteToast(result.ok ? '👑 Đã gửi lên server (' + result.status + ')' : '⚠️ Server trả ' + result.status);
+            }
+            return result;
+        }
+
+        async function sendAllCustomFeaturesToServer() {
+            fillCfServerForm();
+            if (!customFeatures.length) {
+                appAlert('Chưa có tính năng nào để gửi.');
+                return;
+            }
+            try {
+                await sendCustomFeaturesToServer({ ids: null });
+            } catch (e) {
+                cfServerLog('❌ ' + (e.message || e));
+                appAlert(e.message || String(e), '❌ Gửi server thất bại');
+            }
+        }
+
+        async function sendOneCustomFeatureToServer(id) {
+            fillCfServerForm();
+            try {
+                await sendCustomFeaturesToServer({ ids: [id] });
+            } catch (e) {
+                cfServerLog('❌ ' + (e.message || e));
+                appAlert(e.message || String(e), '❌ Gửi server thất bại');
+            }
+        }
+
+        function extractImportedFeatures(data) {
+            if (!data) return [];
+            if (Array.isArray(data)) return data;
+            if (Array.isArray(data.features)) return data.features;
+            if (data.feature && typeof data.feature === 'object') return [data.feature];
+            if (data.data) return extractImportedFeatures(data.data);
+            if (typeof data.name === 'string' && (data.source != null || data.fileName != null)) return [data];
+            return [];
+        }
+
+        function mergeImportedFeatures(items) {
+            let added = 0, updated = 0;
+            items.forEach(function (raw) {
+                if (!raw || typeof raw !== 'object') return;
+                const name = String(raw.name || '').trim();
+                const source = String(raw.source || '');
+                if (!name || !source.trim()) return;
+                const id = String(raw.id || '').trim();
+                let item = id ? getCustomFeatureById(id) : null;
+                if (!item) item = customFeatures.find(function (f) { return f.name === name; }) || null;
+                const next = {
+                    id: item ? item.id : (id && id.indexOf('cf_') === 0 ? id : ('cf_' + Date.now() + '_' + Math.floor(Math.random() * 1000))),
+                    name: name,
+                    icon: String(raw.icon || (item && item.icon) || '✨').slice(0, 4) || '✨',
+                    color: sanitizeHexColor(raw.color) || (item && item.color) || '#00d2ff',
+                    inputMode: raw.inputMode === 'file' ? 'file' : 'code',
+                    display: raw.display === 'center' ? 'center' : 'corner',
+                    fileName: String(raw.fileName || (item && item.fileName) || ''),
+                    source: source.length > CF_MAX_SOURCE ? source.slice(0, CF_MAX_SOURCE) : source,
+                    apiUrl: String(raw.apiUrl || (item && item.apiUrl) || ''),
+                    apiExtra: typeof raw.apiExtra === 'string' ? raw.apiExtra : (raw.apiExtra ? JSON.stringify(raw.apiExtra) : ((item && item.apiExtra) || '')),
+                    hidden: raw.hidden != null ? !!raw.hidden : !!(item && item.hidden),
+                    createdAt: (item && item.createdAt) || raw.createdAt || Date.now(),
+                    updatedAt: Date.now()
+                };
+                if (item) {
+                    Object.assign(item, next);
+                    updated += 1;
+                } else {
+                    customFeatures.push(next);
+                    added += 1;
+                }
+            });
+            if (added || updated) persistCustomFeatures();
+            renderSavedCustomFeaturesMenu();
+            updateCustomMakerButtonUI();
+            return { added: added, updated: updated };
+        }
+
+        function importCustomFeaturesFromObject(data) {
+            const items = extractImportedFeatures(data);
+            if (!items.length) throw new Error('JSON không chứa tính năng hợp lệ (cần features[] hoặc name+source).');
+            return mergeImportedFeatures(items);
+        }
+
+        async function importCustomFeaturesFromUrl() {
+            const el = document.getElementById('cf-saved-server-url');
+            const url = el ? String(el.value || '').trim() : '';
+            if (!url) { appAlert('Hãy nhập URL JSON.'); return; }
+            try {
+                cfServerLog('Đang tải JSON từ ' + url);
+                const result = await cfHttpRequest({ url: url, method: 'GET', useProxy: getCfServerConfig().useProxy });
+                cfServerLog('HTTP ' + result.status + (result.ok ? ' ✅' : ' ❌'));
+                const data = result.json != null ? result.json : JSON.parse(result.body || 'null');
+                const r = importCustomFeaturesFromObject(data);
+                cfServerLog('Đã nhập từ URL: +' + r.added + ' mới, cập nhật ' + r.updated);
+                showAutoPasteToast('📥 Đã nhận ' + (r.added + r.updated) + ' tính năng từ server');
+            } catch (e) {
+                cfServerLog('❌ ' + (e.message || e));
+                appAlert(e.message || String(e), '❌ Nhận từ URL thất bại');
+            }
+        }
+
+        async function fetchCustomFeaturesFromServer() {
+            const cfg = getCfServerConfig();
+            const el = document.getElementById('cf-saved-server-url');
+            if (el && !el.value.trim() && cfg.url) el.value = cfg.url;
+            await importCustomFeaturesFromUrl();
+        }
+
+        function copyCustomFeatureExport() {
+            const payload = buildCustomFeaturePayload(null, {});
+            const text = JSON.stringify(payload, null, 2);
+            const box = document.getElementById('cf-saved-server-payload') || document.getElementById('cf-server-payload');
+            if (box) box.value = text;
+            const done = function () {
+                cfServerLog('Đã sao chép JSON ' + payload.count + ' tính năng.');
+                showAutoPasteToast('📋 Đã sao chép JSON tính năng');
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopyPlainText(text); });
+            } else {
+                fallbackCopyPlainText(text);
+            }
+        }
+
+        function downloadCustomFeatureExport() {
+            const payload = buildCustomFeaturePayload(null, {});
+            const text = JSON.stringify(payload, null, 2);
+            const box = document.getElementById('cf-saved-server-payload') || document.getElementById('cf-server-payload');
+            if (box) box.value = text;
+            downloadBlob(text, 'codespace-tinh-nang-pro-max.json', 'application/json');
+            cfServerLog('Đã tải file JSON ' + payload.count + ' tính năng.');
+            showAutoPasteToast('💾 Đã tải JSON tính năng');
+        }
+
+        function initCustomMakerFeature() {
+            isSavedCustomFeaturesEnabled = localStorage.getItem(CF_SAVED_ENABLED_KEY) === 'true';
+            fillCfServerForm();
+            updateCustomMakerButtonUI();
         }
 
         /* ==================== TÍNH NĂNG CODE WEB PRO MAX 2026 ==================== */
@@ -3719,6 +4912,7 @@ Yêu cầu bắt buộc:
             if (!url) { alert('⚠️ Vui lòng nhập link trang web hợp lệ!'); return; }
             const input = document.getElementById('ai-web-url');
             if (input) input.value = url;
+            aiWebRememberLastUrl(url);
             aiWebDockWindow();
             closeAIWebMenu();
         }
@@ -3726,6 +4920,9 @@ Yêu cầu bắt buộc:
         function openAIWebInTab() {
             const url = getAIWebMenuUrl();
             if (!url) { alert('⚠️ Vui lòng nhập link trang web hợp lệ!'); return; }
+            const input = document.getElementById('ai-web-url');
+            if (input) input.value = url;
+            aiWebRememberLastUrl(url);
             window.open(url, '_blank');
             closeAIWebMenu();
             showAutoPasteToast('↗ Đã mở "' + url + '" trong tab mới');
@@ -4170,12 +5367,14 @@ Yêu cầu bắt buộc:
             const valueInput = document.getElementById('ai-key-value-input');
             const modelInput = document.getElementById('ai-key-model-input');
             const endpointInput = document.getElementById('ai-key-endpoint-input');
+            const proxyInput = document.getElementById('ai-key-proxy-input');
 
             const provider = providerSelect.value || 'gemini';
             const name = nameInput.value.trim();
             const key = valueInput.value.trim();
             const model = modelInput.value.trim();
             const endpoint = endpointInput.value.trim();
+            const proxy = proxyInput.value.trim();
             const preset = getProviderPreset(provider);
 
             if (!key) { alert('⚠️ Vui lòng nhập API Key!'); return; }
@@ -4188,7 +5387,8 @@ Yêu cầu bắt buộc:
                 key: key,
                 provider: provider,
                 model: model || '',
-                endpoint: provider === 'custom' ? endpoint : ''
+                endpoint: provider === 'custom' ? endpoint : '',
+                proxy: proxy
             };
             aiApiKeys.push(newKey);
             saveAIKeyListToStorage();
@@ -4202,29 +5402,63 @@ Yêu cầu bắt buộc:
             valueInput.value = '';
             modelInput.value = '';
             endpointInput.value = '';
+            proxyInput.value = '';
+            document.getElementById('ai-key-test-result').innerHTML = '';
             renderAIKeyList();
             alert(`✅ Đã lưu API Key "${newKey.name}" (${preset.label}) thành công!`);
+        }
+
+        async function testAIKeyConnection() {
+            const resultBox = document.getElementById('ai-key-test-result');
+            if (!resultBox) return;
+            const providerSelect = document.getElementById('ai-key-provider-select');
+            const valueInput = document.getElementById('ai-key-value-input');
+            const modelInput = document.getElementById('ai-key-model-input');
+            const endpointInput = document.getElementById('ai-key-endpoint-input');
+            const proxyInput = document.getElementById('ai-key-proxy-input');
+
+            const key = valueInput.value.trim();
+            if (!key) { resultBox.innerHTML = '⚠️ Hãy nhập API Key trước khi kiểm tra.'; return; }
+
+            const tmpKey = {
+                provider: providerSelect.value || 'gemini',
+                key: key,
+                model: modelInput.value.trim(),
+                endpoint: endpointInput.value.trim(),
+                proxy: proxyInput.value.trim()
+            };
+
+            resultBox.innerHTML = '⏳ Đang kiểm tra kết nối... (có thể mất 10–30 giây)';
+            const dummyMsg = { innerHTML: '' };
+            try {
+                const res = await callAIProvider(tmpKey, 'Hãy trả lời đúng 2 từ: Kết nối OK', dummyMsg, []);
+                if (res.success) {
+                    resultBox.innerHTML = '✅ <b>Kết nối thành công!</b> AI trả lời: "' + escapeHtml(res.text.slice(0, 120)) + '"';
+                } else {
+                    resultBox.innerHTML = '❌ ' + escapeHtml(res.errorMessage);
+                }
+            } catch (e) {
+                resultBox.innerHTML = '❌ ' + escapeHtml(e.message || String(e));
+            }
         }
 
         function buildAIPromptText(text) {
             const htmlCode = getCode(activeEditPage, 'html');
             const cssCode = getCode(activeEditPage, 'css');
             const jsCode = getCode(activeEditPage, 'js');
-            const pyCode = getCode(activeEditPage, 'py');
-            const cppCode = getCode(activeEditPage, 'cpp');
 
-            return `Bạn là trợ lý lập trình thông minh, có khả năng đọc và hiểu TOÀN BỘ dự án của người dùng gồm 5 phần: HTML, CSS, JS, Python và C++ (trang hiện tại: ${activeEditPage.toUpperCase()}). Tab người dùng đang mở là: ${currentTab.toUpperCase()}.\n${buildAIAssistantModeInstructions()}\n--- HTML ---\n\`\`\`html\n${htmlCode}\n\`\`\`\n\n--- CSS ---\n\`\`\`css\n${cssCode}\n\`\`\`\n\n--- JS ---\n\`\`\`javascript\n${jsCode}\n\`\`\`\n\n--- PYTHON ---\n\`\`\`python\n${pyCode}\n\`\`\`\n\n--- C++ ---\n\`\`\`cpp\n${cppCode}\n\`\`\`\n\nYêu cầu người dùng: ${text}\n\nHãy phản hồi theo đúng các CHẾ ĐỘ AI đang bật và dựa trên hiểu biết về TOÀN BỘ 5 phần code ở trên. Nếu cung cấp code mới cho một phần cụ thể, hãy đặt trong khối mã markdown đúng loại ngôn ngữ đó (html, css, javascript, python, cpp) để hệ thống tự nhận diện và chèn đúng vào tab tương ứng.${isAIAutoInsertEnabled ? '\nCHẾ ĐỘ TỰ ĐỘNG NHẬP CODE ĐANG BẬT: mọi khối code bạn trả về trong markdown (html, css, javascript, python, cpp) sẽ TỰ ĐỘNG được nhập vào đúng tab tương ứng và XÓA code cũ. Hãy trả về code đầy đủ, hoàn chỉnh, chạy được ngay.' : ''}`;
+            return `Bạn là trợ lý lập trình thông minh, có khả năng đọc và hiểu TOÀN BỘ dự án của người dùng gồm 3 phần: HTML, CSS và JS (trang hiện tại: ${activeEditPage.toUpperCase()}). Tab người dùng đang mở là: ${currentTab.toUpperCase()}.\n${buildAIAssistantModeInstructions()}\n--- HTML ---\n\`\`\`html\n${htmlCode}\n\`\`\`\n\n--- CSS ---\n\`\`\`css\n${cssCode}\n\`\`\`\n\n--- JS ---\n\`\`\`javascript\n${jsCode}\n\`\`\`\n\nYêu cầu người dùng: ${text}\n\nHãy phản hồi theo đúng các CHẾ ĐỘ AI đang bật và dựa trên hiểu biết về TOÀN BỘ 3 phần code ở trên. Nếu cung cấp code mới cho một phần cụ thể, hãy đặt trong khối mã markdown đúng loại ngôn ngữ đó (html, css, javascript) để hệ thống tự nhận diện và chèn đúng vào tab tương ứng.${isAIAutoInsertEnabled ? '\nCHẾ ĐỘ TỰ ĐỘNG NHẬP CODE ĐANG BẬT: mọi khối code bạn trả về trong markdown (html, css, javascript) sẽ TỰ ĐỘNG được nhập vào đúng tab tương ứng và XÓA code cũ. Hãy trả về code đầy đủ, hoàn chỉnh, chạy được ngay.' : ''}`;
         }
 
         let codeBlockIdCounter = 0;
-        const CODE_LANG_LABEL = { html: 'HTML', css: 'CSS', js: 'JAVASCRIPT', py: 'PYTHON', cpp: 'C++' };
-        const CODE_LANG_CLASS = { html: 'lang-html', css: 'lang-css', js: 'lang-js', py: 'lang-py', cpp: 'lang-cpp' };
-        const CODE_LANG_EXT = { html: 'html', css: 'css', js: 'js', py: 'py', cpp: 'cpp' };
-        const CODE_LANG_MIME = { html: 'text/html', css: 'text/css', js: 'text/javascript', py: 'text/x-python', cpp: 'text/x-c++src' };
+        const CODE_LANG_LABEL = { html: 'HTML', css: 'CSS', js: 'JAVASCRIPT' };
+        const CODE_LANG_CLASS = { html: 'lang-html', css: 'lang-css', js: 'lang-js' };
+        const CODE_LANG_EXT = { html: 'html', css: 'css', js: 'js' };
+        const CODE_LANG_MIME = { html: 'text/html', css: 'text/css', js: 'text/javascript' };
 
         function renderAIResponseIntoBotMsg(botMsg, responseText) {
             let formatted = escapeHtml(responseText);
-            const langMap = { html: 'html', htm: 'html', css: 'css', js: 'js', javascript: 'js', py: 'py', python: 'py', cpp: 'cpp', 'c++': 'cpp', cc: 'cpp', cxx: 'cpp' };
+            const langMap = { html: 'html', htm: 'html', css: 'css', js: 'js', javascript: 'js' };
             const autoBlocks = [];
             formatted = formatted.replace(/```([a-z]*)\n([\s\S]*?)```/gi, function(match, lang, code) {
                 const rawCode = unescapeHtml(code);
@@ -4842,7 +6076,7 @@ Yêu cầu bắt buộc:
 
             const activeKey = aiApiKeys.find(k => k.id === activeAIKeyId);
             if (!activeKey || !activeKey.key) {
-                botMsg.innerHTML = '⚠️ Chưa chọn API Key! Vui lòng bấm nút <b>🔑 Key</b> ở góc trên khung AI để thêm/chọn key.';
+                botMsg.innerHTML = '⚠️ Chưa chọn API Key!<br><button class="btn-ai" style="margin-top:8px; font-size:0.78rem;" onclick="openAIKeyModal()">🔑 Thêm / Chọn Key ngay</button>';
                 return;
             }
 
@@ -4853,10 +6087,12 @@ Yêu cầu bắt buộc:
                 if (result.success) {
                     renderAIResponseIntoBotMsg(botMsg, result.text);
                 } else {
-                    botMsg.innerHTML = `❌ ${result.errorMessage}`;
+                    const errMsg = result.errorMessage || 'Lỗi không xác định.';
+                    botMsg.innerHTML = (/^(❌|⚠️|⏰)/.test(errMsg) ? '' : '❌ ') + errMsg;
                 }
             } catch (err) {
-                botMsg.innerHTML = `❌ Lỗi kết nối: ${err.message}`;
+                const timeoutHint = isAITimeoutError(err) ? '⏰ Quá thời gian chờ — kiểm tra mạng rồi thử lại.' : '❌ Lỗi kết nối.';
+                botMsg.innerHTML = `${timeoutHint}<br><span style="font-size:0.78rem; opacity:.9;">${escapeHtml(err.message || '')}<br>💡 Điền <b>CORS Proxy</b> trong 🔑 Key nếu trình duyệt chặn, hoặc dùng OpenRouter / Groq / Claude.</span>`;
             }
             chatBody.scrollTop = chatBody.scrollHeight;
         }
@@ -4875,6 +6111,47 @@ Yêu cầu bắt buộc:
             }
         }
 
+        // ===== Kết nối AI bền bỉ: CORS Proxy + timeout + thông báo lỗi rõ ràng =====
+        function getAIProxyUrl(keyObj, url) {
+            const proxy = (keyObj.proxy || '').trim();
+            if (!proxy) return url;
+            return proxy.indexOf('{url}') !== -1 ? proxy.replace('{url}', encodeURIComponent(url)) : proxy + encodeURIComponent(url);
+        }
+
+        async function fetchWithAIProxy(keyObj, url, options) {
+            const proxy = (keyObj.proxy || '').trim();
+            const targets = proxy ? [url, getAIProxyUrl(keyObj, url)] : [url];
+            const TIMEOUT_MS = 60000;
+            let lastError = null;
+            for (const target of targets) {
+                const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+                const timer = controller ? setTimeout(() => controller.abort(), TIMEOUT_MS) : null;
+                try {
+                    const opts = Object.assign({}, options);
+                    if (controller) opts.signal = controller.signal;
+                    const res = await fetch(target, opts);
+                    if (res) return { res: res, viaProxy: target !== url };
+                } catch (e) {
+                    lastError = e;
+                } finally {
+                    if (timer) clearTimeout(timer);
+                }
+            }
+            const err = new Error(lastError && lastError.message ? lastError.message : 'Không kết nối được API.');
+            err.isNetwork = true;
+            throw err;
+        }
+
+        function isAITimeoutError(err) { return err && (err.name === 'AbortError' || /abort|timeout/i.test(err.message || '')); }
+
+        function addAIErrorHint(msg, provider) {
+            const lower = String(msg).toLowerCase();
+            if (provider === 'gemini' && (lower.includes('location') || lower.includes('not supported') || lower.includes('unsupported') || lower.includes('permission denied') || lower.includes('country') || lower.includes('region'))) {
+                return msg + ' 💡 Nếu bạn ở Việt Nam: Gemini API bị chặn theo khu vực. Hãy thử OpenRouter / Groq / Claude, hoặc điền CORS Proxy ở mục 🔑 Key.';
+            }
+            return msg;
+        }
+
         async function callGeminiProvider(keyObj, promptText, botMsg, attachments) {
             attachments = attachments || [];
             const modelChain = keyObj.model ? [keyObj.model, 'gemini-2.5-flash', 'gemini-2.0-flash'] : ['gemini-2.5-flash', 'gemini-2.0-flash'];
@@ -4886,11 +6163,12 @@ Yêu cầu bắt buộc:
                 parts.push({ inline_data: { mime_type: att.mimeType, data: att.base64 } });
             });
 
+            let lastNetworkError = null;
             for (let m = 0; m < modelChain.length; m++) {
                 const modelName = modelChain[m];
                 for (let attempt = 0; attempt <= MAX_RETRIES_PER_MODEL; attempt++) {
                     try {
-                        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${keyObj.key}`, {
+                        const { res } = await fetchWithAIProxy(keyObj, `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${keyObj.key}`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ contents: [{ parts: parts }] })
@@ -4911,14 +6189,23 @@ Yêu cầu bắt buộc:
                         if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) {
                             return { success: true, text: data.candidates[0].content.parts[0].text };
                         } else if (data && data.error) {
-                            return { success: false, errorMessage: `Lỗi API Gemini: ${data.error.message}` };
+                            return { success: false, errorMessage: addAIErrorHint(`Lỗi API Gemini: ${data.error.message}`, 'gemini') };
                         }
                         return { success: false, errorMessage: 'Không nhận được phản hồi từ Gemini.' };
                     } catch (e) {
+                        if (e.isNetwork) lastNetworkError = e;
                         if (attempt >= MAX_RETRIES_PER_MODEL) break;
                         await new Promise(r => setTimeout(r, BASE_DELAY_MS));
                     }
                 }
+            }
+            if (lastNetworkError) {
+                return {
+                    success: false,
+                    errorMessage: isAITimeoutError(lastNetworkError)
+                        ? '⏰ Quá thời gian chờ (60s) khi gọi Gemini. Kiểm tra mạng rồi thử lại.'
+                        : `❌ Trình duyệt không kết nối được tới Gemini (CORS/mạng): ${lastNetworkError.message}. 💡 Điền CORS Proxy trong 🔑 Key, hoặc dùng OpenRouter / Groq / Claude (hỗ trợ gọi từ trình duyệt).`
+                };
             }
             return { success: false, errorMessage: 'Máy chủ Gemini đang quá tải. Vui lòng đợi vài phút rồi thử lại.' };
         }
@@ -4949,7 +6236,7 @@ Yêu cầu bắt buộc:
                     headers['X-Title'] = 'Code Space AI Trợ Lý';
                 }
 
-                const res = await fetch(endpoint, {
+                const { res } = await fetchWithAIProxy(keyObj, endpoint, {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify({
@@ -4967,7 +6254,10 @@ Yêu cầu bắt buộc:
                 }
                 return { success: false, errorMessage: `Không nhận được phản hồi hợp lệ từ ${preset.label}.` };
             } catch (e) {
-                return { success: false, errorMessage: `Lỗi kết nối: ${e.message}` };
+                const netMsg = isAITimeoutError(e)
+                    ? `⏰ Quá thời gian chờ (60s) khi gọi ${preset.label}.`
+                    : `❌ Trình duyệt không kết nối được tới ${preset.label} (CORS/mạng): ${e.message}`;
+                return { success: false, errorMessage: netMsg + ' 💡 Điền CORS Proxy trong 🔑 Key, hoặc dùng OpenRouter / Groq / Claude (hỗ trợ gọi từ trình duyệt).' };
             }
         }
 
@@ -4986,7 +6276,7 @@ Yêu cầu bắt buộc:
             }
 
             try {
-                const res = await fetch(preset.endpoint, {
+                const { res } = await fetchWithAIProxy(keyObj, preset.endpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -5009,7 +6299,10 @@ Yêu cầu bắt buộc:
                 }
                 return { success: false, errorMessage: 'Không nhận được phản hồi từ Claude.' };
             } catch (e) {
-                return { success: false, errorMessage: `Lỗi kết nối Claude: ${e.message}` };
+                const netMsg = isAITimeoutError(e)
+                    ? '⏰ Quá thời gian chờ (60s) khi gọi Claude.'
+                    : `❌ Trình duyệt không kết nối được tới Claude (CORS/mạng): ${e.message}`;
+                return { success: false, errorMessage: netMsg + ' 💡 Điền CORS Proxy trong 🔑 Key để gọi từ trình duyệt.' };
             }
         }
 
@@ -5256,10 +6549,8 @@ Yêu cầu bắt buộc:
                 editors.html.setModel(models[page].html);
                 editors.css.setModel(models[page].css);
                 editors.js.setModel(models[page].js);
-                editors.py.setModel(models[page].py);
-                editors.cpp.setModel(models[page].cpp);
 
-                ['html', 'css', 'js', 'py', 'cpp'].forEach(t => {
+                ['html', 'css', 'js'].forEach(t => {
                     updateHttpsHighlighting(editors[t]);
                 });
             }
@@ -5426,8 +6717,6 @@ Yêu cầu bắt buộc:
             const h = getCode(target, 'html');
             const c = getCode(target, 'css');
             const j = getCode(target, 'js');
-            const py = getCode(target, 'py');
-            const cpp = getCode(target, 'cpp');
 
             const activeKey = aiApiKeys.find(k => k.id === activeAIKeyId);
             if (!activeKey || !activeKey.key) {
@@ -5437,15 +6726,13 @@ Yêu cầu bắt buộc:
                 return;
             }
 
-            setAIResultBanner('🤖 AI đang chuyển đổi Python/C++ sang HTML/JS...', false);
-            document.getElementById('viewer').srcdoc = '<body style="margin:0;background:#111;color:#8ecff5;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;"><div>🤖 AI đang chuyển đổi code, vui lòng đợi...</div></body>';
+            setAIResultBanner('🤖 AI đang dựng và tối ưu HTML/JS...', false);
+            document.getElementById('viewer').srcdoc = '<body style="margin:0;background:#111;color:#8ecff5;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;"><div>🤖 AI đang xử lý code, vui lòng đợi...</div></body>';
 
-            const promptText = `Bạn là một công cụ CHUYỂN ĐỔI CODE cho trình soạn code.
-Dưới đây là code gồm: HTML, CSS, JavaScript, Python, C++.
+            const promptText = `Bạn là một công cụ CHUYỂN ĐỔI VÀ TỐI ƯU CODE cho trình soạn code.
+Dưới đây là code gồm: HTML, CSS, JavaScript.
 Nhiệm vụ của bạn: trả về DUY NHẤT một tài liệu HTML hoàn chỉnh (bắt đầu bằng <!DOCTYPE html>, kết thúc bằng </html>), KHÔNG kèm markdown, KHÔNG kèm giải thích.
-1. Nhúng nguyên văn HTML + CSS (trong thẻ <style>) + JavaScript (trong thẻ <script>).
-2. Nếu PYTHON có code: CHUYỂN ĐỔI sang JavaScript và in kết quả ra khung giao diện tối.
-3. Nếu C++ có code: CHUYỂN ĐỔI sang JavaScript và in kết quả ra khung giao diện tối.
+Nhúng nguyên văn HTML + CSS (trong thẻ <style>) + JavaScript (trong thẻ <script>).
 
 === HTML ===
 ${h}
@@ -5454,13 +6741,7 @@ ${h}
 ${c}
 
 === JAVASCRIPT ===
-${j}
-
-=== PYTHON ===
-${py}
-
-=== C++ ===
-${cpp}`;
+${j}`;
 
             const dummyStatusNode = document.createElement('div');
             dummyStatusNode.style.display = 'none';
@@ -5597,7 +6878,7 @@ ${cpp}`;
         function resetWorkspace() {
             if(confirm("Xóa toàn bộ code hiện tại để quay về mẫu ban đầu?")) {
                 ['p1', 'p2'].forEach(p => {
-                    ['html', 'css', 'js', 'py', 'cpp'].forEach(t => {
+                    ['html', 'css', 'js'].forEach(t => {
                         setCode(p, t, defaultTemplates[p][t]);
                     });
                 });
@@ -5649,10 +6930,6 @@ ${cpp}`;
             downloadBlob(getCode('p1', 'css'), "style.css", "text/css");
             await new Promise(r => setTimeout(r, 150));
             downloadBlob(getCode('p1', 'js'), "script.js", "text/javascript");
-            await new Promise(r => setTimeout(r, 150));
-            downloadBlob(getCode('p1', 'py'), "main.py", "text/x-python");
-            await new Promise(r => setTimeout(r, 150));
-            downloadBlob(getCode('p1', 'cpp'), "main.cpp", "text/x-c++src");
 
             if (isWeb2Enabled) {
                 await new Promise(r => setTimeout(r, 150));
@@ -5661,10 +6938,6 @@ ${cpp}`;
                 downloadBlob(getCode('p2', 'css'), "page2_style.css", "text/css");
                 await new Promise(r => setTimeout(r, 150));
                 downloadBlob(getCode('p2', 'js'), "page2_script.js", "text/javascript");
-                await new Promise(r => setTimeout(r, 150));
-                downloadBlob(getCode('p2', 'py'), "page2_main.py", "text/x-python");
-                await new Promise(r => setTimeout(r, 150));
-                downloadBlob(getCode('p2', 'cpp'), "page2_main.cpp", "text/x-c++src");
             }
             closeDownloadMenu();
         }
@@ -5675,19 +6948,17 @@ ${cpp}`;
             folderP1.file("index.html", getCode('p1', 'html'));
             folderP1.file("style.css", getCode('p1', 'css'));
             folderP1.file("script.js", getCode('p1', 'js'));
-            folderP1.file("main.py", getCode('p1', 'py'));
-            folderP1.file("main.cpp", getCode('p1', 'cpp'));
 
             if (isWeb2Enabled) {
                 const folderP2 = zip.folder("page2");
                 folderP2.file("page2.html", getCode('p2', 'html'));
                 folderP2.file("style.css", getCode('p2', 'css'));
                 folderP2.file("script.js", getCode('p2', 'js'));
-                folderP2.file("main.py", getCode('p2', 'py'));
-                folderP2.file("main.cpp", getCode('p2', 'cpp'));
             }
 
             zip.file("index.html", getCode('p1', 'html'));
+            zip.file("style.css", getCode('p1', 'css'));
+            zip.file("script.js", getCode('p1', 'js'));
 
             zip.generateAsync({ type: "blob" }).then(function (content) {
                 downloadBlob(content, "codespace_project.zip", "application/zip");
@@ -5847,9 +7118,19 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
                 let source = buildFullSource(page);
                 const pwaHead = `<link rel="manifest" href="./manifest.json">\n<meta name="theme-color" content="#00b0ff">\n${headExtras}<link rel="icon" href="./icons/icon-192.png">\n<title>${appName.replace(/"/g, '&quot;')}</title>`;
-                source = source.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n' + pwaHead);
+                if (/<meta[^>]*charset[^>]*>/i.test(source)) {
+                    source = source.replace(/(<meta[^>]*charset[^>]*>)/i, `$1\n${pwaHead}`);
+                } else if (/<head[^>]*>/i.test(source)) {
+                    source = source.replace(/(<head[^>]*>)/i, `$1\n<meta charset="UTF-8">\n${pwaHead}`);
+                } else {
+                    source = `<head>\n<meta charset="UTF-8">\n${pwaHead}\n</head>\n` + source;
+                }
                 const swRegisterScript = `<script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn('SW lỗi:', err)); }); }<\/script>`;
-                source = source.replace('</body>', swRegisterScript + '\n</body>');
+                if (/<\/body>/i.test(source)) {
+                    source = source.replace(/<\/body>/i, `${swRegisterScript}\n</body>`);
+                } else {
+                    source += `\n${swRegisterScript}\n`;
+                }
 
                 zip.file('index.html', source);
 
@@ -5884,9 +7165,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             const parts = [
                 '========== HTML ==========\n' + getCode(p, 'html'),
                 '========== CSS ==========\n' + getCode(p, 'css'),
-                '========== JAVASCRIPT ==========\n' + getCode(p, 'js'),
-                '========== PYTHON ==========\n' + getCode(p, 'py'),
-                '========== C++ ==========\n' + getCode(p, 'cpp')
+                '========== JAVASCRIPT ==========\n' + getCode(p, 'js')
             ];
             return parts.join('\n\n');
         }
@@ -5937,7 +7216,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
         function toggleToolbar(show) { const toolbar = document.getElementById('main-toolbar'); const reopenBtn = document.getElementById('reopen-btn'); if (show) { toolbar.classList.remove('collapsed'); reopenBtn.style.display = 'none'; } else { toolbar.classList.add('collapsed'); reopenBtn.style.display = 'block'; } setTimeout(() => { if(editors[currentTab]) editors[currentTab].layout(); }, 200); }
         function toggleLineNumbers() {
             showLines = !showLines;
-            ['html', 'css', 'js', 'py', 'cpp'].forEach(t => {
+            ['html', 'css', 'js'].forEach(t => {
                 if (editors[t]) editors[t].updateOptions({ lineNumbers: showLines ? 'on' : 'off' });
             });
         }
@@ -5958,8 +7237,9 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
         }
 
         function showEditor(type) {
+            if (!['html', 'css', 'js'].includes(type)) type = 'html';
             currentTab = type;
-            ['html', 'css', 'js', 'py', 'cpp'].forEach(t => {
+            ['html', 'css', 'js'].forEach(t => {
                 const container = document.getElementById('container-' + t);
                 const tabBtn = document.getElementById('tab-' + t);
                 if (t === type) {
@@ -5996,6 +7276,33 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             }, 250));
         }
 
+        function saveAllCodeImmediately() {
+            clearTimeout(typingTimer);
+            try {
+                ['p1', 'p2'].forEach(p => {
+                    ['html', 'css', 'js'].forEach(t => {
+                        const val = getCode(p, t);
+                        if (val !== undefined && val !== null) {
+                            safeSetLocalStorage(`codespace_${p}_${t}`, val);
+                        }
+                    });
+                });
+                const indicator = document.getElementById('save-indicator');
+                if (indicator) indicator.textContent = "Đã lưu tự động";
+            } catch (e) {
+                console.warn('Lỗi lưu tự động khi rời trang:', e);
+            }
+        }
+
+        window.addEventListener('beforeunload', saveAllCodeImmediately);
+        window.addEventListener('pagehide', saveAllCodeImmediately);
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                saveAllCodeImmediately();
+            }
+        });
+        window.addEventListener('blur', saveAllCodeImmediately);
+
         function onCodeInput(page, type) {
             showSaveStatus();
             clearTimeout(typingTimer);
@@ -6018,7 +7325,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
         function changeFontSize(amount) {
             currentFontSize = Math.max(10, Math.min(25, currentFontSize + amount));
-            ['html', 'css', 'js', 'py', 'cpp'].forEach(t => {
+            ['html', 'css', 'js'].forEach(t => {
                 if (editors[t]) editors[t].updateOptions({ fontSize: currentFontSize });
             });
         }
@@ -6317,16 +7624,12 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                 const h1 = encodeStr(getCode('p1', 'html'));
                 const c1 = encodeStr(getCode('p1', 'css'));
                 const j1 = encodeStr(getCode('p1', 'js'));
-                const p1 = encodeStr(getCode('p1', 'py'));
-                const x1 = encodeStr(getCode('p1', 'cpp'));
 
                 const h2 = encodeStr(getCode('p2', 'html'));
                 const c2 = encodeStr(getCode('p2', 'css'));
                 const j2 = encodeStr(getCode('p2', 'js'));
-                const p2 = encodeStr(getCode('p2', 'py'));
-                const x2 = encodeStr(getCode('p2', 'cpp'));
 
-                const shareURL = `${window.location.origin}${window.location.pathname}?h1=${h1}&c1=${c1}&j1=${j1}&p1=${p1}&x1=${x1}&h2=${h2}&c2=${c2}&j2=${j2}&p2=${p2}&x2=${x2}&w2=${isWeb2Enabled}`;
+                const shareURL = `${window.location.origin}${window.location.pathname}?h1=${h1}&c1=${c1}&j1=${j1}&h2=${h2}&c2=${c2}&j2=${j2}&w2=${isWeb2Enabled}`;
                 if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(shareURL).then(() => { alert("🎉 ĐÃ COPY LINK CHIA SẺ TRỌN BỘ CẢ 2 TRANG WEB!"); }).catch(() => { fallbackSharePrompt(shareURL); }); } else { fallbackSharePrompt(shareURL); }
             } catch (err) { alert("Lỗi mã hóa: " + err.message); }
         }
@@ -6346,7 +7649,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
         function triggerFileInput() { document.getElementById('file-input').click(); }
         function triggerFolderInput() { document.getElementById('folder-input').click(); }
 
-        const EXT_MAP = { html: ['html', 'htm'], css: ['css', 'scss', 'sass', 'less'], js: ['js', 'jsx', 'ts', 'tsx', 'mjs', 'cjs'], py: ['py', 'pyw', 'ipynb'], cpp: ['cpp', 'cc', 'cxx', 'c', 'h', 'hpp'], vue: ['vue'], image: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'ico'], font: ['woff', 'woff2', 'ttf', 'otf'], mhtml: ['mht', 'mhtml'] };
+        const EXT_MAP = { html: ['html', 'htm'], css: ['css', 'scss', 'sass', 'less'], js: ['js', 'jsx', 'ts', 'tsx', 'mjs', 'cjs'], vue: ['vue'], image: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'ico'], font: ['woff', 'woff2', 'ttf', 'otf'], mhtml: ['mht', 'mhtml'] };
         const MIME_MAP = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', webp: 'image/webp', bmp: 'image/bmp', ico: 'image/x-icon', woff: 'font/woff', woff2: 'font/woff2', ttf: 'font/ttf', otf: 'font/otf' };
         function getExt(name) { const m = name.toLowerCase().match(/\.([a-z0-9]+)$/); return m ? m[1] : ''; }
         function getFileCategory(name) { const ext = getExt(name); for (const cat in EXT_MAP) { if (EXT_MAP[cat].includes(ext)) return cat; } return 'text'; }
@@ -6377,7 +7680,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                 setCode(target, 'html', bodyClone.innerHTML.trim());
                 if (fullOverwrite || cssContent.trim()) setCode(target, 'css', cssContent.trim());
                 if (fullOverwrite || jsContent.trim()) setCode(target, 'js', jsContent.trim());
-            } else if (category === 'css') { setCode(target, 'css', text); } else if (category === 'js') { setCode(target, 'js', text); } else if (category === 'py') { setCode(target, 'py', text); showEditor('py'); } else if (category === 'cpp') { setCode(target, 'cpp', text); showEditor('cpp'); } else { setCode(target, currentTab, text); }
+            } else if (category === 'css') { setCode(target, 'css', text); } else if (category === 'js') { setCode(target, 'js', text); } else { setCode(target, currentTab, text); }
         }
 
         function importVueFileContent(text, fullOverwrite) { const templateMatch = text.match(/<template[^>]*>([\s\S]*?)<\/template>/i); const scriptMatch = text.match(/<script[^>]*>([\s\S]*?)<\/script>/i); const styleMatch = text.match(/<style[^>]*>([\s\S]*?)<\/style>/i); const applySection = (id, match) => { if (match) setCode(activeEditPage, id, match[1].trim()); else if (fullOverwrite) setCode(activeEditPage, id, ''); }; applySection('html', templateMatch); applySection('js', scriptMatch); applySection('css', styleMatch); }
@@ -6386,7 +7689,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
         function finalizeImport() {
             ['p1', 'p2'].forEach(p => {
-                ['html', 'css', 'js', 'py', 'cpp'].forEach(t => {
+                ['html', 'css', 'js'].forEach(t => {
                     safeSetLocalStorage(`codespace_${p}_${t}`, getCode(p, t));
                 });
             });
@@ -6406,8 +7709,6 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                     if (category === 'html') { const text = await zipEntry.async('string'); setCode(target, 'html', text); foundAny = true; }
                     else if (category === 'css') { const text = await zipEntry.async('string'); setCode(target, 'css', text); foundAny = true; }
                     else if (category === 'js') { const text = await zipEntry.async('string'); setCode(target, 'js', text); foundAny = true; }
-                    else if (category === 'py') { const text = await zipEntry.async('string'); setCode(target, 'py', text); foundAny = true; }
-                    else if (category === 'cpp') { const text = await zipEntry.async('string'); setCode(target, 'cpp', text); foundAny = true; }
                     else if (category === 'vue') { const text = await zipEntry.async('string'); importVueFileContent(text, false); foundAny = true; }
                     else if (category === 'mhtml') { const text = await zipEntry.async('string'); importMhtmlContent(text, relPath, false); foundAny = true; }
                     else if (category === 'image') { const base64 = await zipEntry.async('base64'); insertImageIntoHtml(relPath, `data:${MIME_MAP[getExt(relPath)] || 'image/png'};base64,${base64}`); foundAny = true; }
@@ -6421,8 +7722,6 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             const h = getCode(target, 'html') || '';
             const c = getCode(target, 'css') || '';
             const j = getCode(target, 'js') || '';
-            const py = getCode(target, 'py') || '';
-            const cpp = getCode(target, 'cpp') || '';
 
             let adsStyle = ` .fake-ad { background:#fff3cd; color:#856404; border:1px solid #ffeeba; padding:12px; margin:10px auto; border-radius:6px; text-align:center; font-family:sans-serif; position:relative; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; } .fake-ad-tag { position:absolute; top:2px; left:5px; font-size:9px; background:#ccc; color:#fff; padding:1px 3px; border-radius:2px; } .fake-ad-title { font-size:13px; display:block; margin-bottom:4px; font-weight:bold; } .fake-ad-close { position:absolute; top:4px; right:6px; background:none; border:none; font-weight:bold; cursor:pointer; } .video-ad-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); color:white; z-index:99999999; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:sans-serif; padding:20px; text-align:center; } .video-box { width:100%; max-width:320px; height:180px; background:#000; display:flex; flex-direction:column; gap:12px; justify-content:center; align-items:center; border:2px solid #00b0ff; margin-bottom:15px; border-radius:6px; color:#00b0ff; font-weight:bold; } .video-progress { width:82%; height:7px; background:#1b1b20; border-radius:4px; overflow:hidden; border:1px solid #2a2a32; } .video-progress-bar { width:0%; height:100%; background:linear-gradient(90deg,#00b0ff,#00e676); transition:width 1s linear; } .video-ad-badge { font-size:11px; color:#8e8e93; letter-spacing:0.5px; } .video-timer-text { font-size:14px; margin-bottom:15px; } .video-btn { padding:10px 20px; background:#00e676; border:none; color:#052e16; font-weight:bold; border-radius:4px; cursor:pointer; } .video-btn:disabled { background:#3a3a40!important; color:#8e8e93!important; cursor:not-allowed!important; opacity:0.6; } `;
             if (adsSize === 'leaderboard') adsStyle += ` .fake-ad { width: 728px; height: 90px; max-width: 95%; } `; else if (adsSize === 'square') adsStyle += ` .fake-ad { width: 336px; height: 280px; max-width: 95%; } `; else if (adsSize === 'skyscraper') adsStyle += ` .fake-ad { width: 160px; height: 600px; float: left; margin: 10px; max-height: 95%; } `; else adsStyle += ` .fake-ad { width: calc(100% - 20px); } `;
@@ -6440,246 +7739,11 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                 const adBadge = (adsLocation === 'video-forced')
                     ? 'KHÔNG THỂ BỎ QUA'
                     : `CÓ THỂ BỎ QUA SAU ${skipAfter}s`;
-
-                adsHTML = `<div id="video-ad" class="video-ad-overlay"><div class="video-box"><span>${adTitle}</span><div class="video-progress"><div id="video-progress-bar" class="video-progress-bar"></div></div><span class="video-ad-badge">${adBadge}</span></div><div id="video-timer" class="video-timer-text">Đang tải quảng cáo...</div><button id="video-close-btn" class="video-btn" disabled onclick="if(!this.disabled){window.parent.postMessage({type:'close-video-ad'},'*'); var b=document.getElementById('video-ad'); if(b) b.remove();}">🔒 Vui lòng xem quảng cáo...</button></div>`;
-
-                adsJS = `(function() {
-    var total = ${totalTime}, skipAfter = ${skipAfter}, elapsed = 0;
-    var timer = document.getElementById('video-timer');
-    var btn = document.getElementById('video-close-btn');
-    var bar = document.getElementById('video-progress-bar');
-    if (!timer || !btn) return;
-
-    function render() {
-        var remain = Math.max(0, total - elapsed);
-        if (bar) bar.style.width = Math.min(100, (elapsed / total) * 100).toFixed(2) + '%';
-
-        if (remain <= 0) {
-            timer.textContent = '✅ Bạn đã xem xong quảng cáo!';
-            btn.disabled = false;
-            btn.textContent = '▶ VÀO TRANG WEB';
-        } else if (elapsed >= skipAfter) {
-            timer.textContent = 'Quảng cáo còn ' + remain + ' giây — bạn được bỏ qua ngay!';
-            btn.disabled = false;
-            btn.textContent = '⏩ BỎ QUA QUẢNG CÁO';
-        } else {
-            timer.textContent = 'Quảng cáo kết thúc sau ' + remain + ' giây...';
-            btn.disabled = true;
-            btn.textContent = (skipAfter >= total)
-                ? '🔒 Phải xem hết ' + remain + 's mới vào được web'
-                : '🔒 Bỏ qua được sau ' + (skipAfter - elapsed) + ' giây';
-        }
-    }
-
-    render();
-    var interval = setInterval(function() {
-        elapsed++;
-        render();
-        if (elapsed >= total) clearInterval(interval);
-    }, 1000);
-})();`;
+                adsHTML = `<div id="video-ad-overlay" class="video-ad-overlay"><div class="video-box"><div style="font-size:36px;">🎬</div><div style="font-size:13px;letter-spacing:1px;text-transform:uppercase;">${adTitle}</div><div class="video-progress"><div id="video-pbar" class="video-progress-bar"></div></div><div class="video-ad-badge">${adBadge}</div></div><div class="video-timer-text" id="video-timer">Đang phát quảng cáo: <b id="video-timer-sec">${totalTime}</b>s</div><button id="video-skip-btn" class="video-btn" disabled onclick="parent.postMessage({type:'close-video-ad'}, '*')">${adsLocation === 'video-forced' ? 'Vui lòng xem hết...' : 'Bỏ qua sau ' + skipAfter + 's'}</button></div>`;
+                adsJS = `(function(){let t=${totalTime};let s=${skipAfter};const el=document.getElementById('video-timer-sec');const btn=document.getElementById('video-skip-btn');const pbar=document.getElementById('video-pbar');const total=t;const iv=setInterval(()=>{t--;const elapsed=total-t;if(pbar)pbar.style.width=Math.min(100,Math.round((elapsed/total)*100))+'%';if(el)el.textContent=t;if('${adsLocation}'==='video-skippable'){const left=Math.max(0,s-elapsed);if(left>0){if(btn)btn.textContent='Bỏ qua sau '+left+'s';}else{if(btn){btn.disabled=false;btn.textContent='⏩ Bỏ Qua Quảng Cáo';}}}if(t<=0){clearInterval(iv);if(btn){btn.disabled=false;btn.textContent='▶ Vào Xem Trang Web';}if('${adsLocation}'==='video-forced'){setTimeout(()=>{window.parent.postMessage({type:'close-video-ad'},'*');},600);}}},1000);})();`;
             }
+
             const consoleInterceptorScript = `<script>(function() { const origLog = console.log; const origErr = console.error; const origWarn = console.warn; console.log = function(...args) { window.parent.postMessage({ type: 'log', data: args.join(' ') }, '*'); origLog.apply(console, args); }; console.error = function(...args) { window.parent.postMessage({ type: 'error', data: args.join(' ') }, '*'); origErr.apply(console, args); }; console.warn = function(...args) { window.parent.postMessage({ type: 'warn', data: args.join(' ') }, '*'); origWarn.apply(console, args); }; window.onerror = function(m, s, l) { window.parent.postMessage({ type: 'error', data: m + " (Dòng " + l + ")" }, '*'); }; })();<\/script>`;
-
-            const pythonRunnerScript = py.trim() ? `<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"><\/script>
-            <script>
-            (async function() {
-                const rawPy = ${JSON.stringify(py)};
-                if (rawPy && rawPy.trim()) {
-                    if (typeof loadPyodide === 'function') {
-                        try {
-                            console.log("⏳ Đang khởi chạy môi trường Python (Pyodide)...");
-                            if (!window._pyodideInstance) {
-                                window._pyodideInstance = await loadPyodide();
-                            }
-
-                            function printToScreen(text, isError = false) {
-                                let pyContainer = document.getElementById('python-output');
-                                if (!pyContainer) {
-                                    pyContainer = document.createElement('div');
-                                    pyContainer.id = 'python-output';
-                                    pyContainer.style.cssText = 'background: #18181b; color: #4ade80; border: 1px solid #27272a; padding: 14px; margin: 15px auto; border-radius: 8px; font-family: "Courier New", Courier, monospace; font-size: 13px; white-space: pre-wrap; line-height: 1.5; max-width: 95%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); width: 90%; word-break: break-all;';
-                                    pyContainer.innerHTML = '<strong style="color: #38bdf8; display: block; margin-bottom: 8px; border-bottom: 1px solid #27272a; padding-bottom: 6px; font-size: 14px;">🐍 Terminal Python Output (${target.toUpperCase()}):</strong>';
-                                    document.body.appendChild(pyContainer);
-                                }
-                                const line = document.createElement('div');
-                                if (isError) line.style.color = '#f87171';
-                                line.textContent = text;
-                                pyContainer.appendChild(line);
-                            }
-
-                            window._pyodideInstance.setStdout({
-                                batched: (msg) => {
-                                    console.log(msg);
-                                    printToScreen(msg, false);
-                                }
-                            });
-
-                            window._pyodideInstance.setStderr({
-                                batched: (msg) => {
-                                    console.error(msg);
-                                    printToScreen(msg, true);
-                                }
-                            });
-
-                            window._pyodideInstance.setStdin({
-                                stdin: () => {
-                                    const val = prompt("🐍 Python (${target.toUpperCase()}) yêu cầu nhập dữ liệu (input):");
-                                    return val !== null ? val : "";
-                                }
-                            });
-
-                            console.log("📦 Đang tải các thư viện Python...");
-                            await window._pyodideInstance.loadPackagesFromImports(rawPy);
-                            await window._pyodideInstance.runPythonAsync(rawPy);
-
-                            if (rawPy.includes("matplotlib")) {
-                                try {
-                                    const imgData = await window._pyodideInstance.runPythonAsync(
-                                        "import io, base64\\n" +
-                                        "import matplotlib.pyplot as plt\\n" +
-                                        "if plt.get_fignums():\\n" +
-                                        "    buf = io.BytesIO()\\n" +
-                                        "    plt.savefig(buf, format='png', bbox_inches='tight')\\n" +
-                                        "    buf.seek(0)\\n" +
-                                        "    img_str = base64.b64encode(buf.read()).decode('utf-8')\\n" +
-                                        "    plt.close('all')\\n" +
-                                        "    img_str\\n" +
-                                        "else:\\n" +
-                                        "    ''"
-                                    );
-                                    if (imgData) {
-                                        let pyContainer = document.getElementById('python-output');
-                                        if (pyContainer) {
-                                            const img = document.createElement('img');
-                                            img.src = 'data:image/png;base64,' + imgData;
-                                            img.style.cssText = 'max-width: 100%; border-radius: 6px; margin-top: 10px; border: 1px solid #3f3f46; display: block;';
-                                            pyContainer.appendChild(img);
-                                        }
-                                    }
-                                } catch(e) { console.error("Lỗi xuất đồ thị:", e); }
-                            }
-                        } catch(err) {
-                            console.error("🐍 [Python Error] " + err.message);
-                        }
-                    }
-                }
-            })();
-            <\/script>` : '';
-
-            const cppRunnerScript = cpp.trim() ? `<script src="https://cdn.jsdelivr.net/npm/JSCPP@2.0.9/dist/JSCPP.es5.min.js"><\/script>
-            <script>
-            (function() {
-                const rawCpp = ${JSON.stringify(cpp)};
-                if (!rawCpp || !rawCpp.trim()) return;
-
-                function getOutputBody() {
-                    let cppContainer = document.getElementById('cpp-output');
-                    if (!cppContainer) {
-                        cppContainer = document.createElement('div');
-                        cppContainer.id = 'cpp-output';
-                        cppContainer.style.cssText = 'background: #18181b; color: #7dd3fc; border: 1px solid #27272a; padding: 14px; margin: 15px auto; border-radius: 8px; font-family: "Courier New", Courier, monospace; font-size: 13px; max-width: 95%; box-shadow: 0 4px 12px rgba(0,0,0,0.3); width: 90%; word-break: break-all;';
-                        cppContainer.innerHTML = '<strong style="color: #38bdf8; display: block; margin-bottom: 8px; border-bottom: 1px solid #27272a; padding-bottom: 6px; font-size: 14px;">⚙️ Terminal C++ Output (${target.toUpperCase()}):</strong><pre id="cpp-output-body" style="margin:0; white-space: pre-wrap; word-break: break-all; font-family: inherit; font-size: inherit;"></pre>';
-                        document.body.appendChild(cppContainer);
-                    }
-                    return document.getElementById('cpp-output-body');
-                }
-
-                function printToScreen(text, isError) {
-                    const body = getOutputBody();
-                    if (isError) {
-                        const span = document.createElement('span');
-                        span.style.color = '#f87171';
-                        span.textContent = text;
-                        body.appendChild(span);
-                    } else {
-                        body.appendChild(document.createTextNode(text));
-                    }
-                }
-
-                function getStdinIfNeeded() {
-                    let stdinData = "";
-                    if (/\\b(cin|scanf|getline|gets)\\b/.test(rawCpp)) {
-                        const userInput = prompt("⚙️ C++ (${target.toUpperCase()}) yêu cầu nhập dữ liệu (input):");
-                        stdinData = userInput !== null ? userInput : "";
-                    }
-                    return stdinData;
-                }
-
-                async function runCppOnline(stdinData, reasonMsg) {
-                    try {
-                        printToScreen((reasonMsg ? reasonMsg + "\\n" : "") + "🌐 Đang biên dịch trực tuyến GCC...\\n", false);
-                        const resp = await fetch('https://wandbox.org/api/compile.json', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                code: rawCpp,
-                                compiler: 'gcc-13.2.0',
-                                options: 'warning,gnu++17',
-                                'compiler-option-raw': '-std=gnu++17',
-                                stdin: stdinData || ''
-                            })
-                        });
-                        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-                        const data = await resp.json();
-                        if (data.compiler_error) printToScreen(data.compiler_error, true);
-                        if (data.compiler_message && !data.compiler_error) printToScreen(data.compiler_message + "\\n", false);
-                        if (data.program_output) printToScreen(data.program_output, false);
-                        if (data.program_error) printToScreen(data.program_error, true);
-                        const exitCode = (typeof data.status !== 'undefined') ? data.status : (data.signal || '?');
-                        printToScreen("\\n[Mã thoát: " + exitCode + "]", false);
-                        return true;
-                    } catch (err) {
-                        printToScreen("❌ Lỗi biên dịch: " + err.message, true);
-                        return false;
-                    }
-                }
-
-                async function runCpp() {
-                    const stdinData = getStdinIfNeeded();
-                    let jscppOk = false;
-                    try {
-                        const config = {
-                            stdio: {
-                                write: function(s) {
-                                    printToScreen(s, false);
-                                    return s.length;
-                                }
-                            },
-                            unsigned_overflow: "warn"
-                        };
-                        const exitCode = JSCPP.run(rawCpp, stdinData, config);
-                        printToScreen("\\n[Mã thoát: " + exitCode + "]", false);
-                        jscppOk = true;
-                    } catch (err) {
-                        printToScreen("⚠️ JSCPP không hỗ trợ đoạn mã này: " + err.message + "\\n", true);
-                    }
-
-                    if (!jscppOk) {
-                        await runCppOnline(stdinData, null);
-                    }
-                }
-
-                if (typeof JSCPP !== 'undefined') {
-                    runCpp();
-                } else {
-                    let waited = 0;
-                    const waitTimer = setInterval(function() {
-                        if (typeof JSCPP !== 'undefined') {
-                            clearInterval(waitTimer);
-                            runCpp();
-                        } else {
-                            waited += 200;
-                            if (waited >= 8000) {
-                                clearInterval(waitTimer);
-                                const stdinData = getStdinIfNeeded();
-                                runCppOnline(stdinData, "⚠️ Thử biên dịch trực tuyến.");
-                            }
-                        }
-                    }, 200);
-                }
-            })();
-            <\/script>` : '';
 
             const trimmedH = h.trim();
             const isFullDoc = /^<!DOCTYPE/i.test(trimmedH) || /^<html/i.test(trimmedH);
@@ -6695,7 +7759,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                     fullHtml = headInjection + fullHtml;
                 }
 
-                const bodyEndInjection = `\n<script>\n${j}\n${adsJS}\n<\/script>\n${pythonRunnerScript}\n${cppRunnerScript}\n`;
+                const bodyEndInjection = `\n<script>\n${j}\n${adsJS}\n<\/script>\n`;
                 if (/<\/body>/i.test(fullHtml)) {
                     fullHtml = fullHtml.replace(/<\/body>/i, `${bodyEndInjection}</body>`);
                 } else {
@@ -6724,7 +7788,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
             const isVideoAdMode = (adsLocation === 'video-forced' || adsLocation === 'video-skippable');
             let finalBody = (adsLocation === 'top' || adsLocation === 'popup' || isVideoAdMode) ? adsHTML + h : (adsLocation === 'bottom' ? h + adsHTML : h);
-            return `<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<style>\n${adsStyle}\n${c}\n</style>\n${consoleInterceptorScript}\n</head>\n<body>\n${finalBody}\n<script>\n${j}\n${adsJS}\n<\/script>\n${pythonRunnerScript}\n${cppRunnerScript}\n</body>\n</html>`;
+            return `<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<style>\n${adsStyle}\n${c}\n</style>\n${consoleInterceptorScript}\n</head>\n<body>\n${finalBody}\n<script>\n${j}\n${adsJS}\n<\/script>\n</body>\n</html>`;
         }
 
         function runCode() {
@@ -6739,6 +7803,8 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
         window.addEventListener('message', function(event) {
             if (event.data && event.data.type) {
                 if (event.data.type === 'close-video-ad') { setMode(''); return; }
+                if (event.data.type === 'cf-api') { handleCustomFeatureApi(event); return; }
+                if (event.data.type !== 'log' && event.data.type !== 'error' && event.data.type !== 'warn') return;
                 const outputs = document.getElementById('console-outputs');
                 if (outputs.firstChild && outputs.firstChild.textContent.includes("Hệ thống đang hoạt động...")) { outputs.innerHTML = ''; }
                 const logDiv = document.createElement('div');
@@ -6778,10 +7844,11 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             updateAIAssistantModeUI();
             updateSaveButtonLabel();
             initComboFeature();
+            initCustomMakerFeature();
 
             let initialData = {
-                p1: { html: '', css: '', js: '', py: '', cpp: '' },
-                p2: { html: '', css: '', js: '', py: '', cpp: '' }
+                p1: { html: '', css: '', js: '' },
+                p2: { html: '', css: '', js: '' }
             };
 
             const urlParams = new URLSearchParams(window.location.search);
@@ -6797,20 +7864,16 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                 initialData.p1.html = decodeParam('h1') || decodeParam('h') || defaultTemplates.p1.html;
                 initialData.p1.css = decodeParam('c1') || decodeParam('c') || defaultTemplates.p1.css;
                 initialData.p1.js = decodeParam('j1') || decodeParam('j') || defaultTemplates.p1.js;
-                initialData.p1.py = decodeParam('p1') || decodeParam('p') || defaultTemplates.p1.py;
-                initialData.p1.cpp = decodeParam('x1') || decodeParam('x') || defaultTemplates.p1.cpp;
 
                 initialData.p2.html = decodeParam('h2') || defaultTemplates.p2.html;
                 initialData.p2.css = decodeParam('c2') || defaultTemplates.p2.css;
                 initialData.p2.js = decodeParam('j2') || defaultTemplates.p2.js;
-                initialData.p2.py = decodeParam('p2') || defaultTemplates.p2.py;
-                initialData.p2.cpp = decodeParam('x2') || defaultTemplates.p2.cpp;
 
                 if (urlParams.get('w2') === 'true') isWeb2Enabled = true;
                 window.history.replaceState({}, document.title, window.location.pathname);
             } else {
                 ['p1', 'p2'].forEach(p => {
-                    ['html', 'css', 'js', 'py', 'cpp'].forEach(t => {
+                    ['html', 'css', 'js'].forEach(t => {
                         let legacyKey = (p === 'p1') ? `codespace_${t}` : `codespace_html2`;
                         let key = `codespace_${p}_${t}`;
                         let saved = localStorage.getItem(key) || (t === 'html' && p === 'p2' ? localStorage.getItem(legacyKey) : null);
@@ -6868,23 +7931,17 @@ Phần <b>Kết quả, Chạy code và các menu khác vẫn hoạt động bìn
                 models.p1.html = monaco.editor.createModel(initialData.p1.html, 'html');
                 models.p1.css = monaco.editor.createModel(initialData.p1.css, 'css');
                 models.p1.js = monaco.editor.createModel(initialData.p1.js, 'javascript');
-                models.p1.py = monaco.editor.createModel(initialData.p1.py, 'python');
-                models.p1.cpp = monaco.editor.createModel(initialData.p1.cpp, 'cpp');
 
                 models.p2.html = monaco.editor.createModel(initialData.p2.html, 'html');
                 models.p2.css = monaco.editor.createModel(initialData.p2.css, 'css');
                 models.p2.js = monaco.editor.createModel(initialData.p2.js, 'javascript');
-                models.p2.py = monaco.editor.createModel(initialData.p2.py, 'python');
-                models.p2.cpp = monaco.editor.createModel(initialData.p2.cpp, 'cpp');
 
                 editors.html = monaco.editor.create(document.getElementById('container-html'), { model: models.p1.html, ...config });
                 editors.css = monaco.editor.create(document.getElementById('container-css'), { model: models.p1.css, ...config });
                 editors.js = monaco.editor.create(document.getElementById('container-js'), { model: models.p1.js, ...config });
-                editors.py = monaco.editor.create(document.getElementById('container-py'), { model: models.p1.py, ...config });
-                editors.cpp = monaco.editor.create(document.getElementById('container-cpp'), { model: models.p1.cpp, ...config });
 
                 ['p1', 'p2'].forEach(p => {
-                    ['html', 'css', 'js', 'py', 'cpp'].forEach(t => {
+                    ['html', 'css', 'js'].forEach(t => {
                         models[p][t].onDidChangeContent(() => {
                             onCodeInput(p, t);
                             if (editors[t]) updateHttpsHighlighting(editors[t]);
