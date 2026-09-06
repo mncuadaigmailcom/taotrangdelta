@@ -1947,6 +1947,7 @@
                         <option value="p1_bundle">📦 Gói Tự Chạy (Tự nhúng CSS + chạy JS vào trang đích)</option>
                     </select>
                 </div>
+                <button type="button" style="width:100%; margin-bottom:12px; background:linear-gradient(135deg, #0a7f5c, #10b981); color:white; padding:9px; border:none; border-radius:4px; font-size:0.8rem; font-weight:bold; cursor:pointer;" onclick="loadScriptFromRepoToEditor()">📥 TẢI CODE SCRIPT HIỆN TẠI VỀ TAB JS (SỬA TIẾP)</button>
                 <button class="btn-bot-github" style="width:100%; padding:10px; font-size:0.9rem; background: linear-gradient(135deg, #ec4899, #8b5cf6) !important;" onclick="updateSelectedScriptRepo()">🔄 SỬA / CẬP NHẬT FILE SCRIPT NÀY</button>
             </div>
 
@@ -1979,6 +1980,10 @@
                 <div style="display:flex; gap:12px; margin-top:2px; font-size:0.72rem;">
                     <a id="bot-script-test-link" href="#" target="_blank" style="color:#00d2ff; text-decoration:underline;">↗ Mở thử file Script</a>
                     <a id="bot-script-repo-link" href="#" target="_blank" style="color:#94a3b8; text-decoration:underline;">📁 Xem kho GitHub</a>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:4px; padding-top:8px; border-top:1px dashed #334155;">
+                    <button type="button" style="flex-shrink:0; padding:6px 12px; background:linear-gradient(135deg, #0ea5e9, #6366f1); border:none; color:white; border-radius:4px; font-size:0.7rem; font-weight:bold; cursor:pointer;" onclick="verifyScriptLinkUpdated()">🔄 KIỂM TRA LINK ĐÃ CẬP NHẬT CHƯA?</button>
+                    <span style="font-size:0.65rem; color:#64748b; flex:1; min-width:120px;">💡 Sửa script xong bấm đây: nếu link còn nội dung cũ, hệ thống tự xóa cache jsDelivr giúp bạn.</span>
                 </div>
             </div>
         </div>
@@ -7511,6 +7516,103 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             }
         }
 
+        /* ==================== TÍNH NĂNG SỬA SCRIPT: XÓA CACHE CDN + KIỂM TRA LINK + TẢI SCRIPT VỀ EDITOR ==================== */
+        let lastDeployedScript = null; // { cdnUrl, filename, repo, content, at }
+
+        async function purgeJsDelivrCache(cdnUrl) {
+            try {
+                const purgeUrl = cdnUrl.replace('https://cdn.jsdelivr.net/', 'https://purge.jsdelivr.net/');
+                botLog('🧹 Đang gửi lệnh xóa cache jsDelivr để link CẬP NHẬT NGAY nội dung mới...');
+                const res = await fetch(purgeUrl);
+                if (res.ok) {
+                    botLog('✅ Đã xóa cache jsDelivr thành công! Link CDN sẽ phục vụ nội dung MỚI trong vài giây tới.');
+                } else {
+                    botLog(`⚠️ jsDelivr trả về mã ${res.status} khi xóa cache. Link có thể mất vài phút để tự cập nhật. Bạn có thể tự mở: ${purgeUrl}`);
+                }
+            } catch (e) {
+                botLog('⚠️ Không gửi được lệnh xóa cache jsDelivr (lỗi mạng). Link có thể mất vài phút đến vài giờ để tự cập nhật.');
+            }
+        }
+
+        async function verifyScriptLinkUpdated() {
+            if (!lastDeployedScript || !lastDeployedScript.cdnUrl) {
+                alert('Hãy tạo script hoặc sửa script trước, rồi bấm kiểm tra link nhé!');
+                return;
+            }
+            botLog('🔍 Đang kiểm tra nội dung mà link CDN đang phục vụ...');
+            try {
+                const checkUrl = lastDeployedScript.cdnUrl + (lastDeployedScript.cdnUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
+                const res = await fetch(checkUrl, { cache: 'no-store' });
+                if (!res.ok) {
+                    botLog(`⏳ Link chưa phản hồi (mã ${res.status}). jsDelivr cần vài giây để đồng bộ — chờ chút rồi bấm kiểm tra lại nhé!`);
+                    return;
+                }
+                const text = await res.text();
+                const deployed = String(lastDeployedScript.content || '');
+                if (text.trim() === deployed.trim() || text.length === deployed.length) {
+                    botLog('✅ CHÍNH XÁC! Link CDN đang phục vụ nội dung MỚI NHẤT vừa đẩy lên — dùng link này thoải mái!');
+                    showAutoPasteToast('✅ Link đã cập nhật nội dung mới nhất!');
+                } else {
+                    botLog('⏳ Link VẪN ĐANG phục vụ nội dung CŨ (do cache jsDelivr). Đang tự động xóa lại cache...');
+                    await purgeJsDelivrCache(lastDeployedScript.cdnUrl);
+                    botLog('👉 Chờ khoảng 5-10 giây rồi bấm "KIỂM TRA LINK ĐÃ CẬP NHẬT CHƯA?" lần nữa nhé!');
+                }
+            } catch (e) {
+                botLog(`❌ Không kiểm tra được link: ${e.message}`);
+            }
+        }
+
+        async function loadScriptFromRepoToEditor() {
+            const token = document.getElementById('github-token').value.trim();
+            const select = document.getElementById('github-edit-script-repo-list');
+            const selectedRepo = select ? select.value : '';
+            const fnInput = document.getElementById('github-edit-script-filename');
+            let filename = (fnInput && fnInput.value.trim()) || 'script.js';
+            if (!filename.toLowerCase().endsWith('.js')) filename += '.js';
+            filename = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+
+            if (!token || !selectedRepo) {
+                alert('Vui lòng nhập Token, bấm "Lấy Danh Sách Kho" và chọn kho chứa script trước!');
+                return;
+            }
+
+            const opt = select ? select.options[select.selectedIndex] : null;
+            let owner = (opt && opt.dataset.owner) ? opt.dataset.owner : '';
+            botLog(`📥 Đang tải nội dung file script "${filename}" từ kho "${selectedRepo}"...`);
+            try {
+                if (!owner) {
+                    const userRes = await fetch('https://api.github.com/user', {
+                        headers: { 'Authorization': `token ${token}` }
+                    });
+                    if (!userRes.ok) throw new Error('Token không hợp lệ hoặc hết hạn!');
+                    owner = (await userRes.json()).login;
+                }
+
+                const res = await fetch(`https://api.github.com/repos/${owner}/${selectedRepo}/contents/${filename}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                if (res.status === 404) throw new Error(`Không tìm thấy file "${filename}" trong kho "${selectedRepo}". Kiểm tra lại tên file nhé!`);
+                if (!res.ok) throw new Error('Không tải được file script từ GitHub!');
+
+                const data = await res.json();
+                const bin = atob(String(data.content || '').replace(/\s/g, ''));
+                const bytes = new Uint8Array(bin.length);
+                for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+                const text = new TextDecoder('utf-8').decode(bytes);
+
+                const targetPage = (typeof activeEditPage !== 'undefined' && activeEditPage) ? activeEditPage : 'p1';
+                const ok = await appConfirm(`Tải "${filename}" (${text.length} ký tự) vào tab JS của ${targetPage === 'p1' ? 'Trang 1' : 'Trang 2'}? Code JS hiện tại trong tab sẽ bị THAY THẾ bởi nội dung trên GitHub.`, { title: '📥 Tải Script Về Tab JS', okText: '✔ Tải Về Tab JS' });
+                if (!ok) { botLog('🚫 Đã hủy tải script về tab JS.'); return; }
+
+                setCode(targetPage, 'js', text);
+                if (typeof showEditor === 'function') showEditor('js');
+                botLog(`✅ Đã tải "${filename}" vào tab JS (${targetPage === 'p1' ? 'Trang 1' : 'Trang 2'}). Bạn sửa code ở đó xong bấm "🔄 SỬA / CẬP NHẬT FILE SCRIPT NÀY" để đẩy lên lại link!`);
+                showAutoPasteToast(`📥 Đã tải script "${filename}" về tab JS!`);
+            } catch (err) {
+                botLog(`❌ [LỖI]: ${err.message}`);
+            }
+        }
+
         function onScriptRepoListChange() {
             const select = document.getElementById('github-edit-script-repo-list');
             const fnInput = document.getElementById('github-edit-script-filename');
@@ -7518,6 +7620,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             const opt = select.options[select.selectedIndex];
             const repoName = select.value;
             const owner = opt ? opt.dataset.owner : '';
+            const branch = (opt && opt.dataset.branch) ? opt.dataset.branch : 'main';
             let filename = fnInput ? fnInput.value.trim() : 'script.js';
             if (!filename) filename = 'script.js';
             if (!filename.toLowerCase().endsWith('.js')) filename += '.js';
@@ -7525,9 +7628,9 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
             if (!repoName || !owner) return;
 
-            const cdnUrl = `https://cdn.jsdelivr.net/gh/${owner}/${repoName}@main/${filename}`;
+            const cdnUrl = `https://cdn.jsdelivr.net/gh/${owner}/${repoName}@${branch}/${filename}`;
             const scriptTag = `<script src="${cdnUrl}"><\/script>`;
-            const rawUrl = `https://raw.githack.com/${owner}/${repoName}/main/${filename}`;
+            const rawUrl = `https://raw.githack.com/${owner}/${repoName}/${branch}/${filename}`;
             const repoUrl = `https://github.com/${owner}/${repoName}`;
 
             showBotScriptLink(cdnUrl, scriptTag, rawUrl, repoUrl);
@@ -7589,6 +7692,7 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                         const opt = document.createElement('option');
                         opt.value = r.name;
                         opt.dataset.owner = (r.owner && r.owner.login) ? r.owner.login : '';
+                        opt.dataset.branch = r.default_branch || 'main';
                         opt.textContent = `${r.name} ${r.private ? '🔒' : '🌐'}`;
                         select.appendChild(opt);
                     });
@@ -7688,6 +7792,8 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             const fnInput = document.getElementById('github-edit-script-filename');
             let filename = (fnInput && fnInput.value.trim()) || 'script.js';
             const sourceChoice = document.getElementById('github-edit-script-source').value;
+            const selOpt = select ? select.options[select.selectedIndex] : null;
+            let branch = (selOpt && selOpt.dataset.branch) ? selOpt.dataset.branch : 'main';
 
             if (!filename.toLowerCase().endsWith('.js')) filename += '.js';
             filename = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
@@ -7773,12 +7879,12 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                         'Accept': 'application/vnd.github.v3+json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ source: { branch: 'main', path: '/' } })
+                    body: JSON.stringify({ source: { branch: branch, path: '/' } })
                 }).catch(() => {});
 
-                const cdnUrl = `https://cdn.jsdelivr.net/gh/${username}/${selectedRepo}@main/${filename}`;
+                const cdnUrl = `https://cdn.jsdelivr.net/gh/${username}/${selectedRepo}@${branch}/${filename}`;
                 const scriptTag = `<script src="${cdnUrl}"><\/script>`;
-                const rawUrl = `https://raw.githack.com/${username}/${selectedRepo}/main/${filename}`;
+                const rawUrl = `https://raw.githack.com/${username}/${selectedRepo}/${branch}/${filename}`;
                 const repoUrl = `https://github.com/${username}/${selectedRepo}`;
 
                 botLog(`🔗 Link CDN jsDelivr: ${cdnUrl}`);
@@ -7786,6 +7892,11 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
                 showBotScriptLink(cdnUrl, scriptTag, rawUrl, repoUrl);
                 showAutoPasteToast(`🔄 Đã sửa và cập nhật Script "${filename}"!`);
+
+                // Ghi nhớ nội dung vừa đẩy + xóa cache CDN để LINK CŨ phục vụ nội dung MỚI ngay
+                lastDeployedScript = { cdnUrl: cdnUrl, filename: filename, repo: selectedRepo, content: scriptCode, at: Date.now() };
+                await purgeJsDelivrCache(cdnUrl);
+                botLog('👉 Nếu mở link vẫn thấy code cũ, chờ ~10 giây rồi bấm nút "🔄 KIỂM TRA LINK ĐÃ CẬP NHẬT CHƯA?" bên dưới hộp link nhé!');
             } catch (err) {
                 botLog(`❌ [LỖI]: ${err.message}`);
             }
@@ -7851,6 +7962,19 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                     await new Promise(r => setTimeout(r, 2000));
                 }
 
+                // Xác định nhánh mặc định của kho (main hoặc master) để link CDN luôn chính xác
+                let branch = 'main';
+                try {
+                    const branchInfoRes = await fetch(`https://api.github.com/repos/${username}/${repo}`, {
+                        headers: { 'Authorization': `token ${token}` }
+                    });
+                    if (branchInfoRes.ok) {
+                        const repoInfo = await branchInfoRes.json();
+                        if (repoInfo.default_branch) branch = repoInfo.default_branch;
+                    }
+                } catch (e) { /* giữ nguyên main nếu không lấy được */ }
+                botLog(`🌿 Nhánh mặc định của kho: ${branch}`);
+
                 let scriptCode = '';
                 if (sourceChoice === 'p2_js') {
                     scriptCode = getCode('p2', 'js') || '// JavaScript Trang 2\n';
@@ -7908,12 +8032,12 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                         'Accept': 'application/vnd.github.v3+json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ source: { branch: 'main', path: '/' } })
+                    body: JSON.stringify({ source: { branch: branch, path: '/' } })
                 }).catch(() => {});
 
-                const cdnUrl = `https://cdn.jsdelivr.net/gh/${username}/${repo}@main/${filename}`;
+                const cdnUrl = `https://cdn.jsdelivr.net/gh/${username}/${repo}@${branch}/${filename}`;
                 const scriptTag = `<script src="${cdnUrl}"><\/script>`;
-                const rawUrl = `https://raw.githack.com/${username}/${repo}/main/${filename}`;
+                const rawUrl = `https://raw.githack.com/${username}/${repo}/${branch}/${filename}`;
                 const repoUrl = `https://github.com/${username}/${repo}`;
 
                 botLog(`🔗 Link CDN jsDelivr: ${cdnUrl}`);
@@ -7921,6 +8045,10 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
                 showBotScriptLink(cdnUrl, scriptTag, rawUrl, repoUrl);
                 showAutoPasteToast('⚡ Đã tạo xong Link Script CDN!');
+
+                // Ghi nhớ nội dung vừa đẩy + chủ động xóa cache CDN (phải thiết lập khi ghi đè file cũ)
+                lastDeployedScript = { cdnUrl: cdnUrl, filename: filename, repo: repo, content: scriptCode, at: Date.now() };
+                await purgeJsDelivrCache(cdnUrl);
             } catch (err) {
                 botLog(`❌ [LỖI]: ${err.message}`);
             }
