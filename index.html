@@ -1871,6 +1871,7 @@
                 <button id="btn-bot-mode-edit" class="bot-mode-tab" onclick="switchBotMode('edit')" title="Sửa Web Cũ">✏️ Sửa Web</button>
                 <button id="btn-bot-mode-script" class="bot-mode-tab" onclick="switchBotMode('script')" title="Tạo Script Mới">⚡ Tạo Script</button>
                 <button id="btn-bot-mode-edit-script" class="bot-mode-tab" onclick="switchBotMode('edit-script')" title="Sửa Script Cũ">🔄 Sửa Script</button>
+                <button id="btn-bot-mode-pull" class="bot-mode-tab" onclick="switchBotMode('pull')" title="Lấy code đã lưu trên GitHub về phần CODE">📥 Lấy Code</button>
             </div>
 
             <div id="bot-sec-create">
@@ -1956,6 +1957,36 @@
                     <span style="font-size:0.7rem; color:#10b981;">✅ Luôn lấy code từ <b>phần CODE</b> (các ô soạn thảo HTML/CSS/JS đã lưu) — <b>không lấy</b> từ phần Kết Quả chạy thử.</span>
                 </div>
                 <button class="btn-bot-github" style="width:100%; padding:10px; font-size:0.9rem; background: linear-gradient(135deg, #ec4899, #8b5cf6) !important;" onclick="updateSelectedScriptRepo()">🔄 SỬA / CẬP NHẬT FILE SCRIPT NÀY</button>
+            </div>
+
+            <div id="bot-sec-pull" style="display:none;">
+                <button style="width:100%; margin-bottom:12px; background:#0288d1; color:white; padding:8px;" onclick="fetchUserRepos('pull')">🔄 Lấy Danh Sách Kho Lưu Trữ Của Bạn</button>
+                <div class="setting-item">
+                    <label for="github-pull-repo-list">Chọn Kho Lưu Trữ Cần Lấy Code:</label>
+                    <select id="github-pull-repo-list">
+                        <option value="">-- Vui lòng nhấn "Lấy Danh Sách Kho" --</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="github-pull-type">Loại mã nguồn muốn lấy về:</label>
+                    <select id="github-pull-type" onchange="onPullTypeChange()">
+                        <option value="web">🌐 Trang web đã lưu (index.html) → nạp vào tab HTML</option>
+                        <option value="script">⚡ File Script đã lưu (.js) → nạp vào tab JS</option>
+                    </select>
+                </div>
+                <div class="setting-item" id="pull-filename-item" style="display:none;">
+                    <label for="github-pull-filename">Tên File Script Cần Lấy (.js):</label>
+                    <input type="text" id="github-pull-filename" value="script.js" placeholder="script.js hoặc app.js, widget.js..." />
+                </div>
+                <div class="setting-item">
+                    <label for="github-pull-target">Nạp code về phần CODE của:</label>
+                    <select id="github-pull-target">
+                        <option value="p1">📄 Trang 1 (Main)</option>
+                        <option value="p2">🚀 Trang 2</option>
+                    </select>
+                </div>
+                <button class="btn-bot-github" style="width:100%; padding:10px; font-size:0.9rem; background: linear-gradient(135deg, #0ea5e9, #6366f1) !important;" onclick="runBossBotPullCode()">📥 LẤY CODE TỪ GITHUB VỀ PHẦN CODE</button>
+                <span style="font-size:0.7rem; color:#eab308; display:block; margin-top:6px;">⚠️ Code đang có trong ô soạn thảo của trang được chọn sẽ được thay thế bằng code lấy từ GitHub (sẽ hỏi xác nhận trước khi ghi đè).</span>
             </div>
 
             <div id="bot-logs" class="bot-status-box">🤖 Boss Bot sẵn sàng nhận lệnh...</div>
@@ -7698,22 +7729,26 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             const secEdit = document.getElementById('bot-sec-edit');
             const secScript = document.getElementById('bot-sec-script');
             const secEditScript = document.getElementById('bot-sec-edit-script');
+            const secPull = document.getElementById('bot-sec-pull');
             const btnCreate = document.getElementById('btn-bot-mode-create');
             const btnEdit = document.getElementById('btn-bot-mode-edit');
             const btnScript = document.getElementById('btn-bot-mode-script');
             const btnEditScript = document.getElementById('btn-bot-mode-edit-script');
+            const btnPull = document.getElementById('btn-bot-mode-pull');
 
             if (btnCreate) btnCreate.classList.toggle('active', mode === 'create');
             if (btnEdit) btnEdit.classList.toggle('active', mode === 'edit');
             if (btnScript) btnScript.classList.toggle('active', mode === 'script');
             if (btnEditScript) btnEditScript.classList.toggle('active', mode === 'edit-script');
+            if (btnPull) btnPull.classList.toggle('active', mode === 'pull');
 
             if (secCreate) secCreate.style.display = mode === 'create' ? 'block' : 'none';
             if (secEdit) secEdit.style.display = mode === 'edit' ? 'block' : 'none';
             if (secScript) secScript.style.display = mode === 'script' ? 'block' : 'none';
             if (secEditScript) secEditScript.style.display = mode === 'edit-script' ? 'block' : 'none';
+            if (secPull) secPull.style.display = mode === 'pull' ? 'block' : 'none';
 
-            if (mode === 'edit' || mode === 'edit-script') {
+            if (mode === 'edit' || mode === 'edit-script' || mode === 'pull') {
                 const token = document.getElementById('github-token').value.trim();
                 if (token) fetchUserRepos(mode);
             }
@@ -7737,8 +7772,9 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
                 const selectWeb = document.getElementById('github-repo-list');
                 const selectScript = document.getElementById('github-edit-script-repo-list');
+                const selectPull = document.getElementById('github-pull-repo-list');
 
-                [selectWeb, selectScript].forEach(select => {
+                [selectWeb, selectScript, selectPull].forEach(select => {
                     if (!select) return;
                     select.innerHTML = '';
                     if (repos.length === 0) {
@@ -7762,6 +7798,8 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                 botLog(`✅ Đã tìm thấy ${repos.length} kho lưu trữ.`);
                 if (targetMode === 'edit-script') {
                     onScriptRepoListChange();
+                } else if (targetMode === 'pull') {
+                    // Tab Lấy Code: chỉ cần nạp danh sách kho, không cần xem trước link
                 } else {
                     onRepoListChange();
                 }
@@ -8070,6 +8108,112 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
                 showBotScriptLink(cdnUrl, scriptTag, githubRawUrl, repoUrl, githubPagesUrl);
                 showAutoPasteToast('⚡ Đã tạo xong Link Script CDN!');
+            } catch (err) {
+                botLog(`❌ [LỖI]: ${err.message}`);
+            }
+        }
+
+        // ================= 📥 LẤY CODE ĐÃ LƯU TRÊN GITHUB VỀ PHẦN CODE =================
+        function onPullTypeChange() {
+            const type = (document.getElementById('github-pull-type') || {}).value;
+            const item = document.getElementById('pull-filename-item');
+            if (item) item.style.display = type === 'script' ? 'flex' : 'none';
+        }
+
+        // Làm sạch code trang web lấy về từ GitHub: gỡ các phần được hệ thống tự chèn khi build/deploy
+        // (quảng cáo giả lập + bộ bắt console log) để code về gần giống bản gốc trong phần CODE nhất.
+        function cleanPulledWebSource(src) {
+            let out = String(src || '');
+            // Gỡ script bắt console/log được tự chèn khi build
+            out = out.replace(/<script>\s*\(function\(\)\s*\{\s*const origLog = console\.log;[\s\S]*?\}\)\(\);?\s*<\/script>\s*/gi, '');
+            // Gỡ overlay video quảng cáo và banner quảng cáo giả lập
+            out = out.replace(/<div id="video-ad-overlay"[\s\S]*?<\/button>\s*<\/div>/gi, '');
+            out = out.replace(/<div class="fake-ad">[\s\S]*?<\/button>\s*<\/div>/gi, '');
+            // Gỡ đoạn JS đếm giờ quảng cáo video (nhận diện qua close-video-ad)
+            out = out.replace(/\(function\(\)\{let t=\d+;let s=\d+;[\s\S]*?close-video-ad[\s\S]*?1000\);?\}\)\(\);\s*/gi, '');
+            // Gỡ các rule CSS quảng cáo giả lập nằm trong thẻ <style>
+            out = out.replace(/\.fake-ad[^{}]*\{[^{}]*\}/g, '');
+            out = out.replace(/\.fake-ad-(tag|title|close)[^{}]*\{[^{}]*\}/g, '');
+            out = out.replace(/\.video-ad-overlay[^{}]*\{[^{}]*\}/g, '');
+            out = out.replace(/\.video-(box|progress|progress-bar|ad-badge|timer-text|btn)[^{}]*\{[^{}]*\}/g, '');
+            return out.trim();
+        }
+
+        async function runBossBotPullCode() {
+            const token = document.getElementById('github-token').value.trim();
+            const select = document.getElementById('github-pull-repo-list');
+            const repoName = select ? select.value : '';
+            const opt = select ? select.options[select.selectedIndex] : null;
+            const owner = opt && opt.dataset.owner ? opt.dataset.owner : '';
+            const pullType = document.getElementById('github-pull-type').value;
+            const targetPage = document.getElementById('github-pull-target').value;
+
+            let filename = 'index.html';
+            if (pullType === 'script') {
+                filename = (document.getElementById('github-pull-filename').value.trim()) || 'script.js';
+                if (!filename.toLowerCase().endsWith('.js')) filename += '.js';
+                filename = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+            }
+
+            if (!token || !repoName || !owner) {
+                alert("Vui lòng nhập Token và chọn kho lưu trữ cần lấy code!");
+                return;
+            }
+
+            safeSetLocalStorage('codespace_github_token', token);
+
+            const siteBox = document.getElementById('bot-link-box');
+            const scriptBox = document.getElementById('bot-script-link-box');
+            const singleBox = document.getElementById('bot-script-single-box');
+            if (siteBox) siteBox.style.display = 'none';
+            if (scriptBox) scriptBox.style.display = 'none';
+            if (singleBox) singleBox.style.display = 'none';
+
+            const targetLabel = targetPage === 'p2' ? 'Trang 2' : 'Trang 1';
+            botLog(`📥 Bắt đầu lấy file "${filename}" từ kho "${owner}/${repoName}" về phần CODE ${targetLabel}...`);
+
+            try {
+                botLog("Đang tải nội dung file từ GitHub...");
+                const fileRes = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/${filename}`, {
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                if (fileRes.status === 404) {
+                    throw new Error(`Không tìm thấy file "${filename}" trong kho "${repoName}"!`);
+                }
+                if (!fileRes.ok) throw new Error("Không thể đọc file từ GitHub (kiểm tra lại quyền token)!");
+                const fileData = await fileRes.json();
+                if (!fileData.content) throw new Error("File quá lớn hoặc không đọc được nội dung!");
+
+                const bin = atob(String(fileData.content).replace(/\s+/g, ''));
+                const bytes = new Uint8Array(bin.length);
+                for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+                const pulledCode = new TextDecoder('utf-8').decode(bytes);
+
+                botLog(`Đã tải về ${pulledCode.length} ký tự. Chuẩn bị nạp vào phần CODE...`);
+
+                if (pullType === 'script') {
+                    if (!confirm(`📥 Nạp file "${filename}" vào tab JS của phần CODE ${targetLabel}?\n\n⚠️ Code JS hiện tại của ${targetLabel} sẽ được THAY THẾ bằng code từ GitHub.`)) {
+                        botLog("⏹️ Bạn đã hủy - không ghi đè code hiện tại.");
+                        return;
+                    }
+                    setCode(targetPage, 'js', pulledCode);
+                } else {
+                    const cleaned = cleanPulledWebSource(pulledCode);
+                    if (!confirm(`📥 Nạp trang web "index.html" vào tab HTML của phần CODE ${targetLabel}?\n\n(Đã tự gỡ quảng cáo giả lập/bộ bắt log được chèn lúc đẩy lên.)\n\n⚠️ Code HTML hiện tại của ${targetLabel} sẽ được THAY THẾ bằng code từ GitHub.`)) {
+                        botLog("⏹️ Bạn đã hủy - không ghi đè code hiện tại.");
+                        return;
+                    }
+                    setCode(targetPage, 'html', cleaned);
+                    botLog("🧹 Đã gỡ các thành phần chèn tự động (quảng cáo giả lập, bắt console) khỏi code tải về.");
+                    botLog("ℹ️ Mẹo: trang web nạp về là tài liệu đầy đủ nằm trong tab HTML; nếu thấy CSS/JS bị trùng với tab CSS/JS hiện có, hãy dọn bớt ở tab CSS/JS.");
+                }
+
+                runCode();
+                botLog(`🎉 ĐÃ LẤY CODE "${filename}" TỪ GITHUB VỀ PHẦN CODE ${targetLabel} THÀNH CÔNG!`);
+                showAutoPasteToast(`📥 Đã lấy code "${filename}" về ${targetLabel}!`);
             } catch (err) {
                 botLog(`❌ [LỖI]: ${err.message}`);
             }
