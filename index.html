@@ -8155,8 +8155,14 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                 filename = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
             }
 
-            if (!token || !repoName || !owner) {
-                alert("Vui lòng nhập Token và chọn kho lưu trữ cần lấy code!");
+            if (!token) {
+                botLog("❌ Chưa nhập GitHub Personal Access Token (PAT) ở ô trên cùng của bảng Boss Bot!");
+                showAutoPasteToast('⚠️ Chưa nhập GitHub Token!');
+                return;
+            }
+            if (!repoName || !owner) {
+                botLog("❌ Chưa chọn kho lưu trữ! Hãy bấm nút '🔄 Lấy Danh Sách Kho Lưu Trữ Của Bạn' rồi chọn 1 kho trong danh sách.");
+                showAutoPasteToast('⚠️ Chưa chọn kho lưu trữ!');
                 return;
             }
 
@@ -8173,19 +8179,20 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             botLog(`📥 Bắt đầu lấy file "${filename}" từ kho "${owner}/${repoName}" về phần CODE ${targetLabel}...`);
 
             try {
-                botLog("Đang tải nội dung file từ GitHub...");
+                botLog(`Đang tải nội dung file: repos/${owner}/${repoName}/contents/${filename} ...`);
                 const fileRes = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/${filename}`, {
                     headers: {
                         'Authorization': `token ${token}`,
                         'Accept': 'application/vnd.github.v3+json'
                     }
                 });
+                botLog(`GitHub phản hồi: HTTP ${fileRes.status}`);
                 if (fileRes.status === 404) {
-                    throw new Error(`Không tìm thấy file "${filename}" trong kho "${repoName}"!`);
+                    throw new Error(`Không tìm thấy file "${filename}" trong kho "${repoName}" (HTTP 404). Kiểm tra lại tên file hoặc quyền token với kho riêng tư!`);
                 }
-                if (!fileRes.ok) throw new Error("Không thể đọc file từ GitHub (kiểm tra lại quyền token)!");
+                if (!fileRes.ok) throw new Error(`GitHub trả về lỗi HTTP ${fileRes.status} - kiểm tra lại token/quyền truy cập kho!`);
                 const fileData = await fileRes.json();
-                if (!fileData.content) throw new Error("File quá lớn hoặc không đọc được nội dung!");
+                if (!fileData.content) throw new Error(`File "${filename}" quá lớn (>1MB) hoặc GitHub không trả về nội dung. Hãy thử với file nhỏ hơn!`);
 
                 const bin = atob(String(fileData.content).replace(/\s+/g, ''));
                 const bytes = new Uint8Array(bin.length);
@@ -8195,14 +8202,16 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                 botLog(`Đã tải về ${pulledCode.length} ký tự. Chuẩn bị nạp vào phần CODE...`);
 
                 if (pullType === 'script') {
-                    if (!confirm(`📥 Nạp file "${filename}" vào tab JS của phần CODE ${targetLabel}?\n\n⚠️ Code JS hiện tại của ${targetLabel} sẽ được THAY THẾ bằng code từ GitHub.`)) {
+                    const okPull = await appConfirm(`📥 Nạp file "${filename}" vào tab JS của phần CODE ${targetLabel}?\n\n⚠️ Code JS hiện tại của ${targetLabel} sẽ được THAY THẾ bằng code từ GitHub.`, { title: '📥 Xác nhận lấy code', okText: '📥 Nạp vào', danger: true });
+                    if (!okPull) {
                         botLog("⏹️ Bạn đã hủy - không ghi đè code hiện tại.");
                         return;
                     }
                     setCode(targetPage, 'js', pulledCode);
                 } else {
                     const cleaned = cleanPulledWebSource(pulledCode);
-                    if (!confirm(`📥 Nạp trang web "index.html" vào tab HTML của phần CODE ${targetLabel}?\n\n(Đã tự gỡ quảng cáo giả lập/bộ bắt log được chèn lúc đẩy lên.)\n\n⚠️ Code HTML hiện tại của ${targetLabel} sẽ được THAY THẾ bằng code từ GitHub.`)) {
+                    const okPull = await appConfirm(`📥 Nạp trang web "index.html" vào tab HTML của phần CODE ${targetLabel}?\n\n(Đã tự gỡ quảng cáo giả lập/bộ bắt log được chèn lúc đẩy lên.)\n\n⚠️ Code HTML hiện tại của ${targetLabel} sẽ được THAY THẾ bằng code từ GitHub.`, { title: '📥 Xác nhận lấy code', okText: '📥 Nạp vào', danger: true });
+                    if (!okPull) {
                         botLog("⏹️ Bạn đã hủy - không ghi đè code hiện tại.");
                         return;
                     }
