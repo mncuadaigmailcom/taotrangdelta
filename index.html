@@ -1159,6 +1159,7 @@
         <span id="cf-saved-bar" class="page-switch-group" aria-label="Tính năng đã lưu"></span>
 
         <button id="btn-reset-workspace" class="btn-reset" onclick="resetWorkspace()">🔄 Reset</button>
+        <button id="btn-clear-code" class="btn-reset" style="background:linear-gradient(135deg,#b71c1c,#e57373)!important; border-color:#ef5350!important;" onclick="clearAllCode()" title="Xóa sạch toàn bộ code HTML + CSS + JS của trang đang sửa (ô trống hoàn toàn)">🗑️ Xóa Code</button>
 
         <div class="dropdown-wrap">
             <button class="btn-save" onclick="toggleDownloadMenu(event)">💾 Tải Xuống <span class="dropdown-caret">▼</span></button>
@@ -6656,7 +6657,9 @@ Yêu cầu bắt buộc:
             if (models[page] && models[page][type]) {
                 return models[page][type].getValue();
             }
-            return localStorage.getItem(`codespace_${page}_${type}`) || defaultTemplates[page][type];
+            // Tôn trọng cả chuỗi rỗng đã lưu (đã dùng nút Xóa Code) - chỉ dùng mẫu khi CHƯA từng có dữ liệu
+            const savedCode = localStorage.getItem(`codespace_${page}_${type}`);
+            return (savedCode !== null && savedCode !== undefined) ? savedCode : defaultTemplates[page][type];
         }
 
         function setCode(page, type, val) {
@@ -7027,16 +7030,28 @@ ${j}`;
         function stopDrag() { if (isDragging) { isDragging = false; resizer.classList.remove('dragging'); document.getElementById('viewer').style.pointerEvents = 'auto'; if (editors[currentTab]) editors[currentTab].layout(); } }
         resizer.addEventListener('mousedown', startDrag); document.addEventListener('mousemove', doDrag); document.addEventListener('mouseup', stopDrag); resizer.addEventListener('touchstart', startDrag); document.addEventListener('touchmove', doDrag); document.addEventListener('touchend', stopDrag);
 
-        function resetWorkspace() {
-            if(confirm("Xóa toàn bộ code hiện tại để quay về mẫu ban đầu?")) {
-                ['p1', 'p2'].forEach(p => {
-                    ['html', 'css', 'js'].forEach(t => {
-                        setCode(p, t, defaultTemplates[p][t]);
-                    });
+        async function resetWorkspace() {
+            const ok = await appConfirm("Xóa toàn bộ code hiện tại để quay về mẫu ban đầu?", { title: '🔄 Reset code', okText: '🔄 Reset', danger: true });
+            if (!ok) return;
+            ['p1', 'p2'].forEach(p => {
+                ['html', 'css', 'js'].forEach(t => {
+                    setCode(p, t, defaultTemplates[p][t]);
                 });
-                runCode();
-                clearConsole();
-            }
+            });
+            runCode();
+            clearConsole();
+        }
+
+        // 🗑️ XÓA CODE: xóa SẠCH TRẮNG cả 3 tab HTML + CSS + JS của trang đang sửa (ô trống hoàn toàn, KHÔNG quay về mẫu)
+        async function clearAllCode() {
+            const pageLabel = activeEditPage === 'p2' ? 'Trang 2' : 'Trang 1';
+            const web2Note = isWeb2Enabled ? `\n\nℹ️ Chỉ xóa ${pageLabel} (trang bạn đang sửa). Trang còn lại giữ nguyên — chuyển sang sửa trang đó rồi bấm lại nút nếu muốn xóa tiếp.` : '';
+            const ok = await appConfirm(`🗑️ Xóa HẾT code HTML + CSS + JS của ${pageLabel}?${web2Note}\n\n⚠️ Cả 3 ô soạn thảo sẽ bị XÓA SẠCH thành trống trơn.\nHành động này KHÔNG khôi phục được!`, { title: '🗑️ Xóa hết code', okText: '🗑️ Xóa hết', danger: true });
+            if (!ok) return;
+            ['html', 'css', 'js'].forEach(t => setCode(activeEditPage, t, ''));
+            runCode();
+            clearConsole();
+            showAutoPasteToast(`🗑️ Đã xóa hết code HTML + CSS + JS của ${pageLabel}!`);
         }
 
         function toggleDownloadMenu(e) {
@@ -8587,8 +8602,10 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                     ['html', 'css', 'js'].forEach(t => {
                         let legacyKey = (p === 'p1') ? `codespace_${t}` : `codespace_html2`;
                         let key = `codespace_${p}_${t}`;
-                        let saved = localStorage.getItem(key) || (t === 'html' && p === 'p2' ? localStorage.getItem(legacyKey) : null);
-                        initialData[p][t] = saved !== null ? saved : defaultTemplates[p][t];
+                        // Tôn trọng cả chuỗi rỗng đã lưu (đã dùng nút Xóa Code) - chỉ dùng mẫu khi CHƯA từng có dữ liệu
+                        let rawSaved = localStorage.getItem(key);
+                        let saved = (rawSaved !== null && rawSaved !== undefined) ? rawSaved : (t === 'html' && p === 'p2' ? localStorage.getItem(legacyKey) : null);
+                        initialData[p][t] = (saved !== null && saved !== undefined) ? saved : defaultTemplates[p][t];
                     });
                 });
             }
