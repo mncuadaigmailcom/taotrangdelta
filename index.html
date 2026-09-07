@@ -1919,10 +1919,14 @@
                 <div class="setting-item">
                     <label for="github-script-source">Nội dung Script muốn tạo link:</label>
                     <select id="github-script-source">
-                        <option value="p1_js">⚡ JS Trang 1 (Mã JavaScript đang viết)</option>
-                        <option value="p2_js">⚡ JS Trang 2 (Nếu đang dùng Trang 2)</option>
-                        <option value="p1_bundle">📦 Gói Tự Chạy (Tự nhúng CSS + chạy JS vào trang đích)</option>
+                        <option value="p1_js">⚡ JS Trang 1 (Lấy từ tab JS phần CODE)</option>
+                        <option value="p2_js">⚡ JS Trang 2 (Lấy từ tab JS phần CODE)</option>
+                        <option value="p1_bundle">📦 Gói Tự Chạy Trang 1 (CSS + JS từ phần CODE)</option>
+                        <option value="p2_bundle">📦 Gói Tự Chạy Trang 2 (CSS + JS từ phần CODE)</option>
+                        <option value="p1_full">🎁 Gói Đầy Đủ Trang 1 (HTML + CSS + JS từ phần CODE)</option>
+                        <option value="p2_full">🎁 Gói Đầy Đủ Trang 2 (HTML + CSS + JS từ phần CODE)</option>
                     </select>
+                    <span style="font-size:0.7rem; color:#10b981;">✅ Luôn lấy code từ <b>phần CODE</b> (các ô soạn thảo HTML/CSS/JS đã lưu) — <b>không lấy</b> từ phần Kết Quả chạy thử.</span>
                 </div>
                 <button class="btn-bot-github" style="width:100%; padding:10px; font-size:0.9rem; background: linear-gradient(135deg, #10b981, #06b6d4) !important;" onclick="runBossBotScriptDeploy()">⚡ KÍCH HOẠT BOSS BOT TẠO LINK SCRIPT</button>
             </div>
@@ -1942,10 +1946,14 @@
                 <div class="setting-item">
                     <label for="github-edit-script-source">Nội dung Script mới muốn ghi đè vào file:</label>
                     <select id="github-edit-script-source">
-                        <option value="p1_js">⚡ JS Trang 1 (Mã JavaScript đang viết)</option>
-                        <option value="p2_js">⚡ JS Trang 2 (Nếu đang dùng Trang 2)</option>
-                        <option value="p1_bundle">📦 Gói Tự Chạy (Tự nhúng CSS + chạy JS vào trang đích)</option>
+                        <option value="p1_js">⚡ JS Trang 1 (Lấy từ tab JS phần CODE)</option>
+                        <option value="p2_js">⚡ JS Trang 2 (Lấy từ tab JS phần CODE)</option>
+                        <option value="p1_bundle">📦 Gói Tự Chạy Trang 1 (CSS + JS từ phần CODE)</option>
+                        <option value="p2_bundle">📦 Gói Tự Chạy Trang 2 (CSS + JS từ phần CODE)</option>
+                        <option value="p1_full">🎁 Gói Đầy Đủ Trang 1 (HTML + CSS + JS từ phần CODE)</option>
+                        <option value="p2_full">🎁 Gói Đầy Đủ Trang 2 (HTML + CSS + JS từ phần CODE)</option>
                     </select>
+                    <span style="font-size:0.7rem; color:#10b981;">✅ Luôn lấy code từ <b>phần CODE</b> (các ô soạn thảo HTML/CSS/JS đã lưu) — <b>không lấy</b> từ phần Kết Quả chạy thử.</span>
                 </div>
                 <button class="btn-bot-github" style="width:100%; padding:10px; font-size:0.9rem; background: linear-gradient(135deg, #ec4899, #8b5cf6) !important;" onclick="updateSelectedScriptRepo()">🔄 SỬA / CẬP NHẬT FILE SCRIPT NÀY</button>
             </div>
@@ -1976,8 +1984,30 @@
                         <button type="button" style="flex-shrink:0; padding:6px 10px; background:linear-gradient(135deg, #8b5cf6, #d946ef); border:none; color:white; border-radius:4px; font-size:0.7rem; font-weight:bold; cursor:pointer;" onclick="copyBotScriptUrl('tag')">📋 Copy Thẻ</button>
                     </div>
                 </div>
-                <div style="display:flex; gap:12px; margin-top:2px; font-size:0.72rem;">
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:0.72rem; color:#94a3b8;">🐙 Link GitHub Raw (link github - xem/tải code trực tiếp):</span>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        <input id="bot-script-ghraw-input" type="text" readonly style="flex:1; min-width:0; background:#1e293b; border:1px solid #334155; color:#fbbf24; font-size:0.75rem; padding:6px 8px; border-radius:4px; outline:none;" onclick="this.select();" />
+                        <button type="button" style="flex-shrink:0; padding:6px 10px; background:linear-gradient(135deg, #d97706, #fbbf24); border:none; color:white; border-radius:4px; font-size:0.7rem; font-weight:bold; cursor:pointer;" onclick="copyBotScriptUrl('ghraw')">📋 Copy</button>
+                    </div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:0.72rem; color:#94a3b8;">🌐 Link GitHub Pages (link github chạy trực tiếp được làm script):</span>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        <input id="bot-script-ghpages-input" type="text" readonly style="flex:1; min-width:0; background:#1e293b; border:1px solid #334155; color:#22d3ee; font-size:0.75rem; padding:6px 8px; border-radius:4px; outline:none;" onclick="this.select();" />
+                        <button type="button" style="flex-shrink:0; padding:6px 10px; background:linear-gradient(135deg, #0891b2, #22d3ee); border:none; color:white; border-radius:4px; font-size:0.7rem; font-weight:bold; cursor:pointer;" onclick="copyBotScriptUrl('ghpages')">📋 Copy</button>
+                    </div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:0.72rem; color:#94a3b8;">📜 Mã Nhúng GitHub Pages &lt;script&gt; (Dán vào bất kỳ web nào):</span>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        <input id="bot-script-ghtag-input" type="text" readonly style="flex:1; min-width:0; background:#1e293b; border:1px solid #334155; color:#fb7185; font-size:0.75rem; padding:6px 8px; border-radius:4px; outline:none;" onclick="this.select();" />
+                        <button type="button" style="flex-shrink:0; padding:6px 10px; background:linear-gradient(135deg, #e11d48, #fb7185); border:none; color:white; border-radius:4px; font-size:0.7rem; font-weight:bold; cursor:pointer;" onclick="copyBotScriptUrl('ghtag')">📋 Copy Thẻ</button>
+                    </div>
+                </div>
+                <div style="display:flex; gap:12px; margin-top:2px; font-size:0.72rem; flex-wrap:wrap;">
                     <a id="bot-script-test-link" href="#" target="_blank" style="color:#00d2ff; text-decoration:underline;">↗ Mở thử file Script</a>
+                    <a id="bot-script-ghpages-link" href="#" target="_blank" style="color:#22d3ee; text-decoration:underline;">↗ Mở thử link GitHub Pages</a>
                     <a id="bot-script-repo-link" href="#" target="_blank" style="color:#94a3b8; text-decoration:underline;">📁 Xem kho GitHub</a>
                 </div>
             </div>
@@ -7479,30 +7509,111 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
             box.style.display = 'flex';
         }
 
-        function showBotScriptLink(cdnUrl, scriptTag, rawUrl, repoUrl) {
+        // ================= NGUỒN CODE CHO BOSS BOT SCRIPT =================
+        // ✅ LUÔN lấy code từ PHẦN CODE (các ô soạn thảo Monaco Editor / bản đã lưu trong localStorage).
+        // ❌ TUYỆT ĐỐI KHÔNG lấy từ PHẦN KẾT QUẢ chạy thử (iframe result-viewer - bản đã build có thể bị chèn thêm quảng cáo/console),
+        //    và cũng không lấy code mẫu mặc định khi phần code đang trống.
+        function getCodeSectionCode(page, type) {
+            if (models[page] && models[page][type]) {
+                return models[page][type].getValue();
+            }
+            return localStorage.getItem(`codespace_${page}_${type}`) || '';
+        }
+
+        function describeScriptSource(sourceChoice) {
+            const map = {
+                'p1_js': '⚡ JS Trang 1',
+                'p2_js': '⚡ JS Trang 2',
+                'p1_bundle': '📦 Gói Tự Chạy Trang 1 (CSS + JS)',
+                'p2_bundle': '📦 Gói Tự Chạy Trang 2 (CSS + JS)',
+                'p1_full': '🎁 Gói Đầy Đủ Trang 1 (HTML + CSS + JS)',
+                'p2_full': '🎁 Gói Đầy Đủ Trang 2 (HTML + CSS + JS)'
+            };
+            return map[sourceChoice] || map['p1_js'];
+        }
+
+        function buildScriptCodeFromCodeSection(sourceChoice, commentTag) {
+            // Lấy nội dung script 100% từ PHẦN CODE (ô soạn thảo), không đụng tới PHẦN KẾT QUẢ.
+            const tag = commentTag || 'được tạo tự động bởi Boss Bot CodeSpace';
+            const mkBundle = (page, label) => {
+                const cssCode = getCodeSectionCode(page, 'css');
+                const jsCode = getCodeSectionCode(page, 'js');
+                const escapedCss = JSON.stringify(cssCode);
+                return `/* 📦 Gói Tự Chạy ${label} - ${tag} */\n(function() {\n    'use strict';\n    const css = ${escapedCss};\n    if (css && css.trim()) {\n        const style = document.createElement('style');\n        style.setAttribute('data-injected-by', 'boss-bot-codespace');\n        style.textContent = css;\n        document.head ? document.head.appendChild(style) : document.documentElement.appendChild(style);\n    }\n    // Logic JavaScript (lấy từ tab JS phần CODE)\n    ${jsCode}\n})();`;
+            };
+            const mkFull = (page, label) => {
+                const htmlCode = getCodeSectionCode(page, 'html');
+                const cssCode = getCodeSectionCode(page, 'css');
+                const jsCode = getCodeSectionCode(page, 'js');
+                const escapedHtml = JSON.stringify(htmlCode);
+                const escapedCss = JSON.stringify(cssCode);
+                return `/* 🎁 Gói Đầy Đủ ${label} (HTML + CSS + JS) - ${tag} */\n(function() {\n    'use strict';\n    const html = ${escapedHtml};\n    const css = ${escapedCss};\n    function injectAll() {\n        if (css && css.trim()) {\n            const style = document.createElement('style');\n            style.setAttribute('data-injected-by', 'boss-bot-codespace');\n            style.textContent = css;\n            (document.head || document.documentElement).appendChild(style);\n        }\n        if (html && html.trim()) {\n            const m = html.match(/<body[^>]*>([\\s\\S]*?)<\\/body>/i);\n            let content = m ? m[1] : html;\n            content = content.replace(/<script[\\s\\S]*?<\\/script>/gi, '');\n            const root = document.createElement('div');\n            root.id = 'codespace-injected-root';\n            root.setAttribute('data-injected-by', 'boss-bot-codespace');\n            root.innerHTML = content;\n            (document.body || document.documentElement).appendChild(root);\n        }\n        // Logic JavaScript (chạy sau khi đã nhúng xong HTML + CSS từ phần CODE)\n        ${jsCode}\n    }\n    if (document.readyState === 'loading') {\n        document.addEventListener('DOMContentLoaded', injectAll);\n    } else {\n        injectAll();\n    }\n})();`;
+            };
+
+            switch (sourceChoice) {
+                case 'p2_js':
+                    return getCodeSectionCode('p2', 'js') || '// JavaScript Trang 2 (phần Code đang trống)\n';
+                case 'p1_bundle':
+                    return mkBundle('p1', 'Trang 1');
+                case 'p2_bundle':
+                    return mkBundle('p2', 'Trang 2');
+                case 'p1_full':
+                    return mkFull('p1', 'Trang 1');
+                case 'p2_full':
+                    return mkFull('p2', 'Trang 2');
+                case 'p1_js':
+                default:
+                    return getCodeSectionCode('p1', 'js') || '// JavaScript Trang 1 (phần Code đang trống)\n';
+            }
+        }
+
+        function showBotScriptLink(cdnUrl, scriptTag, githubRawUrl, repoUrl, githubPagesUrl) {
             const siteBox = document.getElementById('bot-link-box');
             if (siteBox) siteBox.style.display = 'none';
             const box = document.getElementById('bot-script-link-box');
             const cdnInput = document.getElementById('bot-script-cdn-input');
             const tagInput = document.getElementById('bot-script-tag-input');
+            const ghRawInput = document.getElementById('bot-script-ghraw-input');
+            const ghPagesInput = document.getElementById('bot-script-ghpages-input');
+            const ghTagInput = document.getElementById('bot-script-ghtag-input');
             const testLink = document.getElementById('bot-script-test-link');
+            const ghPagesLink = document.getElementById('bot-script-ghpages-link');
             const repoLink = document.getElementById('bot-script-repo-link');
             if (!box) return;
             if (cdnInput) cdnInput.value = cdnUrl;
             if (tagInput) tagInput.value = scriptTag;
+            if (ghRawInput) ghRawInput.value = githubRawUrl || '';
+            const pagesUrl = githubPagesUrl || '';
+            if (ghPagesInput) ghPagesInput.value = pagesUrl;
+            if (ghTagInput) ghTagInput.value = pagesUrl ? `<script src="${pagesUrl}"><\/script>` : '';
             if (testLink) testLink.href = cdnUrl;
+            if (ghPagesLink) ghPagesLink.href = pagesUrl || '#';
             if (repoLink) repoLink.href = repoUrl;
             box.style.display = 'flex';
         }
 
         function copyBotScriptUrl(type) {
-            const input = document.getElementById(type === 'tag' ? 'bot-script-tag-input' : 'bot-script-cdn-input');
+            const inputMap = {
+                'cdn': 'bot-script-cdn-input',
+                'tag': 'bot-script-tag-input',
+                'ghraw': 'bot-script-ghraw-input',
+                'ghpages': 'bot-script-ghpages-input',
+                'ghtag': 'bot-script-ghtag-input'
+            };
+            const toastMap = {
+                'cdn': '📋 Đã sao chép Link Script CDN!',
+                'tag': '📋 Đã sao chép mã thẻ <script>!',
+                'ghraw': '📋 Đã sao chép Link GitHub Raw!',
+                'ghpages': '📋 Đã sao chép Link GitHub Pages!',
+                'ghtag': '📋 Đã sao chép mã thẻ <script> GitHub Pages!'
+            };
+            const input = document.getElementById(inputMap[type] || 'bot-script-cdn-input');
             if (!input || !input.value) return;
             const text = input.value;
             input.select();
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => {
-                    showCopyToast(type === 'tag' ? '📋 Đã sao chép mã thẻ <script>!' : '📋 Đã sao chép Link Script CDN!');
+                    showCopyToast(toastMap[type] || '📋 Đã sao chép!');
                 }).catch(() => {
                     fallbackSharePrompt(text);
                 });
@@ -7527,10 +7638,11 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
             const cdnUrl = `https://cdn.jsdelivr.net/gh/${owner}/${repoName}@main/${filename}`;
             const scriptTag = `<script src="${cdnUrl}"><\/script>`;
-            const rawUrl = `https://raw.githack.com/${owner}/${repoName}/main/${filename}`;
+            const githubRawUrl = `https://raw.githubusercontent.com/${owner}/${repoName}/main/${filename}`;
             const repoUrl = `https://github.com/${owner}/${repoName}`;
+            const githubPagesUrl = `https://${owner}.github.io/${repoName}/${filename}`;
 
-            showBotScriptLink(cdnUrl, scriptTag, rawUrl, repoUrl);
+            showBotScriptLink(cdnUrl, scriptTag, githubRawUrl, repoUrl, githubPagesUrl);
         }
 
         function switchBotMode(mode) {
@@ -7714,17 +7826,9 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                 const userData = await userRes.json();
                 const username = userData.login;
 
-                let scriptCode = '';
-                if (sourceChoice === 'p2_js') {
-                    scriptCode = getCode('p2', 'js') || '// JavaScript Trang 2\n';
-                } else if (sourceChoice === 'p1_bundle') {
-                    const cssCode = getCode('p1', 'css') || '';
-                    const jsCode = getCode('p1', 'js') || '';
-                    const escapedCss = JSON.stringify(cssCode);
-                    scriptCode = `/* 📦 Bundle Script được cập nhật bởi Boss Bot CodeSpace */\n(function() {\n    'use strict';\n    const css = ${escapedCss};\n    if (css && css.trim()) {\n        const style = document.createElement('style');\n        style.setAttribute('data-injected-by', 'boss-bot-codespace');\n        style.textContent = css;\n        document.head ? document.head.appendChild(style) : document.documentElement.appendChild(style);\n    }\n    // Logic JavaScript\n    ${jsCode}\n})();`;
-                } else {
-                    scriptCode = getCode('p1', 'js') || '// JavaScript Trang 1\n';
-                }
+                // ✅ Lấy nội dung từ PHẦN CODE (ô soạn thảo HTML/CSS/JS) - KHÔNG lấy từ phần Kết Quả chạy thử
+                botLog(`📥 Nguồn code: ${describeScriptSource(sourceChoice)} — lấy từ phần CODE, bỏ qua phần Kết Quả.`);
+                const scriptCode = buildScriptCodeFromCodeSection(sourceChoice, 'được cập nhật bởi Boss Bot CodeSpace');
 
                 botLog(`Chuẩn bị nội dung script "${filename}" (${scriptCode.length} ký tự)...`);
 
@@ -7778,13 +7882,16 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
                 const cdnUrl = `https://cdn.jsdelivr.net/gh/${username}/${selectedRepo}@main/${filename}`;
                 const scriptTag = `<script src="${cdnUrl}"><\/script>`;
-                const rawUrl = `https://raw.githack.com/${username}/${selectedRepo}/main/${filename}`;
+                const githubRawUrl = `https://raw.githubusercontent.com/${username}/${selectedRepo}/main/${filename}`;
+                const githubPagesUrl = `https://${username}.github.io/${selectedRepo}/${filename}`;
                 const repoUrl = `https://github.com/${username}/${selectedRepo}`;
 
                 botLog(`🔗 Link CDN jsDelivr: ${cdnUrl}`);
+                botLog(`🐙 Link GitHub Raw: ${githubRawUrl}`);
+                botLog(`🌐 Link GitHub Pages: ${githubPagesUrl} (Pages có thể cần 1-2 phút kích hoạt lần đầu)`);
                 botLog(`📜 Mã nhúng: ${scriptTag}`);
 
-                showBotScriptLink(cdnUrl, scriptTag, rawUrl, repoUrl);
+                showBotScriptLink(cdnUrl, scriptTag, githubRawUrl, repoUrl, githubPagesUrl);
                 showAutoPasteToast(`🔄 Đã sửa và cập nhật Script "${filename}"!`);
             } catch (err) {
                 botLog(`❌ [LỖI]: ${err.message}`);
@@ -7851,17 +7958,9 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
                     await new Promise(r => setTimeout(r, 2000));
                 }
 
-                let scriptCode = '';
-                if (sourceChoice === 'p2_js') {
-                    scriptCode = getCode('p2', 'js') || '// JavaScript Trang 2\n';
-                } else if (sourceChoice === 'p1_bundle') {
-                    const cssCode = getCode('p1', 'css') || '';
-                    const jsCode = getCode('p1', 'js') || '';
-                    const escapedCss = JSON.stringify(cssCode);
-                    scriptCode = `/* 📦 Bundle Script được tạo tự động bởi Boss Bot CodeSpace */\n(function() {\n    'use strict';\n    const css = ${escapedCss};\n    if (css && css.trim()) {\n        const style = document.createElement('style');\n        style.setAttribute('data-injected-by', 'boss-bot-codespace');\n        style.textContent = css;\n        document.head ? document.head.appendChild(style) : document.documentElement.appendChild(style);\n    }\n    // Logic JavaScript\n    ${jsCode}\n})();`;
-                } else {
-                    scriptCode = getCode('p1', 'js') || '// JavaScript Trang 1\n';
-                }
+                // ✅ Lấy nội dung từ PHẦN CODE (ô soạn thảo HTML/CSS/JS) - KHÔNG lấy từ phần Kết Quả chạy thử
+                botLog(`📥 Nguồn code: ${describeScriptSource(sourceChoice)} — lấy từ phần CODE, bỏ qua phần Kết Quả.`);
+                const scriptCode = buildScriptCodeFromCodeSection(sourceChoice, 'được tạo tự động bởi Boss Bot CodeSpace');
 
                 botLog(`Chuẩn bị nội dung script "${filename}" (${scriptCode.length} ký tự)...`);
 
@@ -7913,13 +8012,16 @@ self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then
 
                 const cdnUrl = `https://cdn.jsdelivr.net/gh/${username}/${repo}@main/${filename}`;
                 const scriptTag = `<script src="${cdnUrl}"><\/script>`;
-                const rawUrl = `https://raw.githack.com/${username}/${repo}/main/${filename}`;
+                const githubRawUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/${filename}`;
+                const githubPagesUrl = `https://${username}.github.io/${repo}/${filename}`;
                 const repoUrl = `https://github.com/${username}/${repo}`;
 
                 botLog(`🔗 Link CDN jsDelivr: ${cdnUrl}`);
+                botLog(`🐙 Link GitHub Raw: ${githubRawUrl}`);
+                botLog(`🌐 Link GitHub Pages: ${githubPagesUrl} (Pages có thể cần 1-2 phút kích hoạt lần đầu)`);
                 botLog(`📜 Mã nhúng: ${scriptTag}`);
 
-                showBotScriptLink(cdnUrl, scriptTag, rawUrl, repoUrl);
+                showBotScriptLink(cdnUrl, scriptTag, githubRawUrl, repoUrl, githubPagesUrl);
                 showAutoPasteToast('⚡ Đã tạo xong Link Script CDN!');
             } catch (err) {
                 botLog(`❌ [LỖI]: ${err.message}`);
